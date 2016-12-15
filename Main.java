@@ -1,5 +1,3 @@
-// Java7以降対応
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -7,109 +5,169 @@ import javax.swing.*;
 public final class Main {
     FrameController controller;
     public Main(){
-        this.controller = new FrameController();
-        controller.start();
+      this.controller = new FrameController();
     }
 
     public static void main(String[] args) {
-        new Main();
+      new Main();
     }
 
 }
 
-final class FrameController {
+final class FrameController extends JFrame{
 
-    private JFrame mainFrame;
+    private JPanel mainPanel;
 
-    private Frame1 frame1;
-    private Frame2 frame2;
-    private Frame3 frame3;
+    private TitlePanel titlePanel;
+    private DeckEditPanel editPanel;
+    private MainGamePanel gamePanel;
+    private ResultPanel resultPanel;
+
+    private CardLayout layout;
 
     public FrameController() {
-        this.mainFrame = new MainFrame();
 
-        this.frame1 = new Frame1(this);
-        this.frame2 = new Frame2(this);
-        this.frame3 = new Frame3(this);
-    }
+        this.titlePanel = new TitlePanel(this);
+        this.editPanel = new DeckEditPanel(this);
+        this.gamePanel = new MainGamePanel(this);
+        this.resultPanel = new ResultPanel(this);
 
-    public void start() {
-        // FrameController controller = new FrameController();
-        // controller.showFrame1();
-        this.showFrame1();
-    }
+        layout = new CardLayout();
 
-    public void showFrame(JFrame frame) {
-        frame.setVisible(true);
-        frame.requestFocus();
-    }
+        this.setLayout(layout);
 
-    public void showFrame1() {
-        mainFrame = frame1;
-        showFrame(mainFrame);
-    }
+        this.add(titlePanel, "Title");
+        this.add(editPanel, "Edit");
+        this.add(gamePanel, "Game");
+        this.add(resultPanel, "Result");
 
-    public void showFrame2() {
-        mainFrame = frame2;
-    }
-
-    public void showFrame3() {
-        mainFrame = frame3;
-    }
-
-}
-
-final class MainFrame extends JFrame {
-    public MainFrame(){
-        this.setTitle("J Game");
-        this.setSize(200,200);
+        this.setSize(300,300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
-    }
-}
 
-
-// Model & View & Controller
-final class Frame1 extends JFrame {
-
-    public Frame1(final FrameController frameController) {
-        setLayout(new FlowLayout());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        add(new JButton(new AbstractAction("続きから") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameController.showFrame2();
-            }
-        }));
-        add(new JButton(new AbstractAction("始めから") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameController.showFrame3();
-            }
-        }));
-        pack();
+        this.showTitle();
     }
 
-}
+    public void showPanel(JPanel panel) {
+      CardLayout cl = (CardLayout)layout;
+      this.mainPanel = panel;
+    }
 
-// Model & View & Controller
-final class Frame2 extends JFrame {
+    public void showTitle() {
+        mainPanel = titlePanel;
+        layout.first(this);
+    }
 
-    public Frame2(FrameController frameController) {
-        setTitle("コンティニュー");
-        setSize(300, 200);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    public void showDeckEdit() {
+      mainPanel = editPanel;
+      // layout.
+    }
+
+    public void showMainGame() {
+        mainPanel = gamePanel;
+    }
+
+    public void ShowResult() {
+        mainPanel = resultPanel;
     }
 
 }
 
-// Model & View & Controller
-final class Frame3 extends JFrame {
 
-    public Frame3(FrameController frameController) {
-        setTitle("ニューゲーム");
-        setSize(300, 200);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+// Title's Model & View & Controller
+final class TitlePanel extends JPanel implements ActionListener {
+  FrameController frameCont;
+  JButton start;
+  JButton deckEdit;
+
+  public TitlePanel(FrameController frameCont) {
+    this.frameCont = frameCont;
+    setLayout(new FlowLayout());
+    start = new JButton("ゲームスタート");
+    deckEdit = new JButton("デッキ編集");
+
+    start.addActionListener(this);
+    deckEdit.addActionListener(this);
+
+    this.add(start);
+    this.add(deckEdit);
+
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == start){
+      frameCont.showMainGame();
     }
+    else if (e.getSource() == deckEdit) {
+      frameCont.showDeckEdit();
+    }
+  }
+}
+
+
+// DeckEdit's Model & View & Controller
+final class DeckEditPanel extends JPanel implements ActionListener { 
+  FrameController frameCont;
+  JButton end;
+
+  public DeckEditPanel(FrameController frameCont) {
+    this.frameCont = frameCont;
+
+    end = new JButton("タイトルへ進む");
+    end.addActionListener(this);
+    this.add(end);
+
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == end) {
+      frameCont.showTitle();
+    }
+  }
+}
+
+// MainGame's Model & View & Controller
+final class MainGamePanel extends JPanel implements ActionListener { 
+  FrameController frameCont;
+  JButton result;
+
+  public MainGamePanel(FrameController frameCont) {
+    this.frameCont = frameCont;
+
+    result = new JButton("Resultへ進む");
+    result.addActionListener(this);
+    this.add(result);
+
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == result) {
+      frameCont.showMainGame();
+    }
+  }
 
 }
+
+// Result's Model & View & Controller
+final class ResultPanel extends JPanel implements ActionListener {
+  FrameController frameCont;
+  JButton title;
+
+  public ResultPanel(FrameController frameCont) {
+    this.frameCont = frameCont;
+
+    title = new JButton("タイトルへ進む");
+    title.addActionListener(this);
+
+    this.add(title);
+
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == title) {
+      frameCont.showTitle();
+    }
+  }
+}
+
+
