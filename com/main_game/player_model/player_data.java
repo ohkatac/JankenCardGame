@@ -7,6 +7,7 @@ class BasePlayer{
   private CardBase GameDeck[];//Edit側のデッキリストをベースにMainGame用に再編しなおしたものを代入する。
   private int Life;//元々のライフ値を設定する
   private int currentLife;//現在のライフ値。初期値はLife。計算用に用いる。
+  private ReDeckConst rDC;//デッキの構成を行うMethodの集まり
 
   public int getLife(){//現在のライフを返す
     return currentLife;
@@ -27,8 +28,8 @@ class myPlayer extends BasePlayer{
     GameDeck = new CardBase[20];//デッキ配列の宣言　とりあえず、枚数は20枚。
     // ここにEdit側のデッキリスト変数の宣言と、デッキリストの内容の取得を行う。
     for (int i=0; i<20; i++) {//デッキの再編
-      GameDeck[i] = GameDeck.reConstDeck(i, /*ここにEdit側のデッキリストを引数として渡す。*/);
-      //再編用の関数を用いる。これ自体はCard_Model側で行う。
+      GameDeck[i] = rDC.reConstDeck(i);
+      //再編用の関数を用いる。これ自体はDeck_Constractor側で行う。
     }
   }
 }
@@ -39,6 +40,6 @@ class comPlayer extends BasePlayer{
     Life=10;
     currentLife=Life;
     GameDeck=new CardBase[20];
-    GameDeck.makeComDeck(ComGamedeck);//コンピューター用のデッキ編成Method。これもCard_model側で行う。
+    rDC.makeComDeck(ComGamedeck);//コンピューター用のデッキ編成Method。これもDeck_Constractor側で行う。
   }
 }
