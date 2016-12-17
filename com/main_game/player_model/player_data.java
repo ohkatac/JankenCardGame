@@ -4,8 +4,7 @@ import java.util.*;
 import com.main_game.card_model.*;
 
 class BasePlayer{
-  private CardBase MyGamedeck[];//Edit側のデッキリストをベースにMainGame用に再編しなおしたものを代入する。プレイヤー用。
-  private CardBase ComGamedeck[];//こちらはCOM用のデッキ。GameDeck_model側で自動で構成する。
+  private CardBase GameDeck[];//Edit側のデッキリストをベースにMainGame用に再編しなおしたものを代入する。
   private int Life;//元々のライフ値を設定する
   private int currentLife;//現在のライフ値。初期値はLife。計算用に用いる。
 
@@ -25,9 +24,10 @@ class myPlayer extends BasePlayer{
   public myPlayer(){
     Life=10;//適当に値を設定、確定したら変更します。
     currentLife=Life;
-    MyGamedeck = new CardBase[20];//デッキ配列の宣言　とりあえず、枚数は20枚。
+    GameDeck = new CardBase[20];//デッキ配列の宣言　とりあえず、枚数は20枚。
+    // ここにEdit側のデッキリスト変数の宣言と、デッキリストの内容の取得を行う。
     for (int i=0; i<20; i++) {//デッキの再編
-      MyGamedeck[i] = GameDeck.reConstDeck(i, /*ここにEdit側のデッキリストを引数として渡す。*/);
+      GameDeck[i] = GameDeck.reConstDeck(i, /*ここにEdit側のデッキリストを引数として渡す。*/);
       //再編用の関数を用いる。これ自体はGameDeck_model側で行う。
     }
   }
@@ -38,7 +38,7 @@ class comPlayer extends BasePlayer{
   public comPlayer(){
     Life=10;
     currentLife=Life;
-    ComGamedeck=new CardBase[20];
+    GameDeck=new CardBase[20];
     GameDeck.makeComDeck(ComGamedeck);//コンピューター用のデッキ編成Method。これもGameDeck_model側で行う。
   }
 }
