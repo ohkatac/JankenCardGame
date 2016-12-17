@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import com.deck_edit.*;
-import com.main_game.*;
+import com.main_game.MainGamePanel;
 import com.result.*;
 import com.title.*;
 

@@ -5,28 +5,25 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import com.FrameController;
+import com.main_game.main_game_model.MainGameModel;
+import com.main_game.main_game_controller.MainGameController;
 
-// MainGame's Model & View & Controller
-final public class MainGamePanel extends JPanel implements ActionListener {
+// MainGame's View
+final public class MainGamePanel extends JPanel {
   FrameController frameCont;
-  JButton result;
+
+  MainGameModel gameModel;
+  MainGameController gameController;
 
   public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
     setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
 
-    result = new JButton("Resultへ進む");
-    result.addActionListener(this);
-    this.add(result);
-
+    gameModel = new MainGameModel();
+    gameController = new MainGameController(gameModel, this);
   }
 
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == result) {
-      // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
-      frameCont.showResult(this);
-    }
+  public void GotoResult(){
+    frameCont.showResult(this);
   }
-
 }
