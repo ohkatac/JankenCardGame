@@ -28,7 +28,7 @@ class myPlayer extends BasePlayer{
     // ここにEdit側のデッキリスト変数の宣言と、デッキリストの内容の取得を行う。
     for (int i=0; i<20; i++) {//デッキの再編
       GameDeck[i] = GameDeck.reConstDeck(i, /*ここにEdit側のデッキリストを引数として渡す。*/);
-      //再編用の関数を用いる。これ自体はGameDeck_model側で行う。
+      //再編用の関数を用いる。これ自体はCard_Model側で行う。
     }
   }
 }
@@ -39,6 +39,6 @@ class comPlayer extends BasePlayer{
     Life=10;
     currentLife=Life;
     GameDeck=new CardBase[20];
-    GameDeck.makeComDeck(ComGamedeck);//コンピューター用のデッキ編成Method。これもGameDeck_model側で行う。
+    GameDeck.makeComDeck(ComGamedeck);//コンピューター用のデッキ編成Method。これもCard_model側で行う。
   }
 }
