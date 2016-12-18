@@ -2,7 +2,7 @@ package com.main_game.card_model;
 /* カードそのもののModel デッキ編集用とは別のモデルとする*/
 import java.util.*;
 
-class CardBase {//全カードにおける継承元のクラス
+class CardBase_G {//全カードにおける継承元のクラス
   private String name;//カードの名前
   private int ID;//カードの識別用
   private Boolean flag;//カードを使用済みかどうかの確認
@@ -20,7 +20,7 @@ class CardBase {//全カードにおける継承元のクラス
 }
 /*ここからは各種カードの設定、IDはグーを1,パーを2,チーを3,グーチーを4,チーパーを5,
 パーグーを6,グーチーパーを7とする。変更するかも*/
-class Gu extends CardBase{
+class Gu extends CardBase_G{
 
   public Gu(){
     name=new String("グー");
@@ -29,7 +29,7 @@ class Gu extends CardBase{
   }
 }
 
-class Pa extends CardBase{
+class Pa extends CardBase_G{
 
   public Pa(){
     name=new String("パー");
@@ -38,7 +38,7 @@ class Pa extends CardBase{
   }
 }
 
-class Chi extends CardBase{
+class Chi extends CardBase_G{
 
   public Chi(){
     name=new String("チー");
@@ -47,7 +47,7 @@ class Chi extends CardBase{
   }
 }
 
-class G_C extends CardBase{
+class G_C extends CardBase_G{
 
   public G_C(){
     name=new String("グーチー");
@@ -56,7 +56,7 @@ class G_C extends CardBase{
   }
 }
 
-class C_P extends CardBase{
+class C_P extends CardBase_G{
 
   public C_P(){
     name=new String("チーパー");
@@ -65,7 +65,7 @@ class C_P extends CardBase{
   }
 }
 
-class P_G extends CardBase{
+class P_G extends CardBase_G{
 
   public P_G(){
     name=new String("パーグー");
@@ -74,7 +74,7 @@ class P_G extends CardBase{
   }
 }
 
-class ALL extends CardBase{
+class ALL extends CardBase_G{
 
   public ALL(){
     name=new String("グーチーパー");

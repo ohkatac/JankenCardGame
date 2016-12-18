@@ -5,11 +5,11 @@ import com.main_game.card_model.*;
 
 class ReDeckConst{
 
-  public CardBase reConstDeck(int i){
+  public CardBase_G reConstDeck(int i){
     //ここに内容を記述
   }
 
-  public void makeComDeck(CardBase ComGamedeck[]){//Com用のデッキリストを作成する
+  public void makeComDeck(CardBase_G ComGamedeck[]){//Com用のデッキリストを作成する
     ComGamedeck[0]=new Gu();
     ComGamedeck[1]=new Gu();
     ComGamedeck[2]=new Chi();
