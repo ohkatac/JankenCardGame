@@ -13,9 +13,9 @@ class CardBase_E {
   public int getID(){
     return ID;
   }
-  public int getCost(){
+/*  public int getCost(){
     return cost;
-  }
+  }上限値のために必要な値を返すMethod*/
 }
 
 class Gu extends CardBase_E{

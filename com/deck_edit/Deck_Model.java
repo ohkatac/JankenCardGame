@@ -26,8 +26,8 @@ class DeckEditorModel{
 
   public ArrayList<CardBase_E> CheckDeck(){//デッキが存在するかどうかの確認
     if(MyDeck.size()==0;)
-      return null;
-    else(MyDeck.size()!=0)
-      return MyDeck;
+      return null;//存在しない
+    else if(MyDeck.size()!=0)
+      return MyDeck;//デッキそのものを値として返す。
   }
 }
