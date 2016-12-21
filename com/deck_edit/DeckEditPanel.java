@@ -99,7 +99,7 @@ class DeleteCardInDeck extends Observable implements ActionListener{//削除操�
   }
 
   public ActionPerformed(ActionEvent e){
-    DeckEditPanel.EditDeck.deleteCard(Integer.parseInt(delNumber.getValue()));
+    DeckEditPanel.EditDeck.deleteCard(Integer.parseInt(delNumber.getValue()-1));
     setChanged();
     notifyObserevers();
   }
@@ -110,28 +110,32 @@ class ShowCardList extends Jpanel implements Observer{
   private AddToDeck_MVC ATD;
   private JLabel[] List;//デッキ内部表示用のJLabel配列
   private JLabel NoneDeck;//デッキが存在しない時の表示用ラベル
+  private String list;
 
   public ShowCardList(DeleteCardInDeck dcd, AddToDeck_MVC atd){
     List=new JLabel[21];//20番目はメッセージ用
     for(int j=0; j<21; j++){
-      List[j]=new JLabel;
+      List[j]=new JLabel();
     }
+    list=new String();
     this.setLayout(new GirdLayout(21,1));
     DCD=dcd; ATD=atd;
     DCD.addObserever(this); ATD.addObserever(this);//それぞれの操作時にupdateを実行する。
     for(int j=0; i<20; i++){
-      this.add(List[i]);
+      this.add(List[j]);
     }
     if(DeckEditPanel.EditDeck.CheckDeck()!=null){//初期化時にデッキが存在する場合さらに追加のコンストラクタを用いる。
-      ShowCardList(DeckEditPanel.EditDeck.CheckDeck());
+      ShowCardList(DeckEditPanel.EditDeck.CheckDeck(),DCD,ATD);
     }else if(DeckEditPanel.EditDeck.CheckDeck().size()==null){
       //デッキが存在しない場合メッセージを表示
       List[0].setText("カードが存在しません");
     }
   }
-  public ShowCardList(EditDeck currentDeck){
+  public ShowCardList(EditDeck currentDeck, DeleteCardInDeck deletecardindeck, AddToDeck_MVC addtodeck){
     for(int j=0; j<currentDeck.CheckDeck().size(); j++){
-      List[j].setText(i+". "+currentDeck.getCard(i).getName())
+      list=Integer.toString(j+1);
+      list=list+". "+currentDeck.getCard(j).getName();
+      List[j].setText(list);
       if(j==19){
         List[20].setText("追加できません")
       }
@@ -141,16 +145,22 @@ class ShowCardList extends Jpanel implements Observer{
   public update(Observable o, Object arg){
     int i;
 
-    if(o.getclass()==AddToDeck_MVC){
-      i=DeckEditPanel.EditDeck.CheckDeck().size();
-      List[i-1].setText(DeckEditPanel.EditDeck.getCard(i-1).getName())
+    if(o.getclass()==AddToDeck_MVC){//updateメソッドの引数として元のクラスを渡しているのか不明なので後で変更の可能性大
+      i=DeckEditPanel.EditDeck.MyDeck.size();
+      list=Integer.toString(i);
+      list=list+". "+DeckEditPanel.EditDeck.getCard(i-1).getName();
+      List[i-1].setText(list);
     }else if(o.getclass()==DeleteCardInDeck){
       List[20].setText("");//メッセージの表記を消す。
-      i=DeckEditPanel.EditDeck.CheckDeck().size();
+      i=DeckEditPanel.EditDeck.MyDeck.size();
       if(i==0){//0枚の時はないことを知らせる。
         List[i].setText("カードが存在しません");
       }
-      List[i].setText("");
+      for(int n=Integer.parseInt(delNumber.getValue())-1; n<i; n++){//削除項目以降の再表記
+        list=Integr.toString(n);
+        list=n+". "+DeckEditPanel.EditDeck.getCard(n).getName();
+        List[n].setText(list);
+      }
     }
   }
 }
@@ -174,7 +184,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
     deletecardindeck=new DeleteCardInDeck();
     showcardlist=new ShowCardList(addtodeck, deletecardindeck);
     end = new JButton("タイトルへ進む");
-    setLayout(new BorderLayout());//BorderLayoutに設定しなおした。(沢畑)
+    this.setLayout(new BorderLayout());//BorderLayoutに設定しなおした。(沢畑)
     this.add(end, BorderLayout.NORTH);
     this.add(addtodeck.AddCard, BorderLayout.WEST);
     this.add(deletecardindeck.DeleteCard, BorderLayout.SOUTH);

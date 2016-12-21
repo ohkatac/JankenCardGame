@@ -18,7 +18,7 @@ class DeckEditorModel{
     MyDeck.add(Card);
   }
   public CardBase_E getCard(int number){//デッキからカードの情報を取得するためのメソッド
-    MyDeck.get(number);
+    return MyDeck.get(number);
   }
   public void deleteCard(int number){//デッキ内部のカードの削除用のメソッド
     MyDeck.remove(number);
