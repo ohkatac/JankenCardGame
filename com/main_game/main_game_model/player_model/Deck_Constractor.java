@@ -4,7 +4,6 @@ import java.util.*;
 import com.main_game.card_model.*;
 
 class ReDeckConst{
-
   public CardBase reConstDeck(int i){
     //ここに内容を記述
   }

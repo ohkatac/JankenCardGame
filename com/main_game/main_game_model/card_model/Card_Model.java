@@ -39,7 +39,6 @@ class Pa extends CardBase{
 }
 
 class Chi extends CardBase{
-
   public Chi(){
     name=new String("チー");
     ID=3;
