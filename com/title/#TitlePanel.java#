@@ -18,6 +18,9 @@ final public class TitlePanel extends JPanel implements ActionListener {
     start = new JButton("ゲームスタート");
     deckEdit = new JButton("デッキ編集");
 
+    start.setBounds(100,90,100,20);
+    deckEdit.setBounds(100,115,100,20);
+
     start.addActionListener(this);
     deckEdit.addActionListener(this);
 
@@ -38,5 +41,3 @@ final public class TitlePanel extends JPanel implements ActionListener {
     }
   }
 }
-
-aaaa
