@@ -14,9 +14,9 @@ import com.title.*;
 public final class FrameController extends JFrame{
 
     private TitlePanel titlePanel; // タイトル画面のJPanel
-    private DeckEditPanel editPanel; // タイトル画面のJPanel
-    private MainGamePanel gamePanel; // タイトル画面のJPanel
-    private ResultPanel resultPanel; // タイトル画面のJPanel
+    private DeckEditPanel editPanel; // 編集画面のJPanel
+    private MainGamePanel gamePanel; // メインゲーム画面のJPanel
+    private ResultPanel resultPanel; // リザルト画面のJPanel
 
     public FrameController() {
 
