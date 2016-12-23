@@ -5,3 +5,6 @@
 javac Main.java
 java Main
 で動作させる確認をしましょう。
+
+カレントディレクトリ以下の.classファイルすべてを消去するコマンド  
+$ find ./ -name '*.class' | xargs rm  
