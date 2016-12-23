@@ -14,11 +14,32 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
   public TitlePanel(FrameController frameCont) {
     this.frameCont = frameCont;
-    setLayout(new BorderLayout());
+    setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
     
-    start = new JButton("ゲームスタート");
-    deckEdit = new JButton("デッキ編集");
+    JLabel label = new JLabel("じゃんけんゲーム", JLabel.CENTER);
+    label.setSize(300,100);
+    label.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC,12));
+  
+/*
+  JPanel p = new JPanel();
+  p.setLayout(null);
+*/
+  start = new JButton("ゲームスタート");
+  start.setBounds(100,90,100,20);
+  start.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC,8));
 
+  deckEdit = new JButton("デッキ編集");
+  deckEdit.setBounds(100,115,100,20);
+  deckEdit.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC,8));
+  /*
+  p.add(start);
+  p.add(deckEdit);
+  */
+  add(label);
+  /*
+  add(p,BorderLayout.CENTER);
+  this.setVisible(true);
+  */
     start.addActionListener(this);
     deckEdit.addActionListener(this);
 
@@ -103,3 +124,4 @@ final public class TitlePanel extends JPanel implements ActionListener {
     }
   }
 }
+
