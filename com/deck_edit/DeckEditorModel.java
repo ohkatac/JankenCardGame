@@ -7,7 +7,7 @@ class DeckEditorModel {
         private ArrayList<CardBase_E> MyDeck;
 
         public DeckEditorModel(){//デッキが存在しない場合や、デッキの内部が空の場合のコンストラクタ
-                MyDeck=new ArrayList<CardBase_E>();
+                MyDeck=new ArrayList<CardBase_E>(0);
         }
 
         public DeckEditorModel(ArrayList<CardBase_E> currentDeck){//デッキが存在する場合のコンストラクタ
