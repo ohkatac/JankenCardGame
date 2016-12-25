@@ -10,7 +10,6 @@ import com.deck_edit.*;
 import com.main_game.MainGamePanel;
 import com.result.*;
 import com.title.*;
-import com.save_controller.RW_csv;
 
 // GameMode Controller : TitlePanel, DeckEditPanel, MainGamePanel, ResultPanel
 // このController兼JFrameをMainで生成して、その上に画面を担うJPanelを載せていく
@@ -21,7 +20,6 @@ public final class FrameController extends JFrame{
     private MainGamePanel gamePanel; // メインゲーム画面のJPanel
     private ResultPanel resultPanel; // リザルト画面のJPanel
 
-    private RW_csv mainDeckModel;
 
     public FrameController() {
 
@@ -30,8 +28,6 @@ public final class FrameController extends JFrame{
         editPanel = new DeckEditPanel(this);
         gamePanel = new MainGamePanel(this);
         resultPanel = new ResultPanel(this);
-
-        mainDeckModel = new RW_csv(new File("assets/csv/main_deck.csv"));
 
         // 初めは必ずタイトル画面を開くのでコンストラクタで
         this.add(titlePanel);

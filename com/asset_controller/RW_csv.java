@@ -1,4 +1,4 @@
-package com.save_controller;
+package com.asset_controller;
 
 import java.util.ArrayList;
 // import for Read and Write File
@@ -15,15 +15,25 @@ import java.io.PrintWriter;
 
 import java.io.IOException;
 
-// CSVファイルの入出力をするためのクラスです。 このクラスでは中身を書くとき中を初期化して一から書く仕様に
-// なっているので中のデータを保持したいときはいったんReadで別の変数に避難させてからwrite系メソッドを使うようにしてください。
+// CSVファイルの入出力をするためのクラスです。 このクラスでは.csvの中身を書くとき中を初期化して一から書く仕様に
+// なっているので中のデータを保持したいときはいったんReadで別のint[]変数に避難させてからwrite系メソッドを使うようにしてください。
 
-/* 使い方
-CSV_ReadWrite mainDeck_csv = new RW_csv(new File("ファイルのパスをここにいれる(文字列で入れる)") );
-mainDeck_csv.WriteCSV(data); // dataは一次元配列、これで指定ファイルにdataがcsv形式で代入される
+/* 使い方(パスの指定方法はMain.javaがあるディレクトリからの相対パスです。)
+RW_csv mainDeck_csv = new RW_csv(new File("ファイルのパスをここにいれる(文字列で入れる)") );
+mainDeck_csv.WriteCSV(data); // dataはint[]一次元配列、これで指定ファイルにdataがcsv形式で代入される
 mainDeck_csv.ReadCSV(); // これで指定されたcsvファイルの中身を取り出せる。 返り値はint[]
 またReadCSV2(), WriteCSV2は拡張性を高めるために将来のことを考えて実装した。
 いらなくなれば後で消します。
+
+MainGameやDeckEditパネルで.csvファイルを取り出したいなぁと思ったら
+RW_csv mainDeck = new RW_csv(new File("assets/css/main_deck.csv")); 
+// この時ファイルが存在していなかったら新しく空の.csvが生成されます。
+int[] data = mainDeck.ReadCSV();
+・・・・・・dataの中身をいろいろ変えたりする。
+mainDeck.WriteCSV(data);
+
+ReadCSV2(), WriteCSV2()についてですが複数のデッキを保存するときがいつか来るかもしれないかなと思い作りました。
+例えばデッキのお気に入り機能とか実装するときに・・・
 */
 public class RW_csv {
   File file = null;
