@@ -1,4 +1,4 @@
-package com.asset_controller;
+package com.assets;
 
 import java.util.ArrayList;
 // import for Read and Write File
