@@ -7,7 +7,9 @@ import javax.swing.*;
 import com.main_game.main_game_model.MainGameModel;
 import com.main_game.MainGamePanel;
 
-//Controller
+//Controller, ゲームのメインの流れはここに書いていく 主な流れはMainGameModel 
+//Classであるmodelを受け取り、その中に入っているモデルたちを取り出してPanelに張り付けたりなどして扱っていく
+
 final public class MainGameController implements ActionListener {
   MainGameModel model;
   MainGamePanel panel;
@@ -15,8 +17,8 @@ final public class MainGameController implements ActionListener {
 
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
-    this.model = model;
-    this.panel = panel;
+    this.model = model; // モデルを設定
+    this.panel = panel; // View JPanelを設定
 
     resultBtn = model.getResultBtn();
 

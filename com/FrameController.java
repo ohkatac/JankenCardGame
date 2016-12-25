@@ -10,7 +10,7 @@ import com.deck_edit.*;
 import com.main_game.MainGamePanel;
 import com.result.*;
 import com.title.*;
-import com.assets.RW_csv;
+import com.save_controller.RW_csv;
 
 // GameMode Controller : TitlePanel, DeckEditPanel, MainGamePanel, ResultPanel
 // このController兼JFrameをMainで生成して、その上に画面を担うJPanelを載せていく
@@ -39,7 +39,7 @@ public final class FrameController extends JFrame{
         titlePanel.setVisible(true);
 
         // 画面サイズを決定、 後で変更も考慮
-        this.setSize(300,300);
+        this.setSize(800,800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -87,5 +87,13 @@ public final class FrameController extends JFrame{
       this.add(resultPanel);
       // JPanelを見える状態にする
       this.resultPanel.setVisible(true);
+    }
+
+    public int[] MainDeckRead() {
+      return mainDeckModel.ReadCSV();
+    }
+
+    public void MainDeckWrite(int[] data) {
+      mainDeckModel.WriteCSV(data);
     }
 }
