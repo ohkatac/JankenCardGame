@@ -58,7 +58,7 @@ public class ImageButton extends JButton implements MouseListener {
   }
 
 // ボタンの機能を有効化するメソッド
-  public void Enebled() {
+  public void Enabled() {
     this.setEnabled(true); // JButtonとしての機能を有効化する。
     image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
     repaint(); // JPanel(JButton)の再描画
@@ -78,7 +78,9 @@ public class ImageButton extends JButton implements MouseListener {
     repaint(); // JPanel(JButton)の再描画
   }
   public void mouseReleased(MouseEvent e) {
-    if(image.toString() != path) image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+    if(image.toString() != path) {
+      image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+    }
     repaint(); // JPanel(JButton)の再描画
   }
   public void mouseEntered(MouseEvent e) {

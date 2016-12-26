@@ -15,14 +15,20 @@ final public class MainGamePanel extends JPanel {
   MainGameModel gameModel;
   MainGameController gameController;
 
+  JButton resultBtn = null;
+
   public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
     setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
 
     gameModel = new MainGameModel();
     gameController = new MainGameController(gameModel, this);
+
+    resultBtn = gameModel.getResultBtn();
+    this.add(resultBtn);
   }
 
+// JPanelをリザルト画面に切り替えるメソッド
   public void GotoResult(){
     frameCont.showResult(this);
   }

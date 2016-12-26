@@ -25,9 +25,6 @@ public final class FrameController extends JFrame{
 
         // それぞれの画面のパネルを生成
         titlePanel = new TitlePanel(this);
-        editPanel = new DeckEditPanel(this);
-        gamePanel = new MainGamePanel(this);
-        resultPanel = new ResultPanel(this);
 
         // 初めは必ずタイトル画面を開くのでコンストラクタで
         this.add(titlePanel);
@@ -35,7 +32,7 @@ public final class FrameController extends JFrame{
         titlePanel.setVisible(true);
 
         // 画面サイズを決定、 後で変更も考慮
-        this.setSize(800,800);
+        this.setSize(800,600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -85,11 +82,4 @@ public final class FrameController extends JFrame{
       this.resultPanel.setVisible(true);
     }
 
-    public int[] MainDeckRead() {
-      return mainDeckModel.ReadCSV();
-    }
-
-    public void MainDeckWrite(int[] data) {
-      mainDeckModel.WriteCSV(data);
-    }
 }

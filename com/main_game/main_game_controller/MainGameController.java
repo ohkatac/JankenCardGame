@@ -18,11 +18,10 @@ final public class MainGameController implements ActionListener {
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
     this.model = model; // モデルを設定
-    this.panel = panel; // View JPanelを設定
+    this.panel = panel;
 
     resultBtn = model.getResultBtn();
 
-    panel.add(resultBtn);
     resultBtn.addActionListener(this);
   }
 
