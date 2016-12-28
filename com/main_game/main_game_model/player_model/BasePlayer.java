@@ -1,19 +1,67 @@
-package com.main_game.player_model;
+package com.main_game.main_game_model.player_model;
 
-import java.util.*;
-import com.main_game.card_model.*;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+
+import com.main_game.main_game_model.card_model.CardModel;
 
 public class BasePlayer{
-  private CardBase_G GameDeck[];//Edit側のデッキリストをベースにMainGame用に再編しなおしたものを代入する。
-  private final int Life = 50;//元々のライフ値を設定する
-  private int currentLife;//現在のライフ値。初期値はLife。計算用に用いる。
+  protected ArrayList<CardModel> deck; //Edit側のデッキリストをベースにMainGame用に再編しなおしたものを代入する
+  protected ArrayList<CardModel> hands; // 手札を格納する変数
+  protected int life;//元々のライフ値を設定する
+  protected int currentLife;//現在のライフ値。初期値はLife。計算用に用いる。
+  protected JLabel imgLabel; // プレイヤーの画像を表示するクラス
+  protected Boolean alive = true;
 
-  public int getLife(){//現在のライフを返す
-    return currentLife;
+  public BasePlayer(int life) {
+    this.life = life;
+    currentLife = life;
+    deck = new ArrayList<CardModel>();
+    hands = new ArrayList<CardModel>();
   }
 
-  public void MinusLife(int damage) {
-    currentLife -= damage;
+  public JLabel getIconLabel(){ return imgLabel; } // IconのJLabelを返す
+  public int getLife(){ return currentLife; } //現在のライフを返す 
+  public void Damage(int damage) { currentLife -= damage; }
+
+  // 現在のデッキのインスタンスを返すメソッド
+  public ArrayList<CardModel> getDeck() { return deck;}
+
+  // 手札の配列を返すメソッド
+  public ArrayList<CardModel> getHands() { return hands; }
+
+  // 手札から一枚取り出す。 indexは0~4
+  public CardModel PopCard(int index) {
+    CardModel c = new CardModel(hands.get(index).getID());
+    for(CardModel m : hands) {
+      m.EnableButton();
+    }
+    hands.get(index).DisableButton();
+    return c;
   }
-  /*さらにここにデッキの残数を返すMethodを追加する。*/
+
+  // デッキからカードを一枚ドローし、手札からカードを一枚捨てるメソッド
+  public void DrawRemoveCard(int removeIndex) {
+    hands.remove(removeIndex);
+    
+    if(deck.size() > 0){
+      hands.add( new CardModel(deck.get(0).getID()) );
+      deck.remove(0);
+    }
+  }
+
+  // デッキからカードを一枚ドローして手札に加える
+  public void DrawCard() {
+    if(deck.size() > 0){
+      hands.add( new CardModel(deck.get(0).getID()) );
+      deck.remove(0);
+    }
+  }
+
+  // プレイヤーが生きているかどうかを判定するメソッド
+  public Boolean isAlive() {
+    if(alive == false || deck.size() == 0) return false; 
+    else return true;
+  }
 }

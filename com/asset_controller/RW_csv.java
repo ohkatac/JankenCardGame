@@ -82,6 +82,7 @@ public class RW_csv {
       BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(this.file), "UTF-8"));
 
       String line = br.readLine(); // CSVファイルの先頭の一行を読み込む
+      if (line == null) return null;
       String[] data = line.split(",", 0); // csvファイルの行を','で分割して代入する
 
       intData = new int[data.length]; // 入ったデータ分の個数int型配列を確保

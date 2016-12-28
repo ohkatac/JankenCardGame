@@ -1,12 +1,24 @@
-public class myPlayer extends BasePlayer{
+package com.main_game.main_game_model.player_model;
 
-public myPlayer(){
-  Life=10;//適当に値を設定、確定したら変更します。
-  currentLife=Life;
-  GameDeck = new CardBase_G[20];//デッキ配列の宣言　とりあえず、枚数は20枚。
-  // ここにEdit側のデッキリスト変数の宣言と、デッキリストの内容の取得を行う。
-  for (int i=0; i<20; i++) {//デッキの再編
-    GameDeck[i] = rDC.reConstDeck(i);
-    //再編用の関数を用いる。これ自体はDeck_Constractor側で行う。
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+
+// to use " new File() "
+import java.io.File;
+
+import com.main_game.main_game_model.card_model.CardModel;
+
+public class MyPlayer extends BasePlayer {
+  public MyPlayer(int[] data) {
+    super(20);
+    for(int i = 0; i < data.length; i++) {
+      super.deck.add(new CardModel(data[i]));
+    }
+    for(int i = 0; i < 5; i++) {
+      this.DrawCard();
+    }
+    imgLabel = new JLabel( new ImageIcon("assets/img/player/my.png") );
   }
 }
