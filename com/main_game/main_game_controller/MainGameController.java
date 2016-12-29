@@ -143,13 +143,13 @@ final public class MainGameController implements ActionListener {
       myField.setImvisible();
       player.RemoveHandsCard(plbattleId);
       temp = player.DrawCard();
-      if(temp != null) m.getImageBtn().addActionListener(this);
+      if(temp != null) temp.getImageBtn().addActionListener(this);
       myField.ReshowCard();
 
       rivalField.setImvisible();
       rival.RemoveHandsCard(ribattleId);
       temp = rival.DrawCard();
-      if(temp != null) m.getImageBtn().addActionListener(this);
+      if(temp != null) temp.getImageBtn().addActionListener(this);
       rivalField.ReshowCard();
 
       PopRivalCard();
