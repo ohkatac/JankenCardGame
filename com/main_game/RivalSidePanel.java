@@ -50,4 +50,8 @@ public class RivalSidePanel extends JPanel {
     captionValue.setVisible(true);
   }
 
+  public void DeleteCaption() {
+    captionValue.setVisible(false);
+  }
+
 }

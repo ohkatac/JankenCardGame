@@ -12,6 +12,7 @@ public class MyFieldPanel extends JPanel {
   MainGameModel model;
   BasePlayer myPlayer;
   ArrayList<CardModel> myHands = null;
+  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/deck.png") );
 
   public MyFieldPanel(MainGameModel model, JPanel mainPanel) {
     super();
@@ -24,11 +25,22 @@ public class MyFieldPanel extends JPanel {
     myPlayer = model.getPlayer();
     myHands = myPlayer.getHands();
 
-    for(int i = 0; i < myHands.size(); i++) {
-      // 将来的にTimerをセットしてアニメーションを入れる
-      this.add(myHands.get(i).getImageBtn());
+    ReshowCard();
+  }
+  public void setImvisible() {
+    for(CardModel cm : myHands) {
+      cm.getImageBtn().setVisible(false);
     }
-    this.add( new JLabel( new ImageIcon("assets/img/card/Deck.png") ) );
+    deckImg.setVisible(false);
   }
 
+  public void ReshowCard(){
+    for(CardModel cm : myHands) {
+      // 将来的にTimerをセットしてアニメーションを入れる
+      this.add(cm.getImageBtn());
+      cm.getImageBtn().setVisible(true);
+    }
+    deckImg.setVisible(true);
+    this.add(deckImg);
+  }
 }

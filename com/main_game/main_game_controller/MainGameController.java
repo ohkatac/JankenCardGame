@@ -36,10 +36,11 @@ final public class MainGameController implements ActionListener {
   private BasePlayer rival;
 
   private CardModel plbattleCard;
+  private int plbattleId;
   private CardModel ribattleCard;
+  private int ribattleId;
 
-  private ArrayList<CardModel> handsModel;
-  private ArrayList<ImageButton> handsBtns;
+  private ArrayList<CardModel> handsModels;
 
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
@@ -57,17 +58,18 @@ final public class MainGameController implements ActionListener {
     resultBtn = model.getResultBtn(); // 結果ボタンをモデルから取得
     decideBtn = model.getDecideBtn(); //決定ボタンをモデルから取得
     nextBtn = model.getNextBtn();
+    nextBtn.setEnabled(false);
     decideBtn.setEnabled(false);
     decideEnable = false; // 決定ボタンをはじめは無効化する。
 
     player = model.getPlayer(); // プレイヤーモデルをMainGameModelから取得
     rival = model.getRival(); // ライバルモデルをMainGameModelから取得
-    handsModel = player.getHands(); // プレイヤーモデルから手札のCardModelリスト構造を受け取る
+    handsModels = player.getHands(); // プレイヤーモデルから手札のCardModelリスト構造を受け取る
 
     // 手札のボタンのモデルを受け取りActionListenerに追加
-    for(int i = 0; i < handsModel.size(); i++) {
-      handsModel.get(i).getImageBtn().setActionCommand("CardBtn"+i);
-      handsModel.get(i).getImageBtn().addActionListener(this);
+    for(int i = 0; i < handsModels.size(); i++) {
+      handsModels.get(i).getImageBtn().setActionCommand("CardBtn"+i);
+      handsModels.get(i).getImageBtn().addActionListener(this);
     }
 
     // 各種ボタンをActionListenerに入れる
@@ -80,10 +82,83 @@ final public class MainGameController implements ActionListener {
 
   }
 
-  public void PopRivalCard() {
+  private void PopRivalCard() {
     Random rnd = new Random();
-    ribattleCard = rival.PopCard(rnd.nextInt(5));
+    int randomId = rnd.nextInt(rival.getHands().size());
+    ribattleCard = rival.PopCard(randomId);
     battleField.setRivalCard(ribattleCard);
+    ribattleId = randomId;
+  }
+
+  private void PopMyCard(int index) {
+    decideEnable = true;
+    decideBtn.setEnabled(true);
+    plbattleCard = player.PopCard(index);
+    battleField.setMyCard(plbattleCard);
+    plbattleId = index;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == resultBtn) {
+      // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
+      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
+      panel.GotoResult();
+    }
+    else if (e.getSource() == decideBtn) {
+      // どのカードを出すかを決定するボタン
+      decideEnable = false;
+      decideBtn.setEnabled(false);
+      for( CardModel m : handsModels ) {
+        m.DisableButton();
+      }
+      int judge = isWinPlayer(plbattleCard, ribattleCard);
+      battleField.openRivalCard();
+      switch(judge) {
+        case 1:
+          rival.Damage(plbattleCard.getCost());
+          break;
+        case -1:
+          player.Damage(ribattleCard.getCost());
+          break;
+        default:
+      }
+
+      // バトルの詳細を表示
+      rivalSide.ShowCaption(player, rival, plbattleCard, ribattleCard, judge);
+
+      nextBtn.setEnabled(true);
+    }
+
+    else if (e.getSource() == nextBtn) {
+      for( CardModel m : handsModels ) {
+        m.EnableButton();
+      }
+      decideBtn.setEnabled(true);
+      battleField.RemoveCards();
+      rivalSide.DeleteCaption();
+      nextBtn.setEnabled(false);
+
+      CardModel temp;
+
+      myField.setImvisible();
+      player.RemoveHandsCard(plbattleId);
+      temp = player.DrawCard();
+      if(temp != null) m.getImageBtn().addActionListener(this);
+      myField.ReshowCard();
+
+      rivalField.setImvisible();
+      rival.RemoveHandsCard(ribattleId);
+      temp = rival.DrawCard();
+      if(temp != null) m.getImageBtn().addActionListener(this);
+      rivalField.ReshowCard();
+
+      PopRivalCard();
+    }
+
+    for(int i = 0; i < handsModels.size(); i++) {
+      if(e.getSource() == handsModels.get(i).getImageBtn()) PopMyCard(i);
+    }
+
   }
 
   public int isWinPlayer(CardModel plCard, CardModel riCard) {
@@ -187,71 +262,5 @@ final public class MainGameController implements ActionListener {
         System.out.println("あなたのじゃんけんの値が不正です。");
         return -2;
     }
-  }
-
-  public void actionPerformed(ActionEvent e) {
-    String cmd = e.getActionCommand();
-    if (e.getSource() == resultBtn) {
-      // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
-      panel.GotoResult();
-    }
-    else if (e.getSource() == decideBtn) {
-      // どのカードを出すかを決定するボタン
-      decideEnable = false;
-      decideBtn.setEnabled(false);
-      int judge = isWinPlayer(plbattleCard, ribattleCard);
-      battleField.openRivalCard();
-      switch(judge) {
-        case 1:
-          rival.Damage(plbattleCard.getCost());
-          break;
-        case -1:
-          player.Damage(ribattleCard.getCost());
-          break;
-        default:
-      }
-
-      // バトルの詳細を表示
-      rivalSide.ShowCaption(player, rival, plbattleCard, ribattleCard, judge);
-    }
-    else if (e.getSource() == nextBtn) {
-      // mySide.remove(sideCaption);
-      // battleField.RemoveCards();
-    }
-
-    switch(cmd) {
-      case "CardBtn0":
-        decideEnable = true;
-        decideBtn.setEnabled(true);
-        plbattleCard = player.PopCard(0);
-        battleField.setMyCard(plbattleCard);
-        break;
-      case "CardBtn1":
-        decideEnable = true;
-        decideBtn.setEnabled(true);
-        plbattleCard = player.PopCard(1);
-        battleField.setMyCard(plbattleCard);
-        break;
-      case "CardBtn2":
-        decideEnable = true;
-        decideBtn.setEnabled(true);
-        plbattleCard = player.PopCard(2);
-        battleField.setMyCard(plbattleCard);
-        break;
-      case "CardBtn3":
-        decideEnable = true;
-        decideBtn.setEnabled(true);
-        plbattleCard = player.PopCard(3);
-        battleField.setMyCard(plbattleCard);
-        break;
-      case "CardBtn4":
-        decideEnable = true;
-        decideBtn.setEnabled(true);
-        plbattleCard = player.PopCard(4);
-        battleField.setMyCard(plbattleCard);
-        break;
-    }
-
   }
 }

@@ -41,22 +41,19 @@ public class BasePlayer{
     return c;
   }
 
-  // デッキからカードを一枚ドローし、手札からカードを一枚捨てるメソッド
-  public void DrawRemoveCard(int removeIndex) {
-    hands.remove(removeIndex);
-    
-    if(deck.size() > 0){
-      hands.add( new CardModel(deck.get(0).getID()) );
-      deck.remove(0);
-    }
-  }
+  // 手札からカードを一枚捨てるメソッド
+  public void RemoveHandsCard(int removeIndex) { hands.remove(removeIndex); }
 
   // デッキからカードを一枚ドローして手札に加える
-  public void DrawCard() {
+  public CardModel DrawCard() {
+    CardModel value;
     if(deck.size() > 0){
-      hands.add( new CardModel(deck.get(0).getID()) );
+      value = new CardModel(deck.get(0).getID());
+      hands.add(value);
       deck.remove(0);
+      return value;
     }
+    return null;
   }
 
   // プレイヤーが生きているかどうかを判定するメソッド

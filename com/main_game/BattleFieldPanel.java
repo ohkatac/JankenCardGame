@@ -18,6 +18,8 @@ public class BattleFieldPanel extends JPanel {
   ImageIcon ricardIcon;
   String myIconPath;
   String riIconPath;
+  Boolean isMycard;
+  Boolean isRicard;
 
   public BattleFieldPanel(MainGameModel model) {
     this.model = model;
@@ -32,6 +34,9 @@ public class BattleFieldPanel extends JPanel {
     this.add(riBattleF, BorderLayout.WEST); // 相手のバトルフィールドを左側に配置
     myBattleF.add( new JButton("BattleField") );
 
+    isMycard = false;
+    isRicard = false;
+
     // 
     myCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
     myBattleF.add(myCard);
@@ -41,6 +46,7 @@ public class BattleFieldPanel extends JPanel {
   }
 
   public void setMyCard( CardModel card ){
+    isMycard = true;
     myIconPath = card.getImgPath();
     mycardIcon = new ImageIcon(myIconPath);
 
@@ -51,6 +57,7 @@ public class BattleFieldPanel extends JPanel {
   }
 
   public void setRivalCard( CardModel card ){
+    isRicard = true;
     riIconPath = card.getImgPath();
     ricardIcon = new ImageIcon(riIconPath);
 
@@ -65,10 +72,27 @@ public class BattleFieldPanel extends JPanel {
     riCard = new JLabel( ricardIcon );
     riBattleF.add(riCard);
     riCard.setVisible(true);
-
   }
 
   public void RemoveCards() {
+    isMycard = isRicard = false;
+    
+    myCard.setVisible(false);
+    myCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    myBattleF.add(myCard);
+    myCard.setVisible(true);
 
+    riCard.setVisible(false);
+    riCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    riBattleF.add(riCard);
+    riCard.setVisible(true);
+  }
+
+  public void setIsMycard(Boolean b) { isMycard = b; }
+  public void setIsRicard(Boolean b) { isRicard = b; }
+
+  public Boolean isSetCards() {
+    if(isMycard && isRicard) return true;
+    else return false;
   }
 }
