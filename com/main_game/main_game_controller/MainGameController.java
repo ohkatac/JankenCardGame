@@ -40,8 +40,6 @@ final public class MainGameController implements ActionListener {
   private CardModel ribattleCard;
   private int ribattleId;
 
-  private ArrayList<CardModel> handsModels;
-
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
     this.model = model; // モデルを設定
@@ -64,12 +62,10 @@ final public class MainGameController implements ActionListener {
 
     player = model.getPlayer(); // プレイヤーモデルをMainGameModelから取得
     rival = model.getRival(); // ライバルモデルをMainGameModelから取得
-    handsModels = player.getHands(); // プレイヤーモデルから手札のCardModelリスト構造を受け取る
 
     // 手札のボタンのモデルを受け取りActionListenerに追加
-    for(int i = 0; i < handsModels.size(); i++) {
-      handsModels.get(i).getImageBtn().setActionCommand("CardBtn"+i);
-      handsModels.get(i).getImageBtn().addActionListener(this);
+    for(CardModel cm : player.getHands() ){
+      cm.getImageBtn().addActionListener(this);
     }
 
     // 各種ボタンをActionListenerに入れる
@@ -82,22 +78,6 @@ final public class MainGameController implements ActionListener {
 
   }
 
-  private void PopRivalCard() {
-    Random rnd = new Random();
-    int randomId = rnd.nextInt(rival.getHands().size());
-    ribattleCard = rival.PopCard(randomId);
-    battleField.setRivalCard(ribattleCard);
-    ribattleId = randomId;
-  }
-
-  private void PopMyCard(int index) {
-    decideEnable = true;
-    decideBtn.setEnabled(true);
-    plbattleCard = player.PopCard(index);
-    battleField.setMyCard(plbattleCard);
-    plbattleId = index;
-  }
-
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == resultBtn) {
       // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
@@ -108,9 +88,7 @@ final public class MainGameController implements ActionListener {
       // どのカードを出すかを決定するボタン
       decideEnable = false;
       decideBtn.setEnabled(false);
-      for( CardModel m : handsModels ) {
-        m.DisableButton();
-      }
+      for ( CardModel cm : player.getHands() ) cm.DisableButton();
       int judge = isWinPlayer(plbattleCard, ribattleCard);
       battleField.openRivalCard();
       switch(judge) {
@@ -130,9 +108,7 @@ final public class MainGameController implements ActionListener {
     }
 
     else if (e.getSource() == nextBtn) {
-      for( CardModel m : handsModels ) {
-        m.EnableButton();
-      }
+      for ( CardModel cm : player.getHands() ) cm.EnableButton();
       battleField.RemoveCards();
       rivalSide.DeleteCaption();
       nextBtn.setEnabled(false);
@@ -140,7 +116,7 @@ final public class MainGameController implements ActionListener {
       CardModel temp;
 
       myField.setImvisible();
-      player.RemoveHandsCard(plbattleId);
+      if(player.getHands().get(plbattleId) != null) player.RemoveHandsCard(plbattleId);
       temp = player.DrawCard();
       if(temp != null) temp.getImageBtn().addActionListener(this);
       myField.ReshowCard();
@@ -154,10 +130,26 @@ final public class MainGameController implements ActionListener {
       if(rival.getHands().size() > 0) PopRivalCard();
     }
 
-    for(int i = 0; i < handsModels.size(); i++) {
-      if(e.getSource() == handsModels.get(i).getImageBtn()) PopMyCard(i);
+    for(int i = 0; i < player.getHands().size(); i++) {
+      if(e.getSource() == player.getHands().get(i).getImageBtn()) PopMyCard(i);
     }
 
+  }
+
+  private void PopRivalCard() {
+    Random rnd = new Random();
+    int randomId = rnd.nextInt(rival.getHands().size());
+    ribattleCard = rival.PopCard(randomId);
+    battleField.setRivalCard(ribattleCard);
+    ribattleId = randomId;
+  }
+
+  private void PopMyCard(int index) {
+    decideEnable = true;
+    decideBtn.setEnabled(true);
+    plbattleCard = player.PopCard(index);
+    battleField.setMyCard(plbattleCard);
+    plbattleId = index;
   }
 
   public int isWinPlayer(CardModel plCard, CardModel riCard) {
