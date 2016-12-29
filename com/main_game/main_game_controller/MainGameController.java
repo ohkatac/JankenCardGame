@@ -133,7 +133,6 @@ final public class MainGameController implements ActionListener {
       for( CardModel m : handsModels ) {
         m.EnableButton();
       }
-      decideBtn.setEnabled(true);
       battleField.RemoveCards();
       rivalSide.DeleteCaption();
       nextBtn.setEnabled(false);
@@ -147,12 +146,12 @@ final public class MainGameController implements ActionListener {
       myField.ReshowCard();
 
       rivalField.setImvisible();
-      rival.RemoveHandsCard(ribattleId);
+      if(rival.getHands().get(ribattleId) != null) rival.RemoveHandsCard(ribattleId);
       temp = rival.DrawCard();
       if(temp != null) temp.getImageBtn().addActionListener(this);
       rivalField.ReshowCard();
 
-      PopRivalCard();
+      if(rival.getHands().size() > 0) PopRivalCard();
     }
 
     for(int i = 0; i < handsModels.size(); i++) {
@@ -208,8 +207,8 @@ final public class MainGameController implements ActionListener {
         }
       case 4:
         switch(ri) {
-          case 1: return 1;
-          case 2: return 0;
+          case 1: return 0;
+          case 2: return 1;
           case 3: return 1;
           case 4: return 0;
           case 5: return -1;
@@ -222,8 +221,8 @@ final public class MainGameController implements ActionListener {
       case 5:
         switch(ri) {
           case 1: return 1;
-          case 2: return 1;
-          case 3: return 0;
+          case 2: return 0;
+          case 3: return 1;
           case 4: return 1;
           case 5: return 0;
           case 6: return -1;
@@ -234,9 +233,9 @@ final public class MainGameController implements ActionListener {
         }
       case 6:
         switch(ri) {
-          case 1: return 0;
+          case 1: return 1;
           case 2: return 1;
-          case 3: return 1;
+          case 3: return 0;
           case 4: return -1;
           case 5: return 1;
           case 6: return 0;

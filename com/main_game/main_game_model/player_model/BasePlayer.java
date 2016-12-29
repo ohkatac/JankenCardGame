@@ -42,7 +42,9 @@ public class BasePlayer{
   }
 
   // 手札からカードを一枚捨てるメソッド
-  public void RemoveHandsCard(int removeIndex) { hands.remove(removeIndex); }
+  public void RemoveHandsCard(int removeIndex) { 
+    if(hands.get(removeIndex) != null) hands.remove(removeIndex); 
+  }
 
   // デッキからカードを一枚ドローして手札に加える
   public CardModel DrawCard() {
