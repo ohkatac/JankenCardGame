@@ -1,32 +1,62 @@
 package com.main_game;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 import com.FrameController;
+import com.main_game.main_game_model.MainGameModel;
+import com.main_game.main_game_model.player_model.*;
+import com.main_game.main_game_model.card_model.*;
+import com.main_game.main_game_controller.MainGameController;
 
-// MainGame's Model & View & Controller
-final public class MainGamePanel extends JPanel implements ActionListener {
+import com.asset_controller.ImageButton;
+
+// MainGame's View
+final public class MainGamePanel extends JPanel {
   FrameController frameCont;
-  JButton result;
+
+  MainGameModel gameModel;
+  MainGameController gameController;
+
+// 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
+  MyFieldPanel myField;
+  MySidePanel mySide;
+  BattleFieldPanel battleField;
+  RivalFieldPanel rivalField;
+  RivalSidePanel rivalSide;
 
   public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
-    setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
 
-    result = new JButton("Resultへ進む");
-    result.addActionListener(this);
-    this.add(result);
+    gameModel = new MainGameModel();
+
+    this.setLayout(new BorderLayout(5, 5)); // それぞれのFieldを再現するためにBorderLayoutを使う
+
+    myField = new MyFieldPanel(gameModel, this);
+    mySide = new MySidePanel(gameModel);
+    battleField = new BattleFieldPanel(gameModel);
+    rivalField = new RivalFieldPanel(gameModel, this);
+    rivalSide = new RivalSidePanel(gameModel);
+
+    gameController = new MainGameController(gameModel, this);
+
+    this.add(myField, BorderLayout.SOUTH);
+    this.add(mySide, BorderLayout.EAST);
+    this.add(battleField, BorderLayout.CENTER);
+    this.add(rivalField, BorderLayout.NORTH);
+    this.add(rivalSide, BorderLayout.WEST);
 
   }
 
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == result) {
-      // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
-      frameCont.showResult(this);
-    }
-  }
+  public MyFieldPanel getMyField() { return myField; }
+  public MySidePanel getMySide() { return mySide; }
+  public BattleFieldPanel getBattleField() { return battleField; }
+  public RivalFieldPanel getRivalField() { return rivalField; }
+  public RivalSidePanel getRivalSide() { return rivalSide; }
 
+// JPanelをリザルト画面に切り替えるメソッド
+  public void GotoResult(){
+    frameCont.showResult(this);
+  }
 }
