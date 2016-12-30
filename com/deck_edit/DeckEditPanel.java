@@ -233,7 +233,7 @@ class ShowCardList extends JPanel {
 final public class DeckEditPanel extends JPanel implements ActionListener {
         FrameController frameCont;
         JButton end;
-        DeckEditorModel EditDeck;//デッキ編集を行うのでstatic
+        DeckEditorModel EditDeck;
         AddOperation Addoperation;
         DeleteOperation Deleteoperation;
         ListUpdate_Add Listupdate_a;
