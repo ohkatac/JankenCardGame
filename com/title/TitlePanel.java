@@ -14,15 +14,44 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
   public TitlePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
-    setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
+
+    setLayout(new GridBagLayout());
+    GridBagLayout layout = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+
+    //JPanel p = new JPanel();
+    //p.setLayout(layout);
+
+    JLabel label = new JLabel("じゃんけんゲーム", JLabel.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    //gbc.gridheight = 1;
+    //gbc.weightx = 1.0;
+    //gbc.weighty = 1.0;
+    //layout.setConstraints(label,gbc);
+
     start = new JButton("ゲームスタート");
+    gbc.gridx = 1;
+    gbc.gridy = 0;
+    //gbc.gridheight = 1;
+    //gbc.weightx = 1.0;
+    //gbc.weighty = 1.0;
+    //layout.setConstraints(start, gbc);
+
     deckEdit = new JButton("デッキ編集");
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    //gbc.weightx = 1.0;
+    //gbc.weighty = 1.0;
+    //layout.setConstraints(deckEdit, gbc);
 
     start.addActionListener(this);
     deckEdit.addActionListener(this);
 
+    this.add(label);
     this.add(start);
     this.add(deckEdit);
+
   }
 
   public void actionPerformed(ActionEvent e) {
