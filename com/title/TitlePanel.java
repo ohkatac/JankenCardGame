@@ -13,7 +13,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
   JButton start;
   JButton deckEdit;
 
-  public TitlePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
+  public TitlePanel(FrameController frameCont) {
     this.frameCont = frameCont;
 
     setLayout(new GridBagLayout());
@@ -27,7 +27,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     label.setFont(new Font("MS 明朝", Font.PLAIN, 30));
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.weighty = 1.0d;　////label, buttonともにweightが効かない
+    gbc.weighty = 1.0d;
     layout.setConstraints(label,gbc);
 
     start = new JButton("ゲームスタート");
@@ -55,14 +55,11 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == start){
-      // メインゲーム画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
       frameCont.showMainGame(this);
     }
     else if (e.getSource() == deckEdit) {
-      // デッキ編集画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
       frameCont.showDeckEdit(this);
     }
   }
 }
+

@@ -30,7 +30,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
     result.setFont(new Font("MS 明朝", Font.PLAIN, 30));
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.weighty = 0.9d;
+    gbc.weighty = 0.9d; 
     layout.setConstraints(result, gbc);
 
     life = new JLabel("残りライフ : ", JLabel.CENTER);
