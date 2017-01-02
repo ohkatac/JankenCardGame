@@ -9,6 +9,7 @@ import com.FrameController;
 // Title's Model & View & Controller
 final public class TitlePanel extends JPanel implements ActionListener {
   FrameController frameCont;
+  JLabel label;
   JButton start;
   JButton deckEdit;
 
@@ -19,38 +20,36 @@ final public class TitlePanel extends JPanel implements ActionListener {
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
-    //JPanel p = new JPanel();
-    //p.setLayout(layout);
+    JPanel p = new JPanel();
+    p.setLayout(layout);
 
-    JLabel label = new JLabel("じゃんけんゲーム", JLabel.CENTER);
+    label = new JLabel("じゃんけんゲーム", JLabel.CENTER);
+    label.setFont(new Font("MS 明朝", Font.PLAIN, 30));
     gbc.gridx = 0;
     gbc.gridy = 0;
-    //gbc.gridheight = 1;
-    //gbc.weightx = 1.0;
-    //gbc.weighty = 1.0;
-    //layout.setConstraints(label,gbc);
+    gbc.weighty = 1.0d;　////label, buttonともにweightが効かない
+    layout.setConstraints(label,gbc);
 
     start = new JButton("ゲームスタート");
-    gbc.gridx = 1;
-    gbc.gridy = 0;
-    //gbc.gridheight = 1;
-    //gbc.weightx = 1.0;
-    //gbc.weighty = 1.0;
-    //layout.setConstraints(start, gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.weighty = 0.5d;
+    layout.setConstraints(start, gbc);
 
     deckEdit = new JButton("デッキ編集");
-    gbc.gridx = 1;
-    gbc.gridy = 1;
-    //gbc.weightx = 1.0;
-    //gbc.weighty = 1.0;
-    //layout.setConstraints(deckEdit, gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.weighty = 0.5d;
+    layout.setConstraints(deckEdit, gbc);
 
     start.addActionListener(this);
     deckEdit.addActionListener(this);
 
-    this.add(label);
-    this.add(start);
-    this.add(deckEdit);
+    p.add(label);
+    p.add(start);
+    p.add(deckEdit);
+
+    add(p);
 
   }
 
