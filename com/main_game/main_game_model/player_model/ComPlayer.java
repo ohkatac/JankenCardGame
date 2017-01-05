@@ -16,12 +16,11 @@ public class ComPlayer extends BasePlayer{
   RW_csv deckCsv;
   public ComPlayer(int[] deckData) {
     super(20);
+    // デッキデータの生成
     for(int i = 0; i < deckData.length; i++) {
       deck.add(new CardModel(deckData[i]));
     }
-    for(int i = 0; i < 5; i++) {
-      this.DrawCard();
-    }
+    
     imgLabel = new JLabel( new ImageIcon("assets/img/player/rival.png") );
   }
 }

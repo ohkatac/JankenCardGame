@@ -31,7 +31,7 @@ final public class MainGamePanel extends JPanel {
 
     gameModel = new MainGameModel();
 
-    this.setLayout(new BorderLayout(5, 5)); // それぞれのFieldを再現するためにBorderLayoutを使う
+    this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
 
     myField = new MyFieldPanel(gameModel, this);
     mySide = new MySidePanel(gameModel);

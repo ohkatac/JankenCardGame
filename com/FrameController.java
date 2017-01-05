@@ -32,7 +32,7 @@ public final class FrameController extends JFrame{
         titlePanel.setVisible(true);
 
         // 画面サイズを決定、 後で変更も考慮
-        this.setSize(800,600);
+        this.setSize(800,800);
         // バツボタンを押せばjavaプログラムが終了するようにする。
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

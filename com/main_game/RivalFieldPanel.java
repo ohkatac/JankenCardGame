@@ -25,8 +25,6 @@ public class RivalFieldPanel extends JPanel {
 
     rivalPlayer = model.getRival();
     rivalHands = rivalPlayer.getHands();
-
-    ReshowCard();
   }
 
   public void setImvisible() {
@@ -37,6 +35,7 @@ public class RivalFieldPanel extends JPanel {
   }
 
   public void ReshowCard(){
+    this.removeAll();
     for(CardModel cm : rivalHands) {
       // 将来的にTimerをセットしてアニメーションを入れる
       this.add(cm.getImageBtn());

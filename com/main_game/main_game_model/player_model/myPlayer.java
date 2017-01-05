@@ -16,9 +16,6 @@ public class MyPlayer extends BasePlayer {
     for(int i = 0; i < data.length; i++) {
       super.deck.add(new CardModel(data[i]));
     }
-    for(int i = 0; i < 5; i++) {
-      this.DrawCard();
-    }
     imgLabel = new JLabel( new ImageIcon("assets/img/player/my.png") );
   }
 }
