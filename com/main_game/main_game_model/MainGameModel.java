@@ -19,9 +19,12 @@ final public class MainGameModel{
   private JButton nextBtn;
   private BasePlayer player;
   private BasePlayer rival;
+  private RW_csv mainDeckdata;
+  private JPanel battleCaption;
+
+  // temporary data for pl, ri deck
   private int[] pl_deck = new int[20];
   private int[] ri_deck = new int[20];
-  private RW_csv mainDeckdata;
 
   public MainGameModel() {
     resultBtn = new JButton("Go Result");
@@ -46,4 +49,5 @@ final public class MainGameModel{
   public JButton getNextBtn() { return nextBtn; }
   public BasePlayer getPlayer() { return player; }
   public BasePlayer getRival() { return rival; }
+  public JPanel getBattleCaption() { return battleCaption; }
 }

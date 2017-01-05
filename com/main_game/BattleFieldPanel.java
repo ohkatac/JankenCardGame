@@ -32,7 +32,6 @@ public class BattleFieldPanel extends JPanel {
     this.setLayout( new BorderLayout() );
     this.add(myBattleF, BorderLayout.EAST); // 自分のバトルフィールドを右側に配置
     this.add(riBattleF, BorderLayout.WEST); // 相手のバトルフィールドを左側に配置
-    myBattleF.add( new JButton("BattleField") );
 
     isMycard = false;
     isRicard = false;
@@ -76,12 +75,15 @@ public class BattleFieldPanel extends JPanel {
 
   public void RemoveCards() {
     isMycard = isRicard = false;
+    mycardIcon = ricardIcon = null;
     
+    // 場のカードを空カードに設定
     myCard.setVisible(false);
     myCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
     myBattleF.add(myCard);
     myCard.setVisible(true);
 
+    // 場のカードを空カードに設定
     riCard.setVisible(false);
     riCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
     riBattleF.add(riCard);

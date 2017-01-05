@@ -22,7 +22,7 @@ public class RivalSidePanel extends JPanel {
     this.setLayout( new FlowLayout() );
   }
 
-  public void ShowCaption(BasePlayer player, BasePlayer rival, CardModel plCard, CardModel riCard, int judge) {
+  public void showCaption(BasePlayer player, BasePlayer rival, CardModel plCard, CardModel riCard, int judge) {
     String resultText;
     if(captionValue != null) captionValue.setVisible(false);
     switch(judge) {
@@ -50,7 +50,7 @@ public class RivalSidePanel extends JPanel {
     captionValue.setVisible(true);
   }
 
-  public void DeleteCaption() {
+  public void deleteCaption() {
     captionValue.setVisible(false);
   }
 
