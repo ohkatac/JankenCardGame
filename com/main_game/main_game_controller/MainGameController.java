@@ -32,12 +32,15 @@ final public class MainGameController {
     this.model = model; // モデルを設定
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
 
+// 一番初めはすべてのボタンを無効化
     model.getResultBtn().setEnabled(false);
     model.getDecideBtn().setEnabled(false);
     model.getNextBtn().setEnabled(false);
 
+// 始めのフェイズのクラスのインスタンスを生成
     nowPhase = new FirstJankenPhase(this);
 
+// あらかじめそれぞれのフェイズのインスタンスを作成しておく
     playerPhase = new PlayerPhase(this);
     rivalPhase = new RivalPhase(this);
     battlePhase = new BattlePhase(this);
@@ -46,6 +49,7 @@ final public class MainGameController {
   // 先攻か後攻かを記録する変数に記録するためのメソッド
   public void setIsPlayFirst(Boolean b) { isPlayFirst = b; }
 
+// FirstJankenPhase終了と同時にそのクラスから呼び出すメソッド。
   public void StartMainGame() {
     for(int i = 0; i < 5; i++) {
       model.getPlayer().DrawCard();
@@ -67,6 +71,7 @@ final public class MainGameController {
     }
   }
 
+// 次のフェイズへ進むメソッド、 それぞれのフェイズクラス内部から呼び出すこととする
   public void GotoNextPhase() {
     if(isPlayFirst) {
       if (nowPhase.getId() == BasePhase.PLAYER) {

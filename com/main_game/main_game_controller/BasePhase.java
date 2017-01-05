@@ -11,11 +11,15 @@ public class BasePhase {
     this.id = id;
   }
 
+// 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく
   public int getId() { return id; }
 
+// 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく
   public void startThisPhase() {}
 
+// 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく 
   public void endThisPhase() {}
 
+// 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく
   public void signalAction(int index) {}
 }

@@ -63,9 +63,11 @@ public class BattlePhase extends BasePhase implements ActionListener{
   }
 
   public void actionPerformed(ActionEvent e) {
+    // 次のバトルへ進むための処理
     if (e.getSource() == nextBtn) { endThisPhase(); }
   }
 
+// 
   public int isWinPlayer(CardModel plCard, CardModel riCard) {
     // 単色カード同士のバトルの場合
     int pl = plCard.getID();
