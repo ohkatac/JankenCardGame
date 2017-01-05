@@ -24,8 +24,6 @@ public class MyFieldPanel extends JPanel {
 
     myPlayer = model.getPlayer();
     myHands = myPlayer.getHands();
-
-    ReshowCard();
   }
   public void setImvisible() {
     for(CardModel cm : myHands) {
@@ -35,6 +33,7 @@ public class MyFieldPanel extends JPanel {
   }
 
   public void ReshowCard(){
+    this.removeAll();
     for(CardModel cm : myHands) {
       // 将来的にTimerをセットしてアニメーションを入れる
       this.add(cm.getImageBtn());

@@ -5,54 +5,64 @@ import java.util.*;
 import com.asset_controller.ImageButton;
 
 public class CardModel {//全カードにおける継承元のクラス
+  public static final int GU = 1, CHI = 2, PA = 3, GUCHI = 4, CHIPA = 5, PAGU = 6, ALL = 7;
+
   private String name;//カードの名前
   private int id;//カードの識別用
   private int cost;
   private Boolean flag;//カードを使用済みかどうかの確認
   private ImageButton myImage = null;
+  private String btLabelPath;
 
   public static final String[][] imgPath = {
     {     
-          "assets/img/card/Gu.png",
-          "assets/img/card/Gu_unable.png",
-          "assets/img/card/Gu_unable.png",
-          "assets/img/card/Gu_unable.png"
+          "assets/img/card/btnimg/Gu.png",
+          "assets/img/card/btnimg/Gu_unable.png",
+          "assets/img/card/btnimg/Gu_unable.png",
+          "assets/img/card/btnimg/Gu_unable.png",
+          "assets/img/card/origin/Gu.png"
     },
     {
-          "assets/img/card/Chi.png",
-          "assets/img/card/Chi_unable.png",
-          "assets/img/card/Chi_unable.png",
-          "assets/img/card/Chi_unable.png"
+          "assets/img/card/btnimg/Chi.png",
+          "assets/img/card/btnimg/Chi_unable.png",
+          "assets/img/card/btnimg/Chi_unable.png",
+          "assets/img/card/btnimg/Chi_unable.png",
+          "assets/img/card/origin/Chi.png"
     },
     {
-          "assets/img/card/Pa.png",
-          "assets/img/card/Pa_unable.png",
-          "assets/img/card/Pa_unable.png",
-          "assets/img/card/Pa_unable.png"
+          "assets/img/card/btnimg/Pa.png",
+          "assets/img/card/btnimg/Pa_unable.png",
+          "assets/img/card/btnimg/Pa_unable.png",
+          "assets/img/card/btnimg/Pa_unable.png",
+          "assets/img/card/origin/Pa.png"
     },
     {
-          "assets/img/card/GuChi.png",
-          "assets/img/card/GuChi_unable.png",
-          "assets/img/card/GuChi_unable.png",
-          "assets/img/card/GuChi_unable.png"
+          "assets/img/card/btnimg/GuChi.png",
+          "assets/img/card/btnimg/GuChi_unable.png",
+          "assets/img/card/btnimg/GuChi_unable.png",
+          "assets/img/card/btnimg/GuChi_unable.png",
+          "assets/img/card/origin/GuChi.png"
     },
     {
-          "assets/img/card/ChiPa.png",
-          "assets/img/card/ChiPa_unable.png",
-          "assets/img/card/ChiPa_unable.png",
-          "assets/img/card/ChiPa_unable.png"
+          "assets/img/card/btnimg/ChiPa.png",
+          "assets/img/card/btnimg/ChiPa_unable.png",
+          "assets/img/card/btnimg/ChiPa_unable.png",
+          "assets/img/card/btnimg/ChiPa_unable.png",
+          "assets/img/card/origin/ChiPa.png"
     },
     {
-          "assets/img/card/PaGu.png",
-          "assets/img/card/PaGu_unable.png",
-          "assets/img/card/PaGu_unable.png",
-          "assets/img/card/PaGu_unable.png"
+          "assets/img/card/btnimg/PaGu.png",
+          "assets/img/card/btnimg/PaGu_unable.png",
+          "assets/img/card/btnimg/PaGu_unable.png",
+          "assets/img/card/btnimg/PaGu_unable.png",
+          "assets/img/card/origin/PaGu.png"
     },
     {
-          "assets/img/card/All.png",
-          "assets/img/card/All_unable.png",
-          "assets/img/card/All_unable.png",
-          "assets/img/card/All_unable.png"
+          "assets/img/card/btnimg/All.png",
+          "assets/img/card/btnimg/All_unable.png",
+          "assets/img/card/btnimg/All_unable.png",
+          "assets/img/card/btnimg/All_unable.png",
+          "assets/img/card/origin/All.png"
     }
   };
 
@@ -100,6 +110,7 @@ public class CardModel {//全カードにおける継承元のクラス
         imgPath[id-1][2],
         imgPath[id-1][3]
       });
+      btLabelPath = imgPath[id-1][4];
     }
     /*ここからは各種カードの設定、idはグーを1,パーを2,チーを3,グーチーを4,チーパーを5,
     パーグーを6,グーチーパーを7とする。*/
@@ -112,7 +123,7 @@ public class CardModel {//全カードにおける継承元のクラス
   public Boolean getFlag(){ return flag; }
   public void ChangeFlag() { flag = !flag; }
   public ImageButton getImageBtn() { return this.myImage; }
-  public String getImgPath() { return imgPath[id-1][0]; }
+  public String getImgPath() { return btLabelPath; }
   public void EnableButton() { this.myImage.Enabled(); }  
   public void DisableButton() { this.myImage.Disabled(); }
 }

@@ -12,246 +12,113 @@ import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
 import com.asset_controller.ImageButton;
 
-//Controller, ゲームのメインの流れはここに書いていく 主な流れはMainGameModel 
-//Classであるmodelを受け取り、その中に入っているモデルたちを取り出してPanelに張り付けたりなどして扱っていく
+// Controller, ゲームのメインの流れはここに書いていく 主な流れはMainGameModel 
+// Classであるmodelを受け取り、その中に入っているモデルたちを取り出してPanelに張り付けたりなどして扱っていく
 
-final public class MainGameController implements ActionListener {
+final public class MainGameController {
   private MainGameModel model;
   private MainGamePanel panel;
 
-  private MyFieldPanel myField;
-  private MySidePanel mySide;
-  private BattleFieldPanel battleField;
-  private RivalFieldPanel rivalField;
-  private RivalSidePanel rivalSide;
+  private Boolean isPlayFirst;
 
-  private JButton sideCaption;
-  private JButton nextBtn;
+  private BasePhase nowPhase;
 
-  private JButton resultBtn;
-  private JButton decideBtn;
-
-  private Boolean decideEnable;
-  private BasePlayer player;
-  private BasePlayer rival;
-
-  private CardModel plbattleCard;
-  private int plbattleId;
-  private CardModel ribattleCard;
-  private int ribattleId;
+  private PlayerPhase playerPhase;
+  private RivalPhase rivalPhase;
+  private BattlePhase battlePhase;
 
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
     this.model = model; // モデルを設定
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
 
-    // 各種フィールドのインスタンスを取得、ここに
-    myField = panel.getMyField();
-    mySide = panel.getMySide();
-    battleField = panel.getBattleField();
-    rivalField = panel.getRivalField();
-    rivalSide = panel.getRivalSide();
-    //
+    model.getResultBtn().setEnabled(false);
+    model.getDecideBtn().setEnabled(false);
+    model.getNextBtn().setEnabled(false);
 
-    resultBtn = model.getResultBtn(); // 結果ボタンをモデルから取得
-    decideBtn = model.getDecideBtn(); //決定ボタンをモデルから取得
-    nextBtn = model.getNextBtn();
-    nextBtn.setEnabled(false);
-    decideBtn.setEnabled(false);
-    decideEnable = false; // 決定ボタンをはじめは無効化する。
+    nowPhase = new FirstJankenPhase(this);
 
-    player = model.getPlayer(); // プレイヤーモデルをMainGameModelから取得
-    rival = model.getRival(); // ライバルモデルをMainGameModelから取得
-
-    // 手札のボタンのモデルを受け取りActionListenerに追加
-    for(CardModel cm : player.getHands() ){
-      cm.getImageBtn().addActionListener(this);
-    }
-
-    // 各種ボタンをActionListenerに入れる
-    nextBtn.addActionListener(this);
-    resultBtn.addActionListener(this);
-    decideBtn.addActionListener(this);
-
-    // Timerを使って将来的にアニメーションを実現させる。
-    PopRivalCard();
-
+    playerPhase = new PlayerPhase(this);
+    rivalPhase = new RivalPhase(this);
+    battlePhase = new BattlePhase(this);
   }
 
-  public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == resultBtn) {
-      // リザルト画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
-      panel.GotoResult();
+  // 先攻か後攻かを記録する変数に記録するためのメソッド
+  public void setIsPlayFirst(Boolean b) { isPlayFirst = b; }
+
+  public void StartMainGame() {
+    for(int i = 0; i < 5; i++) {
+      model.getPlayer().DrawCard();
+      model.getRival().DrawCard();
     }
-    else if (e.getSource() == decideBtn) {
-      // どのカードを出すかを決定するボタン
-      decideEnable = false;
-      decideBtn.setEnabled(false);
-      for ( CardModel cm : player.getHands() ) cm.DisableButton();
-      int judge = isWinPlayer(plbattleCard, ribattleCard);
-      battleField.openRivalCard();
-      switch(judge) {
-        case 1:
-          rival.Damage(plbattleCard.getCost());
-          break;
-        case -1:
-          player.Damage(ribattleCard.getCost());
-          break;
-        default:
+
+    panel.getMyField().setVisible(true);
+    panel.getRivalField().setVisible(true);
+
+    if(isPlayFirst){
+      System.out.println("you win at first");
+      nowPhase = playerPhase;
+      nowPhase.startThisPhase();
+   }
+    else if(!isPlayFirst){
+      System.out.println("you lose at first");
+      nowPhase = rivalPhase;
+      nowPhase.startThisPhase();
+    }
+  }
+
+  public void GotoNextPhase() {
+    if(isPlayFirst) {
+      if (nowPhase.getId() == BasePhase.PLAYER) {
+        nowPhase = rivalPhase;
+        nowPhase.startThisPhase();
       }
-
-      // バトルの詳細を表示
-      rivalSide.ShowCaption(player, rival, plbattleCard, ribattleCard, judge);
-
-      nextBtn.setEnabled(true);
+      else if (nowPhase.getId() == BasePhase.RIVAL) {
+        nowPhase = battlePhase;
+        nowPhase.startThisPhase();
+      }
+      else if (nowPhase.getId() == BasePhase.BATTLE) {
+        nowPhase = playerPhase;
+        nowPhase.startThisPhase();
+      }
     }
 
-    else if (e.getSource() == nextBtn) {
-      for ( CardModel cm : player.getHands() ) cm.EnableButton();
-      battleField.RemoveCards();
-      rivalSide.DeleteCaption();
-      nextBtn.setEnabled(false);
-
-      CardModel temp;
-
-      myField.setImvisible();
-      if(player.getHands().get(plbattleId) != null) player.RemoveHandsCard(plbattleId);
-      temp = player.DrawCard();
-      if(temp != null) temp.getImageBtn().addActionListener(this);
-      myField.ReshowCard();
-
-      rivalField.setImvisible();
-      if(rival.getHands().get(ribattleId) != null) rival.RemoveHandsCard(ribattleId);
-      temp = rival.DrawCard();
-      if(temp != null) temp.getImageBtn().addActionListener(this);
-      rivalField.ReshowCard();
-
-      if(rival.getHands().size() > 0) PopRivalCard();
-    }
-
-    for(int i = 0; i < player.getHands().size(); i++) {
-      if(e.getSource() == player.getHands().get(i).getImageBtn()) PopMyCard(i);
+    else if(!isPlayFirst) {
+      if (nowPhase.getId() == BasePhase.RIVAL) {
+        nowPhase = playerPhase;
+        nowPhase.startThisPhase();
+      }
+      else if (nowPhase.getId() == BasePhase.PLAYER) {
+        nowPhase = battlePhase;
+        nowPhase.startThisPhase();
+      }
+      else if (nowPhase.getId() == BasePhase.BATTLE) {
+        nowPhase = rivalPhase;
+        nowPhase.startThisPhase();
+      }
     }
 
   }
 
-  private void PopRivalCard() {
-    Random rnd = new Random();
-    int randomId = rnd.nextInt(rival.getHands().size());
-    ribattleCard = rival.PopCard(randomId);
-    battleField.setRivalCard(ribattleCard);
-    ribattleId = randomId;
-  }
+  public void FinishMainGame() { panel.GotoResult(); }
 
-  private void PopMyCard(int index) {
-    decideEnable = true;
-    decideBtn.setEnabled(true);
-    plbattleCard = player.PopCard(index);
-    battleField.setMyCard(plbattleCard);
-    plbattleId = index;
-  }
+// method to return some Field Instance
+  public MyFieldPanel getMyField() { return panel.getMyField(); }
+  public MySidePanel getMySide() { return panel.getMySide(); }
+  public BattleFieldPanel getBattleField() { return panel.getBattleField(); }
+  public RivalFieldPanel getRivalField() { return panel.getRivalField(); }
+  public RivalSidePanel getRivalSide() { return panel.getRivalSide(); }
+  
+  // MainGameModelよりそれぞれのボタンのインスタンスを取得
+  public JButton getResultBtn() { return model.getResultBtn(); }
+  public JButton getDecideBtn() { return model.getDecideBtn(); }
+  public JButton getNextBtn() { return model.getNextBtn(); }
 
-  public int isWinPlayer(CardModel plCard, CardModel riCard) {
-    // 単色カード同士のバトルの場合
-    int pl = plCard.getID();
-    int ri = riCard.getID();
+  // 現在各プレイヤーが場に出しているカードのインスタンスを返す
+  public int getPlayerBattleHandIndex() { return getPlayer().getBattleHandIndex(); }
+  public int getRivalBattleHandIndex() { return getRival().getBattleHandIndex(); }
 
-    switch(pl) {
-      case 1:
-        switch(ri) {
-          case 1: return 0;
-          case 2: return 1;
-          case 3: return -1;
-          case 4: return 0;
-          case 5: return -1;
-          case 6: return -1;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 2:
-        switch(ri) {
-          case 1: return -1;
-          case 2: return 0;
-          case 3: return 1;
-          case 4: return -1;
-          case 5: return 0;
-          case 6: return -1;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 3:
-        switch(ri) {
-          case 1: return 1;
-          case 2: return -1;
-          case 3: return 0;
-          case 4: return -1;
-          case 5: return -1;
-          case 6: return 0;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 4:
-        switch(ri) {
-          case 1: return 0;
-          case 2: return 1;
-          case 3: return 1;
-          case 4: return 0;
-          case 5: return -1;
-          case 6: return 1;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 5:
-        switch(ri) {
-          case 1: return 1;
-          case 2: return 0;
-          case 3: return 1;
-          case 4: return 1;
-          case 5: return 0;
-          case 6: return -1;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 6:
-        switch(ri) {
-          case 1: return 1;
-          case 2: return 1;
-          case 3: return 0;
-          case 4: return -1;
-          case 5: return 1;
-          case 6: return 0;
-          case 7: return -1;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      case 7:
-        switch(ri) {
-          case 1: return 1;
-          case 2: return 1;
-          case 3: return 1;
-          case 4: return 1;
-          case 5: return 1;
-          case 6: return 1;
-          case 7: return 0;
-          default:
-            System.out.println("相手のじゃんけんの値が不正です。");
-            return -2;
-        }
-      default:
-        System.out.println("あなたのじゃんけんの値が不正です。");
-        return -2;
-    }
-  }
+  // プレイヤーモデルのインスタンスを取得
+  public BasePlayer getPlayer() { return model.getPlayer(); }
+  public BasePlayer getRival() { return model.getRival(); }
 }
