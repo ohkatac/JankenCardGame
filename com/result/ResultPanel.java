@@ -17,55 +17,52 @@ final public class ResultPanel extends JPanel implements ActionListener {
   public ResultPanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
 
-    setLayout(new GridBagLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
+    setLayout(new GridBagLayout()); 
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
-    JPanel p = new JPanel();
-    p.setLayout(layout);
+    setLayout(layout);
 
     //JLabel resultのところに場合分けをしてYou win, You loseみたいにできればなお良い
+    //結果のデータをどうやって表示するかはこれから。
 
     result = new JLabel("結果発表", JLabel.CENTER);
     result.setFont(new Font("MS 明朝", Font.PLAIN, 30));
-    gbc.gridx = 0;
+    gbc.gridx = 2;
     gbc.gridy = 0;
-    gbc.weighty = 0.9d; 
+    gbc.weighty = 0.9d;
+    gbc.gridwidth = 5; 
     layout.setConstraints(result, gbc);
 
     life = new JLabel("残りライフ : ", JLabel.CENTER);
-    gbc.gridx = 0;
+    gbc.gridx = 1;
     gbc.gridy = 1;
     gbc.weighty = 0.3d;
     layout.setConstraints(life, gbc);
 
     card = new JLabel("残り枚数 : ", JLabel.CENTER);
-    gbc.gridx = 0;
+    gbc.gridx = 1;
     gbc.gridy = 2;
     gbc.weighty = 0.3d;
     layout.setConstraints(card, gbc);
 
     title = new JButton("タイトルへ進む");
-    gbc.gridx = 0;
+    gbc.gridx = 4;
     gbc.gridy = 3;
     gbc.weighty = 0.3d;
-    gbc.anchor = GridBagConstraints.EAST;
     layout.setConstraints(title, gbc);
 
     title.addActionListener(this);
 
-    p.add(result);
-    p.add(life);
-    p.add(card);
-    p.add(title);
+    add(result);
+    add(life);
+    add(card);
+    add(title);
 
-    add(p);
   }
 
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == title) {
-      // タイトル画面への切り替え処理、大元のFrameControllerの中のメソッドを使う。
-      // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
       frameCont.showTitle(this);
     }
   }
