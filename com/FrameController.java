@@ -75,12 +75,12 @@ public final class FrameController extends JFrame{
       this.gamePanel.setVisible(true);
     }
 
-    public void showResult(JPanel currentPanel) {
+    public void showResult(JPanel currentPanel, int myLife, int riLife) {
       // 現在JFrame上に表示してあるJPanelを削除
       currentPanel.setVisible(false);
       currentPanel = null;
       // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
-      resultPanel = new ResultPanel(this);
+      resultPanel = new ResultPanel(this, myLife, riLife);
       // JPanelを追加
       this.add(resultPanel);
       // JPanelを見える状態にする

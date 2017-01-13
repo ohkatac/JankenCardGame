@@ -21,5 +21,5 @@ public class BasePhase {
   public void endThisPhase() {}
 
 // 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく
-  public void signalAction(int index) {}
+  public void signalAction(String data) {}
 }

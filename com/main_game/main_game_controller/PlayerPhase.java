@@ -14,7 +14,6 @@ public class PlayerPhase extends BasePhase implements ActionListener {
   private BattleFieldPanel battleField;
   private JButton decideBtn;
   private BasePlayer player;
-  private CardModel plbattleCard;
 
   public PlayerPhase(MainGameController mainCont) {
     super(PLAYER);
@@ -23,7 +22,6 @@ public class PlayerPhase extends BasePhase implements ActionListener {
     myField = mainCont.getMyField();
     decideBtn = mainCont.getDecideBtn();
     player = mainCont.getPlayer();
-
   }
 
 // Override
@@ -64,9 +62,10 @@ public class PlayerPhase extends BasePhase implements ActionListener {
 
   private void PopMyCard(int index) {
     player.PopCard(index);
-    plbattleCard = player.getPoppingCard();
-    battleField.setMyCard(plbattleCard);
-    decideBtn.setEnabled(true);
-    decideBtn.addActionListener(this);
+    battleField.setMyCard(player.getPoppingCard());
+    if(decideBtn.isEnabled() == false) { // 連続してListenerにComponentをaddするのを避けるためif文を入れる
+      decideBtn.setEnabled(true);
+      decideBtn.addActionListener(this);
+    }
   }
 }

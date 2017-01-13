@@ -39,7 +39,6 @@ public class RivalPhase extends BasePhase {
   }
 
   public void endThisPhase() {
-    //
     signal.destroySignal();
   }
 
@@ -53,11 +52,14 @@ public class RivalPhase extends BasePhase {
     battleField.setRivalCard(rival.getPoppingCard());
   }
 
-  public void signalAction(int index) {
-    if(rival.getPoppingCard() == null){
-      System.out.println("popped rival card");
-      PopRivalCard(index);
+  public void signalAction(String st) {
+    if(st == "decide") {
+      if(rival.getPoppingCard() != null) {
+        DecideEvent();
+      }
+      return ;
     }
-    else DecideEvent();
+    int index = Integer.parseInt(st);
+    if( index < rival.getHands().size() ) PopRivalCard(index);
   }
 }

@@ -12,7 +12,7 @@ public class MyFieldPanel extends JPanel {
   MainGameModel model;
   BasePlayer myPlayer;
   ArrayList<CardModel> myHands = null;
-  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/deck.png") );
+  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/btnimg/deck.png") );
 
   public MyFieldPanel(MainGameModel model, JPanel mainPanel) {
     super();
@@ -39,7 +39,7 @@ public class MyFieldPanel extends JPanel {
       this.add(cm.getImageBtn());
       cm.getImageBtn().setVisible(true);
     }
-    deckImg.setVisible(true);
     this.add(deckImg);
+    deckImg.setVisible(true);
   }
 }

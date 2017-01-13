@@ -77,21 +77,29 @@ public class ImageButton extends JButton implements MouseListener {
 // ボタンの画像変化処理の記述
   public void mouseClicked(MouseEvent e) { }
   public void mousePressed(MouseEvent e) {
-    image = new javax.swing.ImageIcon(pressPath); // ボタンの画像を押された状態に設定する
-    repaint(); // JPanel(JButton)の再描画
+    if(enable) {
+      image = new javax.swing.ImageIcon(pressPath);// ボタンの画像を押された状態に設定する
+      repaint(); // JPanel(JButton)の再描画
+    }
   }
   public void mouseReleased(MouseEvent e) {
     if(image.toString() != path) {
-      image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+      if(enable) {
+        image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+        repaint(); // JPanel(JButton)の再描画
+      }
     }
-    repaint(); // JPanel(JButton)の再描画
   }
   public void mouseEntered(MouseEvent e) {
-    if(enable == true) image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
-    repaint(); // JPanel(JButton)の再描画
+    if(enable){
+      image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+      repaint(); // JPanel(JButton)の再描画
+    }
   }
   public void mouseExited(MouseEvent e) {
-    if(enable == true) image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
-    repaint(); // JPanel(JButton)の再描画
+    if(enable) {
+      image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
+      repaint(); // JPanel(JButton)の再描画
+    }
   }
 }

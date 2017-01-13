@@ -11,7 +11,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
   FrameController frameCont;
   JButton title;
 
-  public ResultPanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
+  public ResultPanel(FrameController frameCont, int my_life, int ri_life) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
     setLayout(new FlowLayout()); // とりあえず一番単純なFlowLayout()に設定。 後で変更するのも視野に入れておく
 

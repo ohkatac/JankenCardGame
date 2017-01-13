@@ -37,9 +37,9 @@ public class BattleFieldPanel extends JPanel {
     isRicard = false;
 
     // 
-    myCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     myBattleF.add(myCard);
-    riCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     riBattleF.add(riCard);
 
   }
@@ -50,6 +50,7 @@ public class BattleFieldPanel extends JPanel {
     mycardIcon = new ImageIcon(myIconPath);
 
     myCard.setVisible(false);
+    myBattleF.removeAll();
     myCard = new JLabel( mycardIcon );
     myBattleF.add(myCard);
     myCard.setVisible(true);
@@ -61,7 +62,7 @@ public class BattleFieldPanel extends JPanel {
     ricardIcon = new ImageIcon(riIconPath);
 
     riCard.setVisible(false);
-    riCard = new JLabel( new ImageIcon("assets/img/card/back.png") );
+    riCard = new JLabel( new ImageIcon("assets/img/card/origin/back.png") );
     riBattleF.add(riCard);
     riCard.setVisible(true);
   }
@@ -79,13 +80,13 @@ public class BattleFieldPanel extends JPanel {
     
     // 場のカードを空カードに設定
     myCard.setVisible(false);
-    myCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     myBattleF.add(myCard);
     myCard.setVisible(true);
 
     // 場のカードを空カードに設定
     riCard.setVisible(false);
-    riCard = new JLabel(new ImageIcon("assets/img/card/empty.png"));
+    riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     riBattleF.add(riCard);
     riCard.setVisible(true);
   }
