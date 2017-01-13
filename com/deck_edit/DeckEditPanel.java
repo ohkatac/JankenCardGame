@@ -145,7 +145,7 @@ class DeleteCardInDeck extends JPanel implements ActionListener {//削除操作�
         int number;
         JButton delete;
         DeckEditorModel MyDeck;
-        static JTextField delNumber;//リスト整理用に外部アクセスを可能としてある。
+        JTextField delNumber;
         DeleteOperation deleteOperation;
         ShowCardList showCardList;
 
@@ -164,10 +164,13 @@ class DeleteCardInDeck extends JPanel implements ActionListener {//削除操作�
         public void actionPerformed(ActionEvent e){
                 int j;
                 j=Integer.parseInt(delNumber.getText());
-                number=MyDeck.CheckDeck().size();
                 if(showCardList.getDeckSize()>0) {
                         deleteOperation.DeleteCardforDeck(j-1, MyDeck);
-                        showCardList.setDeckSize(MyDeck.CheckDeck().size());
+                        if(MyDeck.CheckDeck()==null) {
+                                showCardList.setDeckSize(0);
+                        }else{
+                                showCardList.setDeckSize(MyDeck.CheckDeck().size());
+                        }
                 }
         }
 }
@@ -282,21 +285,19 @@ class ShowCardList extends JPanel {        //デッキ内部のカードリス�
                                 list=Integer.toString(j+1);
                                 list=list+". "+MyDeck.getCard(j).getCardName();
                                 List[j].setText(list);
+                                DeckSize=MyDeck.CheckDeck().size();
                                 if(j==19) {
                                         List[20].setText("カードをこれ以上追加できません.");        //最大に達した場合のメッセージ
                                 }
                         }
                 }else if(MyDeck.CheckDeck()==null) {
-                        List[0].setText("カードが存在しません.");
+                        List[20].setText("カードが存在しません.");
                         //デッキが存在しない場合メッセージを表示
                 }
         }
 
         public void setDeckSize(int size){
                 DeckSize=size;
-                for(CardBase_E Card:MyDeck.CheckDeck()) {
-                        System.out.println(Card.getCardName());
-                }
         }
 
         public int getDeckSize(){
