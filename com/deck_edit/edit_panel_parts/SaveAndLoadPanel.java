@@ -3,26 +3,26 @@ package com.deck_edit.edit_panel_parts;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.DeckEditorModel;
-import com.deck_edit.edit_panel_parts.ShowCardListField;
-import com.deck_edit.edit_panel_controller.SaveOperation;
-import com.deck_edit.edit_panel_controller.LoadOperation;
+import com.deck_edit.edit_panel_parts.ShowCardListPanel;
+import com.deck_edit.edit_panel_model.SavePanelModel;
+import com.deck_edit.edit_panel_model.LoadPanelModel;
 import com.asset_controller.RW_csv;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 
-public class SaveAndLoadField extends JPanel implements ActionListener {
+public class SaveAndLoadPanel extends JPanel implements ActionListener {
         /*csvファイルからデータを読み込み,デッキを生成、もしくはデッキデータをセーブするパネル部分のview&controller*/
         int[] DeckData;
         JButton Save, Load;
         RW_csv DeckManager;
         DeckEditorModel MyDeck;
-        SaveOperation saveOperation;
-        LoadOperation loadOperation;
-        ShowCardListField showCardList;
+        SavePanelModel saveOperation;
+        LoadPanelModel loadOperation;
+        ShowCardListPanel showCardList;
 
-        public SaveAndLoadField(DeckEditorModel Deck, ShowCardListField sc, SaveOperation so, LoadOperation lo){
+        public SaveAndLoadPanel(DeckEditorModel Deck, ShowCardListPanel sc, SavePanelModel so, LoadPanelModel lo){
                 DeckData=new int[20];         //最大カード格納数を配列のサイズとする.
                 MyDeck=Deck;
                 saveOperation=so;
@@ -39,12 +39,12 @@ public class SaveAndLoadField extends JPanel implements ActionListener {
         }
 
         public void actionPerformed(ActionEvent e){
-                /*セーブ,ロード,各操作をObserverパターンのために分離*/
+                /*セーブ,ロード,各操作ModelをObserverパターンのために分離*/
                 if(e.getSource()==Save && showCardList.getDeckSize()>0)
                         saveOperation.SaveDeck(DeckData, MyDeck, DeckManager);
                 if(e.getSource()==Load) {
                         loadOperation.LoadDeck(MyDeck, DeckManager, showCardList.getDeckSize());
-                        showCardList.setDeckSize(MyDeck.CheckDeck().size());
+                        showCardList.setDeckSize(MyDeck.CheckDeck().size());//ロード後はデッキの大きさをセットする。
                 }
         }
 }

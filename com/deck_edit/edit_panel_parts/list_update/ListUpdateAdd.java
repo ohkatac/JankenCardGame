@@ -4,16 +4,18 @@ import com.deck_edit.DeckEditorModel;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.edit_panel_parts.*;
-import com.deck_edit.edit_panel_controller.AddOperation;
+import com.deck_edit.edit_panel_model.AddPanelModel;
 import java.util.*;
 
+/* 追加を行った際にListの表示を更新するView*/
+
 public class ListUpdateAdd implements Observer {//追加操作に対するObserver. Observerパターンの都合により分離.
-        ShowCardListField showCardList;//リスト操作用
-        AddOperation addoperation;
+        ShowCardListPanel showCardList;//リスト操作用
+        AddPanelModel addoperation;
         String addList;//リストに表示する文
         DeckEditorModel MyDeck;
 
-        public ListUpdateAdd(ShowCardListField sl, AddOperation ao, DeckEditorModel Deck){
+        public ListUpdateAdd(ShowCardListPanel sl, AddPanelModel ao, DeckEditorModel Deck){
                 showCardList=sl;
                 addoperation=ao;
                 addList=" ";

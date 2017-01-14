@@ -4,14 +4,14 @@ import com.deck_edit.DeckEditorModel;
 import javax.swing.*;
 import java.awt.*;
 
-public class ShowCardListField extends JPanel {        //デッキ内部のカードリストの表記を行うパネル
+public class ShowCardListPanel extends JPanel {        //デッキ内部のカードリストの表記を行うview
         static JLabel[] List;        //デッキ内部表示用のJLabel配列
         JLabel NoneDeck;        //デッキが存在しない時の表示用ラベル
         String list;        //リスト文字列格納用変数
         DeckEditorModel MyDeck;
-        int DeckSize;
+        int DeckSize; //デッキの大きさを格納する。
 
-        public ShowCardListField(DeckEditorModel Deck){
+        public ShowCardListPanel(DeckEditorModel Deck){
                 List=new JLabel[21];        //20番目はメッセージ用
                 for(int j=0; j<21; j++) {
                         List[j]=new JLabel();
@@ -39,11 +39,11 @@ public class ShowCardListField extends JPanel {        //デッキ内部のカ�
                 }
         }
 
-        public void setDeckSize(int size){
+        public void setDeckSize(int size){ //各種操作時に必要となるデッキの大きさの値を格納する.
                 DeckSize=size;
         }
 
-        public int getDeckSize(){
+        public int getDeckSize(){//デッキの大きさを返す.
                 return DeckSize;
         }
 

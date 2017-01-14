@@ -3,23 +3,23 @@ package com.deck_edit.edit_panel_parts;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.DeckEditorModel;
-import com.deck_edit.edit_panel_controller.AddOperation;
-import com.deck_edit.edit_panel_parts.ShowCardListField;
+import com.deck_edit.edit_panel_model.AddPanelModel;
+import com.deck_edit.edit_panel_parts.ShowCardListPanel;
 import com.asset_controller.ImageButton;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class AddField extends JPanel implements ActionListener {//デッキ編集:追加操作のviewとcontroller
+public class AddPanel extends JPanel implements ActionListener {//デッキ編集:追加操作のviewとcontroller
         ImageButton Gu, Chi, Pa, G_C, C_P, P_G, ALL;//デッキ追加操作ボタン
         JLabel ex_Gu, ex_Chi, ex_Pa, ex_G_C, ex_C_P, ex_P_G, ex_ALL; //カード説明;
         DeckEditorModel MyDeck;//デッキにカードを追加するための変数
         Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;//各種カードデータ
-        AddOperation addOperation;
-        ShowCardListField showCardList;
+        AddPanelModel addOperation;
+        ShowCardListPanel showCardList;
 /*追加操作と削除操作はデッキ内容表示のクラスからObservableとする。*/
 
-        public AddField(DeckEditorModel MyDeck, AddOperation ado, ShowCardListField sc){//追加操作パネルのVCコンストラクタ デッキを値として引き渡す。
+        public AddPanel(DeckEditorModel MyDeck, AddPanelModel ado, ShowCardListPanel sc){//追加操作パネルのVCコンストラクタ デッキを値として引き渡す。
                 Gu=new ImageButton(new String[] {
                         "assets/img/button/redButton.png",
                         "assets/img/button/pinkButton.png",

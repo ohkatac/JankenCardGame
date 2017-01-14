@@ -3,22 +3,22 @@ package com.deck_edit.edit_panel_parts;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.DeckEditorModel;
-import com.deck_edit.edit_panel_parts.ShowCardListField;
-import com.deck_edit.edit_panel_controller.DeleteOperation;
+import com.deck_edit.edit_panel_parts.ShowCardListPanel;
+import com.deck_edit.edit_panel_model.DeletePanelModel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class DeleteField extends JPanel implements ActionListener {//削除操作を行うパネルのMVC
+public class DeletePanel extends JPanel implements ActionListener {//削除操作を行うパネルのMVC
         int number;
         JButton delete;
         DeckEditorModel MyDeck;
         JTextField delNumber;
-        DeleteOperation deleteOperation;
-        ShowCardListField showCardList;
+        DeletePanelModel deleteOperation;
+        ShowCardListPanel showCardList;
 
-        public DeleteField(DeckEditorModel MyDeck, DeleteOperation dO, ShowCardListField sc){
+        public DeletePanel(DeckEditorModel MyDeck, DeletePanelModel dO, ShowCardListPanel sc){
                 delete=new JButton("番目を削除");
                 delNumber=new JTextField(2);
                 this.MyDeck=MyDeck;

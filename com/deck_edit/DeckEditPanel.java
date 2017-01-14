@@ -6,7 +6,7 @@ import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.edit_panel_parts.*;
 import com.deck_edit.edit_panel_parts.list_update.*;
-import com.deck_edit.edit_panel_controller.*;
+import com.deck_edit.edit_panel_model.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -15,22 +15,23 @@ import com.asset_controller.ImageButton;
 import com.asset_controller.RW_csv;
 import java.io.*;
 
-// DeckEdit's Model & View & Controller
+// デッキ編集画面上のPanel配置、及び各操作ごとのModelのオブジェクト変数の生成を行うModel デッキの内部のカードがパネル生成時に存在するかの判定も
+// ここで行う。
 final public class DeckEditPanel extends JPanel implements ActionListener {
         FrameController frameCont;
         JButton end;
         DeckEditorModel EditDeck;
-        AddOperation Addoperation;
-        DeleteOperation Deleteoperation;
+        AddPanelModel Addoperation;
+        DeletePanelModel Deleteoperation;
         ListUpdateAdd Listupdate_a;
         ListUpdateDelete Listupdate_d;
         ListUpdateLoad Listupdate_l;
-        AddField addtodeck;
-        DeleteField deletecardindeck;
-        ShowCardListField showcardlist;
-        SaveOperation saveOperation;
-        LoadOperation loadOperation;
-        SaveAndLoadField saveAndloadPanel;
+        AddPanel addtodeck;
+        DeletePanel deletecardindeck;
+        ShowCardListPanel showcardlist;
+        SavePanelModel saveOperation;
+        LoadPanelModel loadOperation;
+        SaveAndLoadPanel saveAndloadPanel;
 
 /* デッキ判定に関する変数の宣言*/
         RW_csv DeckManege;
@@ -46,30 +47,30 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
                 DeckManege=new RW_csv(new File("assets/csv/main_deck.csv"));
                 Inisialize=DeckManege.ReadCSV();
                 DeckExists=true;
-                if(Inisialize==null) {
+                if(Inisialize==null) {  //デッキが存在するかどうかの判定を行う。リストの返り値がnullの場合デッキが存在しないのでオブジェクトを生成する。
                         EditDeck=new DeckEditorModel();
                         DeckExists=false;
                 }else{
-                        for(int j=0; j<Inisialize.length && Inisialize[j]==0; j++) {
-                                if(j==Inisialize.length-1) {
+                        for(int j=0; j<Inisialize.length && Inisialize[j]==0; j++) {//ダミーデータ(ID=0)が一部でも入っていた場合その場でループを止める。
+                                if(j==Inisialize.length-1) {//全てダミーデータの場合はデッキｈ存在しないと判定し、オブジェクトを生成。
                                         DeckExists=false;
                                         EditDeck=new DeckEditorModel();
                                 }
                         }
-                        if(DeckExists==true) {
+                        if(DeckExists==true) {//ダミーデータでないデータが含まれていた場合はそれを元にArrayListを生成後に追加を行い、オブジェクトを生成する。
                                 ExistsDeck=new ArrayList<CardBase_E>();
                                 DeckReCreate(ExistsDeck, Inisialize);
                                 EditDeck=new DeckEditorModel(ExistsDeck);
                         }
                 }
-                Deleteoperation=new DeleteOperation();
-                Addoperation=new AddOperation();
-                saveOperation=new SaveOperation();
-                loadOperation=new LoadOperation();
-                showcardlist=new ShowCardListField(EditDeck);
-                addtodeck=new AddField(EditDeck, Addoperation, showcardlist);
-                deletecardindeck=new DeleteField(EditDeck, Deleteoperation, showcardlist);
-                saveAndloadPanel=new SaveAndLoadField(EditDeck, showcardlist, saveOperation, loadOperation);
+                Deleteoperation=new DeletePanelModel();
+                Addoperation=new AddPanelModel();
+                saveOperation=new SavePanelModel();
+                loadOperation=new LoadPanelModel();
+                showcardlist=new ShowCardListPanel(EditDeck);
+                addtodeck=new AddPanel(EditDeck, Addoperation, showcardlist);
+                deletecardindeck=new DeletePanel(EditDeck, Deleteoperation, showcardlist);
+                saveAndloadPanel=new SaveAndLoadPanel(EditDeck, showcardlist, saveOperation, loadOperation);
                 Listupdate_l=new ListUpdateLoad(showcardlist, loadOperation, EditDeck);
                 Listupdate_a=new ListUpdateAdd(showcardlist, Addoperation, EditDeck);
                 Listupdate_d=new ListUpdateDelete(showcardlist, Deleteoperation, EditDeck);
@@ -94,7 +95,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
                 }
         }
 
-        public void DeckReCreate(ArrayList<CardBase_E> Deck, int[] List){
+        public void DeckReCreate(ArrayList<CardBase_E> Deck, int[] List){ //デッキがすでに存在していた場合生成ごとにこのメソッドで再構成を行う。
                 for(int i=0; i<List.length; i++) {
                         switch(List[i]) {
 

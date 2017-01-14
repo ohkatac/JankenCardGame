@@ -3,17 +3,17 @@ package com.deck_edit.edit_panel_parts.list_update;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
 import com.deck_edit.DeckEditorModel;
-import com.deck_edit.edit_panel_parts.ShowCardListField;
-import com.deck_edit.edit_panel_controller.LoadOperation;
+import com.deck_edit.edit_panel_parts.ShowCardListPanel;
+import com.deck_edit.edit_panel_model.LoadPanelModel;
 import java.util.*;
 
 public class ListUpdateLoad implements Observer {
-        ShowCardListField showcardlist;
-        LoadOperation loadOperation;
+        ShowCardListPanel showcardlist;
+        LoadPanelModel loadOperation;
         String loadList;
         DeckEditorModel MyDeck;
 
-        public ListUpdateLoad(ShowCardListField sl, LoadOperation lo, DeckEditorModel Deck){
+        public ListUpdateLoad(ShowCardListPanel sl, LoadPanelModel lo, DeckEditorModel Deck){
                 showcardlist=sl;
                 loadOperation=lo;
                 loadList=" ";

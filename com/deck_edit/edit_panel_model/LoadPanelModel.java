@@ -1,4 +1,4 @@
-package com.deck_edit.edit_panel_controller;
+package com.deck_edit.edit_panel_model;
 
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
@@ -7,7 +7,7 @@ import com.asset_controller.RW_csv;
 import java.util.*;
 import java.io.*;
 
-public class LoadOperation extends Observable {
+public class LoadPanelModel extends Observable {
 
         Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;
 
