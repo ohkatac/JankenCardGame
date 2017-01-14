@@ -3,7 +3,7 @@ package com.deck_edit;
 import java.util.*;
 import com.deck_edit.edit_card_model.*;
 
-class DeckEditorModel {
+public class DeckEditorModel {
         private ArrayList<CardBase_E> MyDeck;
 
         public DeckEditorModel(){//デッキが存在しない場合や、デッキの内部が空の場合のコンストラクタ
