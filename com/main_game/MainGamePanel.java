@@ -1,3 +1,16 @@
+/*
+  MainGameのViewであるJPanelのクラス
+  このJPanelが
+MyFieldPanel myField;
+MySidePanel mySide;
+BattleFieldPanel battleField;
+RivalFieldPanel rivalField;
+RivalSidePanel rivalSide;
+の5つのJPanelを持っており、これらをBorderLayoutでこのJPanelに配置している。
+
+また、初めに作った画面遷移のフレームの性質上このクラスが次の画面へ行くためのメソッドを持っている。(このクラスがMainGameの中心)
+*/
+
 package com.main_game;
 
 import java.awt.*;
@@ -13,59 +26,49 @@ import com.asset_controller.ImageButton;
 
 // MainGame's View
 final public class MainGamePanel extends JPanel {
-        FrameController frameCont;
+  FrameController frameCont;
 
-        MainGameModel gameModel;
-        MainGameController gameController;
+  MainGameModel gameModel;
+  MainGameController gameController;
 
-// 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
-        MyFieldPanel myField;
-        MySidePanel mySide;
-        BattleFieldPanel battleField;
-        RivalFieldPanel rivalField;
-        RivalSidePanel rivalSide;
+  // 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
+  MyFieldPanel myField;
+  MySidePanel mySide;
+  BattleFieldPanel battleField;
+  RivalFieldPanel rivalField;
+  RivalSidePanel rivalSide;
 
-        public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
-                this.frameCont = frameCont;
+  public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
+    this.frameCont = frameCont;
+    gameModel = new MainGameModel();
+    this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
 
-                gameModel = new MainGameModel();
+// 5つのフィールドをつかさどるViewであるJPanelのインスタンスの生成
+    myField = new MyFieldPanel(gameModel, this);
+    mySide = new MySidePanel(gameModel);
+    battleField = new BattleFieldPanel(gameModel);
+    rivalField = new RivalFieldPanel(gameModel, this);
+    rivalSide = new RivalSidePanel(gameModel);
 
-                this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
+// MainGameの流れを制御するためのコントローラーを定義
+    gameController = new MainGameController(gameModel, this);
 
-                myField = new MyFieldPanel(gameModel, this);
-                mySide = new MySidePanel(gameModel);
-                battleField = new BattleFieldPanel(gameModel);
-                rivalField = new RivalFieldPanel(gameModel, this);
-                rivalSide = new RivalSidePanel(gameModel);
+    this.add(myField, BorderLayout.SOUTH);
+    this.add(mySide, BorderLayout.EAST);
+    this.add(battleField, BorderLayout.CENTER);
+    this.add(rivalField, BorderLayout.NORTH);
+    this.add(rivalSide, BorderLayout.WEST);
 
-                gameController = new MainGameController(gameModel, this);
+  }
 
-                this.add(myField, BorderLayout.SOUTH);
-                this.add(mySide, BorderLayout.EAST);
-                this.add(battleField, BorderLayout.CENTER);
-                this.add(rivalField, BorderLayout.NORTH);
-                this.add(rivalSide, BorderLayout.WEST);
-
-        }
-
-        public MyFieldPanel getMyField() {
-                return myField;
-        }
-        public MySidePanel getMySide() {
-                return mySide;
-        }
-        public BattleFieldPanel getBattleField() {
-                return battleField;
-        }
-        public RivalFieldPanel getRivalField() {
-                return rivalField;
-        }
-        public RivalSidePanel getRivalSide() {
-                return rivalSide;
-        }
+  public MyFieldPanel getMyField() { return myField;}
+  public MySidePanel getMySide() { return mySide; }
+  public BattleFieldPanel getBattleField() { return battleField; }
+  public RivalFieldPanel getRivalField() { return rivalField; }
+  public RivalSidePanel getRivalSide() { return rivalSide; }
 
 // JPanelをリザルト画面に切り替えるメソッド
-        public void GotoResult(){
-                frameCont.showResult(this, gameModel.getPlayer().getLife(), gameModel.getRival().getLife() );
-        }
+  public void GotoResult(){
+    frameCont.showResult(this, gameModel.getPlayer().getLife(), gameModel.getRival().getLife() );
+  }
 }

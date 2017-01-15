@@ -1,3 +1,7 @@
+/*
+  
+*/
+
 package com.main_game;
 
 import java.util.ArrayList;
@@ -34,6 +38,7 @@ public class RivalFieldPanel extends JPanel {
     deckImg.setVisible(false);
   }
 
+// Debug用に相手のカードを表示させるメソッドを残しておく
   public void ReshowCard(){
     this.removeAll();
     for(CardModel cm : rivalHands) {
@@ -43,8 +48,13 @@ public class RivalFieldPanel extends JPanel {
     this.add(deckImg);
     deckImg.setVisible(true);
   }
-
+// 
   public void closeCards() {
-
+    this.removeAll();
+    for(int i = 0; i < rivalHands.size(); i++) {
+      this.add(new ImageIcon(new File("assets/img/card/btnimg/back.png") ));
+    }
+    this.add(deckImg);
+    deckImg.setVisible(true);
   }
 }

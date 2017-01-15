@@ -1,3 +1,8 @@
+/*
+  MainGame画面の一番真ん中のバトルフィールドのViewをつかさどるクラス
+  基本はMainGameModelから必要なモデルをgetterでとってきてそれを使用するという方針
+*/
+
 package com.main_game;
 
 import java.util.ArrayList;
@@ -9,15 +14,23 @@ import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
 
 public class BattleFieldPanel extends JPanel {
+  // MainGameのModelがすべて入っているインスタンスを参照する変数。 ここからmodelを取り出していく
   MainGameModel model;
+
+  // 自分のバトルフィールドと相手のを二分割するために二つの変数に分けてさらにBorderLayoutを適用させ分ける
   JPanel myBattleF;
   JPanel riBattleF;
+
+  // 自分のカードと相手のカードの画像を表示するためのJLabel。このクラスに表示する画像を載せていく
   JLabel myCard;
   JLabel riCard;
+
+  // カードを出すときカードの裏側の画像を表示するので避難用の変数として定義する。 
+  //int a, int bのときaとbの中身を入れ替えるとき int tempを用意するがそれと同じ
   ImageIcon mycardIcon;
   ImageIcon ricardIcon;
-  String myIconPath;
-  String riIconPath;
+
+  // 現在場にカードが出ているかを記憶するための変数
   Boolean isMycard;
   Boolean isRicard;
 
@@ -36,7 +49,7 @@ public class BattleFieldPanel extends JPanel {
     isMycard = false;
     isRicard = false;
 
-    // 
+    // 一番初めはカードが何もない状態を表す画像を表示
     myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     myBattleF.add(myCard);
     riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
@@ -44,24 +57,24 @@ public class BattleFieldPanel extends JPanel {
 
   }
 
+// 自分のフィールドにカードを設置するメソッド
   public void setMyCard( CardModel card ){
-    isMycard = true;
-    myIconPath = card.getImgPath();
-    mycardIcon = new ImageIcon(myIconPath);
+    isMycard = true; // フラグをtrueにする
+    mycardIcon = new ImageIcon(card.getImgPath()); // 自分が出すカードの画像をサブ用変数にコピーしておく
 
-    myCard.setVisible(false);
-    myBattleF.removeAll();
-    myCard = new JLabel( mycardIcon );
-    myBattleF.add(myCard);
-    myCard.setVisible(true);
+    myCard.setVisible(false); // いったん場のコンポーネントを見えなくする
+    myBattleF.remove(myCard); // もともとあるmyCardコンポーネントを場から取り除いておく
+    myCard = new JLabel( mycardIcon ); // 場に出しているカードの画像を生成
+    myBattleF.add(myCard); // 自分のフィールドに指定されたカードを表示
+    myCard.setVisible(true); // コンポーネントを再表示
   }
 
   public void setRivalCard( CardModel card ){
     isRicard = true;
-    riIconPath = card.getImgPath();
-    ricardIcon = new ImageIcon(riIconPath);
+    ricardIcon = new ImageIcon(card.getImgPath());
 
     riCard.setVisible(false);
+    riBattleF.remove(riCard);
     riCard = new JLabel( new ImageIcon("assets/img/card/origin/back.png") );
     riBattleF.add(riCard);
     riCard.setVisible(true);
@@ -80,19 +93,18 @@ public class BattleFieldPanel extends JPanel {
     
     // 場のカードを空カードに設定
     myCard.setVisible(false);
+    myBattleF.remove(myCard);
     myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     myBattleF.add(myCard);
     myCard.setVisible(true);
 
     // 場のカードを空カードに設定
     riCard.setVisible(false);
+    myBattleF.remove(riCard);
     riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
     riBattleF.add(riCard);
     riCard.setVisible(true);
   }
-
-  public void setIsMycard(Boolean b) { isMycard = b; }
-  public void setIsRicard(Boolean b) { isRicard = b; }
 
   public Boolean isSetCards() {
     if(isMycard && isRicard) return true;
