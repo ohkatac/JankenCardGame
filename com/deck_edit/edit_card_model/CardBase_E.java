@@ -9,7 +9,7 @@ public class CardBase_E {
         private String Describe;//カード間の相性を記述する 必要になれば一応使えるようにはした
 
         public CardBase_E(){
-                IconImagePath=new String[4]; //継承先カード各種の初期化時に必ず行われる
+                IconImagePath=new String[3]; //継承先カード各種の初期化時に必ず行われる
         }
 
         public String getCardName(){
@@ -30,12 +30,10 @@ public class CardBase_E {
         public String getDescribe(){
                 return Describe;
         }
-        public void setPath(String NormalPath, String PressPath, String HoverPath, String UnablePath){
+        public void setPath(String NormalPath, String PressPath, String HoverPath){
                 IconImagePath[0]=NormalPath;//通常時
                 IconImagePath[1]=PressPath;//押したとき
                 IconImagePath[2]=HoverPath;//マウスが重なったとき
-                IconImagePath[3]=UnablePath;//押せない時
-                //各種アイコン画像の変化状態のパスを設定
         }
         public String[] getPath(){
                 return IconImagePath;

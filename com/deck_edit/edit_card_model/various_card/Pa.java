@@ -11,8 +11,7 @@ public class Pa extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/Pa.png",
                         "assets/img/card/btnimg/Pa_pressed.png",
-                        "assets/img/card/btnimg/Pa_hover.png",
-                        "assets/img/card/btnimg/Pa_unable.png"
+                        "assets/img/card/btnimg/Pa_hover.png"
                         );
         }
 }

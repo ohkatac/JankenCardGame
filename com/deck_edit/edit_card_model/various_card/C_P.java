@@ -11,8 +11,7 @@ public class C_P extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/ChiPa.png",
                         "assets/img/card/btnimg/ChiPa_pressed.png",
-                        "assets/img/card/btnimg/ChiPa_hover.png",
-                        "assets/img/card/btnimg/ChiPa_unable.png"
+                        "assets/img/card/btnimg/ChiPa_hover.png"
                         );
         }
 }

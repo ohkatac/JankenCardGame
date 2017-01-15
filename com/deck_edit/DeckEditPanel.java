@@ -75,7 +75,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         "assets/img/card/btnimg/PaGu.png",
                         "assets/img/card/btnimg/PaGu_pressed.png",
                         "assets/img/card/btnimg/PaGu_hover.png",
-                        "assets/img/card/btnimg/PaGu_unabled.png"
+                        "assets/img/card/btnimg/PaGu_unable.png"
                 }); P_G.addActionListener(this); Additonal.add(P_G);
                 ALL=new ImageButton(new String[] {
                         "assets/img/card/btnimg/All.png",
