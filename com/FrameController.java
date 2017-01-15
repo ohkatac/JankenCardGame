@@ -10,15 +10,17 @@ import com.deck_edit.*;
 import com.main_game.MainGamePanel;
 import com.result.*;
 import com.title.*;
+import com.explain.*;
 
 // GameMode Controller : TitlePanel, DeckEditPanel, MainGamePanel, ResultPanel
 // このController兼JFrameをMainで生成して、その上に画面を担うJPanelを載せていく
 public final class FrameController extends JFrame{
 
-    private TitlePanel titlePanel; // タイトル画面のJPanel
-    private DeckEditPanel editPanel; // 編集画面のJPanel
-    private MainGamePanel gamePanel; // メインゲーム画面のJPanel
-    private ResultPanel resultPanel; // リザルト画面のJPanel
+    private TitlePanel titlePanel; 
+    private DeckEditPanel editPanel; 
+    private MainGamePanel gamePanel; 
+    private ResultPanel resultPanel; 
+    private ExplainFrame explainFrame; 
 
 
     public FrameController() {
@@ -87,4 +89,8 @@ public final class FrameController extends JFrame{
       this.resultPanel.setVisible(true);
     }
 
+    public void showExplain() {
+      explainFrame = new ExplainFrame();
+    }
+ 
 }

@@ -62,7 +62,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     int[] checkData = mainDeck.ReadCSV();
 
 // デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)
-    if(checkData == null || checkData.length != 20) start.setEnabled(false); 
+    if(checkData == null || checkData.length != 40) start.setEnabled(false); 
 
     start.addActionListener(this);
     deckEdit.addActionListener(this);
@@ -82,7 +82,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
       frameCont.showDeckEdit(this);
     }
     else if (e.getSource() == explain) {
-
+      frameCont.showExplain();
     }
   }
 
