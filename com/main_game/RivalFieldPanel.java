@@ -13,7 +13,7 @@ public class RivalFieldPanel extends JPanel {
   MainGameModel model;
   BasePlayer rivalPlayer;
   ArrayList<CardModel> rivalHands = null;
-  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/deck.png") );
+  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/btnImg/deck.png") );
 
   public RivalFieldPanel(MainGameModel model, JPanel mainPanel) {
     super();
@@ -37,12 +37,11 @@ public class RivalFieldPanel extends JPanel {
   public void ReshowCard(){
     this.removeAll();
     for(CardModel cm : rivalHands) {
-      // 将来的にTimerをセットしてアニメーションを入れる
       this.add(cm.getImageBtn());
       cm.getImageBtn().setVisible(true);
     }
-    deckImg.setVisible(true);
     this.add(deckImg);
+    deckImg.setVisible(true);
   }
 
   public void closeCards() {

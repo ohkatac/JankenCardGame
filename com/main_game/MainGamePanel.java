@@ -57,6 +57,6 @@ final public class MainGamePanel extends JPanel {
 
 // JPanelをリザルト画面に切り替えるメソッド
   public void GotoResult(){
-    frameCont.showResult(this);
+    frameCont.showResult(this, gameModel.getPlayer().getLife(), gameModel.getRival().getLife() );
   }
 }

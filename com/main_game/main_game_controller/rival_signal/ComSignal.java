@@ -19,14 +19,26 @@ public class ComSignal implements ActionListener{
   }
 
   public void actionPerformed(ActionEvent e) {
-    // シグナルを送る処理
     Random rnd = new Random();
-    if( signalTo.getId() == BasePhase.RIVAL) {
-      signalTo.signalAction(rnd.nextInt( rival.getHands().size() ));
-    // System.out.println("jjj");
+    int index;
+    String data = "";
+
+    // シグナルを送る処理
+    if( signalTo.getId() == BasePhase.FIRST) {
+      data = String.valueOf( rnd.nextInt(3) + 1 );
     }
-    else if( signalTo.getId() == BasePhase.FIRST) {
-      signalTo.signalAction(rnd.nextInt(3) + 1);    }
+
+    else if( signalTo.getId() == BasePhase.RIVAL) {
+      if(rnd.nextBoolean() && rival.getPoppingCard() != null ) {
+        data = "decide";
+      }
+      else {
+        index = rnd.nextInt(rival.getHands().size());
+        data = String.valueOf(index);
+      }
+    }
+
+    signalTo.signalAction(data);
   }
 
   public void startSignal() {

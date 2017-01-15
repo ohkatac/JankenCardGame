@@ -25,6 +25,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     plBattleId = -1;
     riBattleId = -1;
 
+// Computer対戦の時はこのsignalを指定する。 ネットワーク対戦の場合は後で記述する。
     signal = new ComSignal(this, mainCont.getRival());
     signal.startSignal();
 
@@ -59,9 +60,9 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   }
 
   //Override
-  public void signalAction(int index) {
+  public void signalAction(String data) {
     if(riBattleId == -1) {
-      InputJanken(index, BasePlayer.RIVAL);
+      InputJanken(Integer.parseInt(data), BasePlayer.RIVAL);
       signal.destroySignal();
     }
   }

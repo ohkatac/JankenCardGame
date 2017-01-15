@@ -17,50 +17,50 @@ public class CardModel {//全カードにおける継承元のクラス
   public static final String[][] imgPath = {
     {     
           "assets/img/card/btnimg/Gu.png",
-          "assets/img/card/btnimg/Gu_unable.png",
-          "assets/img/card/btnimg/Gu_unable.png",
+          "assets/img/card/btnimg/Gu_pressed.png",
+          "assets/img/card/btnimg/Gu_hover.png",
           "assets/img/card/btnimg/Gu_unable.png",
           "assets/img/card/origin/Gu.png"
     },
     {
           "assets/img/card/btnimg/Chi.png",
-          "assets/img/card/btnimg/Chi_unable.png",
-          "assets/img/card/btnimg/Chi_unable.png",
+          "assets/img/card/btnimg/Chi_pressed.png",
+          "assets/img/card/btnimg/Chi_hover.png",
           "assets/img/card/btnimg/Chi_unable.png",
           "assets/img/card/origin/Chi.png"
     },
     {
           "assets/img/card/btnimg/Pa.png",
-          "assets/img/card/btnimg/Pa_unable.png",
-          "assets/img/card/btnimg/Pa_unable.png",
+          "assets/img/card/btnimg/Pa_pressed.png",
+          "assets/img/card/btnimg/Pa_hover.png",
           "assets/img/card/btnimg/Pa_unable.png",
           "assets/img/card/origin/Pa.png"
     },
     {
           "assets/img/card/btnimg/GuChi.png",
-          "assets/img/card/btnimg/GuChi_unable.png",
-          "assets/img/card/btnimg/GuChi_unable.png",
+          "assets/img/card/btnimg/GuChi_pressed.png",
+          "assets/img/card/btnimg/GuChi_hover.png",
           "assets/img/card/btnimg/GuChi_unable.png",
           "assets/img/card/origin/GuChi.png"
     },
     {
           "assets/img/card/btnimg/ChiPa.png",
-          "assets/img/card/btnimg/ChiPa_unable.png",
-          "assets/img/card/btnimg/ChiPa_unable.png",
+          "assets/img/card/btnimg/ChiPa_pressed.png",
+          "assets/img/card/btnimg/ChiPa_hover.png",
           "assets/img/card/btnimg/ChiPa_unable.png",
           "assets/img/card/origin/ChiPa.png"
     },
     {
           "assets/img/card/btnimg/PaGu.png",
-          "assets/img/card/btnimg/PaGu_unable.png",
-          "assets/img/card/btnimg/PaGu_unable.png",
+          "assets/img/card/btnimg/PaGu_pressed.png",
+          "assets/img/card/btnimg/PaGu_hover.png",
           "assets/img/card/btnimg/PaGu_unable.png",
           "assets/img/card/origin/PaGu.png"
     },
     {
           "assets/img/card/btnimg/All.png",
-          "assets/img/card/btnimg/All_unable.png",
-          "assets/img/card/btnimg/All_unable.png",
+          "assets/img/card/btnimg/All_pressed.png",
+          "assets/img/card/btnimg/All_hover.png",
           "assets/img/card/btnimg/All_unable.png",
           "assets/img/card/origin/All.png"
     }

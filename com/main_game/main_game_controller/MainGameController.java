@@ -59,13 +59,11 @@ final public class MainGameController {
     panel.getMyField().setVisible(true);
     panel.getRivalField().setVisible(true);
 
-    if(isPlayFirst){
-      System.out.println("you win at first");
+    if(isPlayFirst == true){
       nowPhase = playerPhase;
       nowPhase.startThisPhase();
    }
-    else if(!isPlayFirst){
-      System.out.println("you lose at first");
+    else if(isPlayFirst == false){
       nowPhase = rivalPhase;
       nowPhase.startThisPhase();
     }
@@ -73,7 +71,7 @@ final public class MainGameController {
 
 // 次のフェイズへ進むメソッド、 それぞれのフェイズクラス内部から呼び出すこととする
   public void GotoNextPhase() {
-    if(isPlayFirst) {
+    if(isPlayFirst == true) {
       if (nowPhase.getId() == BasePhase.PLAYER) {
         nowPhase = rivalPhase;
         nowPhase.startThisPhase();
@@ -88,7 +86,7 @@ final public class MainGameController {
       }
     }
 
-    else if(!isPlayFirst) {
+    else if(isPlayFirst == false) {
       if (nowPhase.getId() == BasePhase.RIVAL) {
         nowPhase = playerPhase;
         nowPhase.startThisPhase();
@@ -105,6 +103,7 @@ final public class MainGameController {
 
   }
 
+// メインゲームを終了しリザルト画面へ進むメソッド
   public void FinishMainGame() { panel.GotoResult(); }
 
 // method to return some Field Instance
