@@ -27,7 +27,6 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
         ListUpdateDelete Listupdate_d;
         ListUpdateLoad Listupdate_l;
         AddPanel addtodeck;
-        DeletePanel deletecardindeck;
         ShowCardListPanel showcardlist;
         SavePanelModel saveOperation;
         LoadPanelModel loadOperation;
@@ -67,18 +66,16 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
                 Addoperation=new AddPanelModel();
                 saveOperation=new SavePanelModel();
                 loadOperation=new LoadPanelModel();
-                showcardlist=new ShowCardListPanel(EditDeck);
+                showcardlist=new ShowCardListPanel(EditDeck, Deleteoperation);
                 addtodeck=new AddPanel(EditDeck, Addoperation, showcardlist);
-                deletecardindeck=new DeletePanel(EditDeck, Deleteoperation, showcardlist);
                 saveAndloadPanel=new SaveAndLoadPanel(EditDeck, showcardlist, saveOperation, loadOperation);
-                Listupdate_l=new ListUpdateLoad(showcardlist, loadOperation, EditDeck);
-                Listupdate_a=new ListUpdateAdd(showcardlist, Addoperation, EditDeck);
-                Listupdate_d=new ListUpdateDelete(showcardlist, Deleteoperation, EditDeck);
+                Listupdate_l=new ListUpdateLoad(showcardlist, loadOperation, EditDeck, addtodeck);
+                Listupdate_a=new ListUpdateAdd(showcardlist, Addoperation, EditDeck, addtodeck);
+                Listupdate_d=new ListUpdateDelete(showcardlist, Deleteoperation, EditDeck, addtodeck);
                 end = new JButton("タイトルへ進む");
                 this.setLayout(new BorderLayout());        //BorderLayoutに設定しなおした。(沢畑)
                 this.add(end, BorderLayout.NORTH);
                 this.add(addtodeck, BorderLayout.WEST);
-                this.add(deletecardindeck, BorderLayout.SOUTH);
                 this.add(showcardlist, BorderLayout.CENTER);
                 this.add(saveAndloadPanel, BorderLayout.EAST);
 

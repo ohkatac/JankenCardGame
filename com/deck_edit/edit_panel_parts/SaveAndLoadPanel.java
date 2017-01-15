@@ -40,11 +40,10 @@ public class SaveAndLoadPanel extends JPanel implements ActionListener {
 
         public void actionPerformed(ActionEvent e){
                 /*セーブ,ロード,各操作ModelをObserverパターンのために分離*/
-                if(e.getSource()==Save && showCardList.getDeckSize()>0)
+                if(e.getSource()==Save && MyDeck.CheckDeck()!=null)
                         saveOperation.SaveDeck(DeckData, MyDeck, DeckManager);
-                if(e.getSource()==Load) {
-                        loadOperation.LoadDeck(MyDeck, DeckManager, showCardList.getDeckSize());
-                        showCardList.setDeckSize(MyDeck.CheckDeck().size());//ロード後はデッキの大きさをセットする。
+                if(e.getSource()==Load && MyDeck.CheckDeck()!=null) {
+                        loadOperation.LoadDeck(MyDeck, DeckManager, MyDeck.CheckDeck().size());
                 }
         }
 }
