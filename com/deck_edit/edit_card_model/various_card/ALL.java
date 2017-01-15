@@ -16,3 +16,4 @@ public class ALL extends CardBase_E {
                         );
         }
 }
+//グーチーパーのカードデータ

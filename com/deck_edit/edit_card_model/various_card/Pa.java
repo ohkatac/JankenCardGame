@@ -16,3 +16,4 @@ public class Pa extends CardBase_E {
                         );
         }
 }
+//パーのカードデータ

@@ -16,3 +16,4 @@ public class P_G extends CardBase_E {
                         );
         }
 }
+//パーグーのカードデータ

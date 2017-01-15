@@ -16,3 +16,4 @@ public class Gu extends CardBase_E {
                         );
         }
 }
+//グーのカードデータ

@@ -9,31 +9,29 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import com.asset_controller.ImageButton;
 import com.asset_controller.RW_csv;
 import java.io.*;
 
-// デッキ編集画面のVC 操作に反応して画面上の再描画等を行う
+// デッキ編集画面のView&Controller 操作に反応して画面上の再描画等を行う
 final public class DeckEditPanel extends JPanel implements ActionListener, Observer {
-        FrameController frameCont;
-        JButton end;
-        JPanel Additonal, ShowAndDelete, SaveAndLoad;
-        JPanel CardList, Text;
-        ImageButton Gu, Pa, Chi, G_C, C_P, P_G, ALL;
-        JButton Save, Load;
-        JLabel HowTo, Message;
-        CardIconBase[] CardIcon;
-        DeckEditorModel MyDeck;
-        int countGC, countCP, countPG, countALL;
-        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;
+        FrameController frameCont;//画面表示、遷移のための変数。詳細はFrameController.javaを参照
+        JButton end;//タイトルへ戻るためのボタン
+        JPanel Additonal, ShowAndDelete, SaveAndLoad;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
+        JPanel CardList, Text;//ShowAndDeleteにてCardListはカードの表示、Textは使用方法とセーブ、ロードの通知を表示
+        ImageButton Gu, Pa, Chi, G_C, C_P, P_G, ALL;//追加操作パネル上でのボタン 詳細はImageButton.javaを参照
+        JButton Save, Load;//セーブ、ロードを行うボタン
+        JLabel HowTo, Message;//HowToは使用方法、Messageはセーブ、ロード通知
+        CardIconBase[] CardIcon;//デッキ内部のカード表示および削除ボタン担当　詳細はCardIconBase.javaを参照
+        DeckEditorModel MyDeck;//デッキ編集操作に関するModel 必要な処理はここにすべて入っている 詳細はDeckEditorModel.java参照
+        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;//追加時に必要な各種カードデータ
 
 
         public DeckEditPanel(FrameController frameCont) {         // FrameControllerでPanelを管理するために引数にこれをとる
                 this.frameCont = frameCont;
-                MyDeck=new DeckEditorModel();
-                MyDeck.addObserver(this);
 
-
+                /* 各種操作ごとのパネルの初期化とレイアウト設定*/
                 this.setLayout(new BorderLayout());
                 Additonal=new JPanel();
                 Additonal.setLayout(new GridLayout(7,1));
@@ -95,28 +93,32 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 this.add(SaveAndLoad, BorderLayout.EAST);
 
                 /*カード表記と削除に関するComponent*/
+                MyDeck=new DeckEditorModel();//デッキを初期化
+                MyDeck.addObserver(this);//監視対象に登録
                 CardList=new JPanel();
                 CardList.setLayout(new GridLayout(5,8));
                 CardIcon=new CardIconBase[40];
                 for(int i=0; i<40; i++) {
-                        CardIcon[i]=new CardIconBase(i, MyDeck);
-                        CardList.add(CardIcon[i]);
+                        CardIcon[i]=new CardIconBase(i, MyDeck);//CardIconBaseごとに初期化
+                        CardList.add(CardIcon[i]);//配置　基本的に表示の切り替えと反応のOnOffのみ行うので配置後の削除は行わない
                 }
                 Message=new JLabel("カードが存在しません");
-                if(MyDeck.CheckDeck()!=null) {
-                        int i=0;
-                        for(CardBase_E Card: MyDeck.CheckDeck()) {
+                Message.setHorizontalAlignment(JLabel.CENTER);
+                if(MyDeck.CheckDeck()!=null) {//ここで、デッキにカードが一枚でも格納されている場合アイコンを表示する
+                        for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
                                 CardIcon[i].setCardIcon();
-                                i++;
                         }
+                        MyDeck.Inform();
                         Message.setText("ロードしました");
                 }
                 Text=new JPanel();
                 Text.setLayout(new GridLayout(2,1));
                 HowTo=new JLabel("右クリックで削除します");
+                HowTo.setHorizontalAlignment(JLabel.CENTER);
                 Text.add(HowTo); Text.add(Message);
                 ShowAndDelete.add(Text, BorderLayout.NORTH);
                 ShowAndDelete.add(CardList, BorderLayout.CENTER);
+                ShowAndDelete.setBorder(new EmptyBorder(2,2,2,0));//見やすくするためにBorderを設定
                 this.add(ShowAndDelete, BorderLayout.CENTER);
 
                 /*タイトルに戻るためのComponent*/
@@ -175,25 +177,24 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 
         public void update(Observable o, Object arg){
                 Boolean[] Flag;
-                Flag=MyDeck.getChekerList();
-                Gu.Enabled(); Chi.Enabled(); Pa.Enabled();
+                Gu.Enabled(); Chi.Enabled(); Pa.Enabled();//追加ボタン、リストアイコンの初期化
                 G_C.Enabled(); C_P.Enabled(); P_G.Enabled();
                 ALL.Enabled();
-                MyDeck.CountChecker();
+                MyDeck.CountChecker(); //ここでカウンターをチェック、フラグを更新する
                 for(int i=0; i<40; i++) {
                         CardIcon[i].IconClear();
                 }
-                if(MyDeck.CheckDeck()!=null) {
-                        for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
+                if(MyDeck.CheckDeck()!=null) {//ここでデッキ内にカードが存在する場合、アイコンの再配置、
+                        for(int i=0; i<MyDeck.CheckDeck().size(); i++) { //及び追加ボタンの使用可否を判定する
                                 CardIcon[i].setCardIcon();
                         }
-                        Flag=MyDeck.getChekerList();
+                        Flag=MyDeck.getChekerList();//CheckerをここでFlagに代入、判定を行う
                         if(Flag[0]==false) G_C.Disabled();
                         if(Flag[1]==false) C_P.Disabled();
                         if(Flag[2]==false) P_G.Disabled();
                         if(Flag[3]==false) ALL.Disabled();
-                        if(MyDeck.CheckDeck().size()>=40) {
-                                Gu.Disabled(); Chi.Disabled(); Pa.Disabled();
+                        if(MyDeck.CheckDeck().size()>=40) {//最終的に40枚を超えた場合(超えることは直接データを
+                                Gu.Disabled(); Chi.Disabled(); Pa.Disabled();//いじらないと起きないが)全てのボタンを使用不可にする
                                 G_C.Disabled(); C_P.Disabled(); P_G.Disabled();
                                 ALL.Disabled();
                         }

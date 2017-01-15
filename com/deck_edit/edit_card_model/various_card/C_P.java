@@ -16,3 +16,4 @@ public class C_P extends CardBase_E {
                         );
         }
 }
+//チーパーのカードデータ

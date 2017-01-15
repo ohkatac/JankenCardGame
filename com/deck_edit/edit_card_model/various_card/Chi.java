@@ -16,3 +16,4 @@ public class Chi extends CardBase_E {
                         );
         }
 }
+//チーのカードデータ

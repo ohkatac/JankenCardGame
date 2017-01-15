@@ -17,3 +17,4 @@ public class G_C extends CardBase_E {
 
         }
 }
+//グーチーのカードデータ
