@@ -38,7 +38,7 @@ public class DeckEditorModel extends Observable {
 
 
         public void AddCardToDeck(CardBase_E Card){//デッキ追加用のメソッド
-                if(Card.getID()==4) countGC++;
+                if(Card.getID()==4) countGC++; //対象となるカードに合わせて増加
                 if(Card.getID()==5) countCP++;
                 if(Card.getID()==6) countPG++;
                 if(Card.getID()==7) countALL++;
@@ -51,7 +51,7 @@ public class DeckEditorModel extends Observable {
         }
         public void deleteCard(int number){//デッキ内部のカードの削除用のメソッド
                 int ID=getCard(number).getID();
-                if(ID==4) countGC--;
+                if(ID==4) countGC--; //対象となるカードに合わせて減少
                 if(ID==5) countCP--;
                 if(ID==6) countPG--;
                 if(ID==7) countALL--;
@@ -64,9 +64,10 @@ public class DeckEditorModel extends Observable {
                 if(countCP>=5) Checker[1]=false; else Checker[1]=true;
                 if(countPG>=5) Checker[2]=false; else Checker[2]=true;
                 if(countALL>=3) Checker[3]=false; else Checker[3]=true;
+                //一定値以上の場合false(=追加不可能)とする
         }
         public Boolean[] getChekerList(){
-                return Checker;
+                return Checker;//現在のChekerを返す
         }
 
         public ArrayList<CardBase_E> CheckDeck(){//デッキが存在するかどうかの確認

@@ -102,19 +102,21 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         CardIcon[i]=new CardIconBase(i, MyDeck);
                         CardList.add(CardIcon[i]);
                 }
+                Message=new JLabel("カードが存在しません");
                 if(MyDeck.CheckDeck()!=null) {
                         int i=0;
                         for(CardBase_E Card: MyDeck.CheckDeck()) {
                                 CardIcon[i].setCardIcon();
                                 i++;
                         }
+                        Message.setText("ロードしました");
                 }
                 Text=new JPanel();
                 Text.setLayout(new GridLayout(2,1));
                 HowTo=new JLabel("右クリックで削除します");
-                Message=new JLabel();
                 Text.add(HowTo); Text.add(Message);
-                ShowAndDelete.add(Text); ShowAndDelete.add(CardList);
+                ShowAndDelete.add(Text, BorderLayout.NORTH);
+                ShowAndDelete.add(CardList, BorderLayout.CENTER);
                 this.add(ShowAndDelete, BorderLayout.CENTER);
 
                 /*タイトルに戻るためのComponent*/
@@ -161,10 +163,13 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                                 MyDeck.AddCardToDeck(all);
                         }
                 }
-                if(e.getSource()==Save && MyDeck.CheckDeck()!=null) //セーブ、ロードボタンに対する操作
+                if(e.getSource()==Save && MyDeck.CheckDeck()!=null) { //セーブ、ロードボタンに対する操作
                         MyDeck.SaveDeck();
+                        Message.setText("セーブしました");
+                }
                 if(e.getSource()==Load && MyDeck.CheckDeck()!=null) {
                         MyDeck.LoadDeck();
+                        Message.setText("ロードしました");
                 }
         }
 

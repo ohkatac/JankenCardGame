@@ -10,11 +10,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class CardIconBase extends JLabel implements MouseListener {
-        int number;
+        int number;//デッキ内での番号
         DeckEditorModel MyDeck;//削除操作用
-        CardBase_E Card;
-        String[] ImagePath;
-        ImageIcon Normal, Pressed, Hover;
+        CardBase_E Card;//アイコンのパスを確保するため
+        String[] ImagePath;//アイコンとなる画像のパス群
+        ImageIcon Normal, Pressed, Hover;//それぞれの状態に対応するアイコン
 
         public CardIconBase(int number, DeckEditorModel Deck){
                 this.number=number;
