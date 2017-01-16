@@ -11,8 +11,8 @@ public class ALL extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/All.png",
                         "assets/img/card/btnimg/All_pressed.png",
-                        "assets/img/card/btnimg/All_hover.png",
-                        "assets/img/card/btnimg/All_unable.png"
+                        "assets/img/card/btnimg/All_hover.png"
                         );
         }
 }
+//グーチーパーのカードデータ

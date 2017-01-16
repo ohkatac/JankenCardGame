@@ -11,8 +11,8 @@ public class Gu extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/Gu.png",
                         "assets/img/card/btnimg/Gu_pressed.png",
-                        "assets/img/card/btnimg/Gu_hover.png",
-                        "assets/img/card/btnimg/Gu_unable.png"
+                        "assets/img/card/btnimg/Gu_hover.png"
                         );
         }
 }
+//グーのカードデータ

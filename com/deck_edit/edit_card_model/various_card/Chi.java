@@ -11,8 +11,8 @@ public class Chi extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/Chi.png",
                         "assets/img/card/btnimg/Chi_pressed.png",
-                        "assets/img/card/btnimg/Chi_hover.png",
-                        "assets/img/card/btnimg/Chi_unable.png"
+                        "assets/img/card/btnimg/Chi_hover.png"
                         );
         }
 }
+//チーのカードデータ

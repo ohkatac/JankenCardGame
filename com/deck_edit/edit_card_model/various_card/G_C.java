@@ -11,9 +11,9 @@ public class G_C extends CardBase_E {
                 setPath(
                         "assets/img/card/btnimg/GuChi.png",
                         "assets/img/card/btnimg/GuChi_pressed.png",
-                        "assets/img/card/btnimg/GuChi_hover.png",
-                        "assets/img/card/btnimg/GuChi_unable.png"
+                        "assets/img/card/btnimg/GuChi_hover.png"
                         );
 
         }
 }
+//グーチーのカードデータ
