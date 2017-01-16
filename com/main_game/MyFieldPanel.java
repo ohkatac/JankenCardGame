@@ -1,3 +1,8 @@
+/*
+  自分のフィールドのViewをつかさどるJPanel
+
+*/
+
 package com.main_game;
 
 import java.util.ArrayList;
@@ -25,6 +30,8 @@ public class MyFieldPanel extends JPanel {
     myPlayer = model.getPlayer();
     myHands = myPlayer.getHands();
   }
+  
+  // このフィールドをいったんすべて見えなくするメソッド。 再描画のために使う
   public void setImvisible() {
     for(CardModel cm : myHands) {
       cm.getImageBtn().setVisible(false);
@@ -32,6 +39,7 @@ public class MyFieldPanel extends JPanel {
     deckImg.setVisible(false);
   }
 
+//  再描画のために使う
   public void ReshowCard(){
     this.removeAll();
     for(CardModel cm : myHands) {

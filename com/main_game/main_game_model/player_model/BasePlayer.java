@@ -1,3 +1,9 @@
+/*
+  MyPlayer, RivalPlayerの親クラス
+  基本的なメソッドはすべてこの中に書いてある。
+  今回は子クラスを作るまでもなかったが将来的に拡張性を持たせるためにあえて継承させて使った。
+*/
+
 package com.main_game.main_game_model.player_model;
 
 import java.util.ArrayList;

@@ -5,21 +5,18 @@ import java.awt.*;
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import java.awt.event.*;
+import java.awt.Dimension;
+import javax.swing.table.DefaultTableModel;
 
 final public class ExplainFrame extends JFrame implements ActionListener{
 
   JPanel cardPanel;
   CardLayout layout;
 
-  public static void main(String[] args){
-    ExplainFrame frame = new ExplainFrame();
-
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setBounds(10,10,900,750);
-    frame.setVisible(true);
-  }
-
   public ExplainFrame(){
+
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setBounds(10,10,900,750);
 
   //1ページ目
     JPanel card1 = new JPanel();
@@ -53,8 +50,27 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     card1.add(label,BorderLayout.NORTH);
 
   //2ページ目
+
+    long serialVersionUID = 1L;
+    JTable table;
+    JScrollPane pane;
     JPanel card2 = new JPanel();
-    card2.add(new JButton("button"));
+
+    String[][] data = {
+      {"グー","△","〇","×","△","×","×","×"},
+      {"チョキ","×","△","〇","×","△","×","×"},
+      {"パー","〇","×","△","×","×","△","×"},
+      {"グーチー","△","〇","〇","△","×","〇","×"},
+      {"チーパー","〇","△","〇","〇","△","×","×"},
+      {"パーグー","〇","〇","△","×","〇","△","×"},
+      {"グーチーパー","〇","〇","〇","〇","〇","〇","△"},
+    };
+
+    String[] header = {"あなた|相手","グー","チョキ","パー","グーチー","チーパー","パーグー","グーチーパー"};
+    table = new JTable(data,header);
+    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    pane = new JScrollPane(table);
+    card2.add(pane,BorderLayout.CENTER);
 
   //新しくパネル生成
     cardPanel = new JPanel();
@@ -65,17 +81,17 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     cardPanel.add(card2);
 
   //カード移動用ボタン追加
-    JButton prevButton = new JButton("前ページへ");
-    prevButton.addActionListener(this);
-    prevButton.setActionCommand("Prev");
+    JButton firstButton = new JButton("前ページへ");
+    firstButton.addActionListener(this);
+    firstButton.setActionCommand("Previous");
 
-    JButton nextButton = new JButton("次ページへ");
-    nextButton.addActionListener(this);
-    nextButton.setActionCommand("Next");
+    JButton lastButton = new JButton("次ページへ");
+    lastButton.addActionListener(this);
+    lastButton.setActionCommand("Next");
 
     JPanel btnPanel = new JPanel();
-    btnPanel.add(prevButton);
-    btnPanel.add(nextButton);
+    btnPanel.add(firstButton);
+    btnPanel.add(lastButton);
 
     add(cardPanel, BorderLayout.CENTER);
     add(btnPanel, BorderLayout.PAGE_END);
@@ -85,15 +101,17 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     cardPanel.add(scrollpane);
+
+    this.setVisible(true);
   }
 
   public void actionPerformed(ActionEvent e){
     String cmd = e.getActionCommand();
 
-    if (cmd.equals("Prev")){
-      layout.previous(cardPanel);
-    }else if (cmd.equals("Next")){
+    if (cmd.equals("Previous")){
       layout.next(cardPanel);
+    }else if (cmd.equals("Next")){
+      layout.previous(cardPanel);
     }
   }
 

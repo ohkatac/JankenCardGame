@@ -1,3 +1,8 @@
+/*
+  右側にあるnextBtnなどが配置されているJPanel
+  単なるViewなのでActionLisetenerはControllerで定義する。
+*/
+
 package com.main_game;
 
 import java.util.ArrayList;

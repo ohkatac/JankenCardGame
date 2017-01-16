@@ -5,7 +5,12 @@ import java.util.*;
 public class CardBase_E {
         private String name;//カードの名前
         private int ID;//カードの識別用,MainGame側と同様の値を振り分ける。
-        /*必要があればカードごとにデッキに組み込める上限を設定するための値を設定*/
+        private String[] IconImagePath;//各種追加ボタンやパネルのアイコン生成時用
+        private String Describe;//カード間の相性を記述する 必要になれば一応使えるようにはした
+
+        public CardBase_E(){
+                IconImagePath=new String[3]; //継承先カード各種の初期化時に必ず行われる
+        }
 
         public String getCardName(){
                 return name;
@@ -19,7 +24,19 @@ public class CardBase_E {
         public void setID(int ID){
                 this.ID=ID;
         }
-/*  public int getCost(){
-    return cost;
-   }上限値のために必要な値を返すMethod*/
+        public void setDescribe(String content){
+                Describe=content;
+        }
+        public String getDescribe(){
+                return Describe;
+        }
+        public void setPath(String NormalPath, String PressPath, String HoverPath){
+                IconImagePath[0]=NormalPath;//通常時
+                IconImagePath[1]=PressPath;//押したとき
+                IconImagePath[2]=HoverPath;//マウスが重なったとき
+        }
+        public String[] getPath(){
+                return IconImagePath;
+        }//パスが書かれた配列を返す
+
 }

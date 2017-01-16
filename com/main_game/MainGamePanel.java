@@ -1,3 +1,16 @@
+/*
+  MainGameのViewであるJPanelのクラス
+  このJPanelが
+MyFieldPanel myField;
+MySidePanel mySide;
+BattleFieldPanel battleField;
+RivalFieldPanel rivalField;
+RivalSidePanel rivalSide;
+の5つのJPanelを持っており、これらをBorderLayoutでこのJPanelに配置している。
+
+また、初めに作った画面遷移のフレームの性質上このクラスが次の画面へ行くためのメソッドを持っている。(このクラスがMainGameの中心)
+*/
+
 package com.main_game;
 
 import java.awt.*;
@@ -6,10 +19,9 @@ import java.util.ArrayList;
 
 import com.FrameController;
 import com.main_game.main_game_model.MainGameModel;
-import com.main_game.main_game_model.player_model.*;
-import com.main_game.main_game_model.card_model.*;
 import com.main_game.main_game_controller.MainGameController;
-
+import com.main_game.main_game_model.card_model.*;
+import com.main_game.main_game_model.player_model.*;
 import com.asset_controller.ImageButton;
 
 // MainGame's View
@@ -19,7 +31,7 @@ final public class MainGamePanel extends JPanel {
   MainGameModel gameModel;
   MainGameController gameController;
 
-// 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
+  // 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
   MyFieldPanel myField;
   MySidePanel mySide;
   BattleFieldPanel battleField;
@@ -28,17 +40,17 @@ final public class MainGamePanel extends JPanel {
 
   public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
-
     gameModel = new MainGameModel();
-
     this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
 
+// 5つのフィールドをつかさどるViewであるJPanelのインスタンスの生成
     myField = new MyFieldPanel(gameModel, this);
     mySide = new MySidePanel(gameModel);
     battleField = new BattleFieldPanel(gameModel);
     rivalField = new RivalFieldPanel(gameModel, this);
     rivalSide = new RivalSidePanel(gameModel);
 
+// MainGameの流れを制御するためのコントローラーを定義
     gameController = new MainGameController(gameModel, this);
 
     this.add(myField, BorderLayout.SOUTH);
@@ -49,7 +61,7 @@ final public class MainGamePanel extends JPanel {
 
   }
 
-  public MyFieldPanel getMyField() { return myField; }
+  public MyFieldPanel getMyField() { return myField;}
   public MySidePanel getMySide() { return mySide; }
   public BattleFieldPanel getBattleField() { return battleField; }
   public RivalFieldPanel getRivalField() { return rivalField; }

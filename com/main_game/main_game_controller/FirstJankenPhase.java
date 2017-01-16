@@ -1,3 +1,11 @@
+/*
+  一番初めの先攻後攻を決めるためのじゃんけんフェイズ
+  コンピュータ対戦。ネットワーク対戦両方に対応できるように
+  com/main_game/main_game_model/rival_signal/ComSignal.java(Timer駆動にしてある)
+  クラスより発信してきた信号(String value)を読み取りそれにより相手の動きをこちら側でも再現している。
+  後にネットワーク対戦も実装する。・
+*/
+
 package com.main_game.main_game_controller;
 
 import java.awt.event.ActionListener;
@@ -33,6 +41,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     chi = new CardModel(2);
     pa = new CardModel(3);
 
+// 自分の場にじゃんけんカードをセット
     mainCont.getMyField().add(gu.getImageBtn());
     mainCont.getMyField().add(chi.getImageBtn());
     mainCont.getMyField().add(pa.getImageBtn());
@@ -41,11 +50,13 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     chi.getImageBtn().addActionListener(this);
     pa.getImageBtn().addActionListener(this);
 
+// 相手フィールドにもカードを裏面で設置
     mainCont.getRivalField().add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png")));
     mainCont.getRivalField().add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png")));
     mainCont.getRivalField().add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png")));
   }
 
+// 自分が何を出したのかをよみとるコールバックメソッド。 
   public void actionPerformed(ActionEvent e) {
     // ここに初めのじゃんけんの処理を入れる
     if (e.getSource() == gu.getImageBtn()) {
@@ -59,6 +70,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     }
   }
 
+// 相手が何を出したのかを読み取るためのメソッド。 rival_signal側でこのメソッドが呼び出され、それによって動きを再現している。
   //Override
   public void signalAction(String data) {
     if(riBattleId == -1) {
@@ -67,6 +79,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     }
   }
 
+// 自分もしくは相手がじゃんけんの手を出したときに呼び出すメソッド、 両プレイヤーが手を出していたら勝敗判定が始まる。
   public void InputJanken(int jankenId, int basePlayerId) {
     if(basePlayerId == BasePlayer.PLAYER) {
       // 
@@ -85,12 +98,13 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
           // あいこの時の処理
           plBattleId = -1;
           riBattleId = -1;
+          // もう一回じゃんけんのやりなおし
 
           gu.EnableButton();
           chi.EnableButton();
           pa.EnableButton();
 
-          signal.startSignal();
+          signal.startSignal(); // 再び信号発信を再開させる。
           break;
         case 1:
           // 後攻に設定する

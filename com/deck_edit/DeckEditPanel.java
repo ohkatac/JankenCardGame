@@ -1,475 +1,145 @@
 package com.deck_edit;
 
 import com.FrameController;
-import com.deck_edit.DeckEditorModel;
 import com.deck_edit.edit_card_model.*;
 import com.deck_edit.edit_card_model.various_card.*;
+import com.deck_edit.DeckEditorModel;
+import com.deck_edit.CardIconBase;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import com.asset_controller.ImageButton;
 import com.asset_controller.RW_csv;
 import java.io.*;
 
-class AddOperation extends Observable {//追加操作のModel
-
-        public void AddCardtoDeck(CardBase_E Card, DeckEditorModel AddDeck){
-                AddDeck.setCardToDeck(Card);
-                setChanged();
-                notifyObservers();
-
-        }
-}
-
-class AddToDeck extends JPanel implements ActionListener {//デッキ編集:追加操作のviewとcontroller
-        ImageButton Gu, Chi, Pa, G_C, C_P, P_G, ALL;//デッキ追加操作ボタン
-        JLabel ex_Gu, ex_Chi, ex_Pa, ex_G_C, ex_C_P, ex_P_G, ex_ALL; //カード説明;
-        DeckEditorModel MyDeck;//デッキにカードを追加するための変数
-        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;//各種カードデータ
-        AddOperation addOperation;
-        ShowCardList showCardList;
-/*追加操作と削除操作はデッキ内容表示のクラスからObservableとする。*/
-
-        public AddToDeck(DeckEditorModel MyDeck, AddOperation ado, ShowCardList sc){//追加操作パネルのVCコンストラクタ デッキを値として引き渡す。
-                Gu=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); Gu.addActionListener(this);//各種ボタンの設定とActionListenerへの追加
-                Pa=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); Pa.addActionListener(this);
-                Chi=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); Chi.addActionListener(this);
-                G_C=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); G_C.addActionListener(this);
-                C_P=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); C_P.addActionListener(this);
-                P_G=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); P_G.addActionListener(this);
-                ALL=new ImageButton(new String[] {
-                        "assets/img/button/redButton.png",
-                        "assets/img/button/pinkButton.png",
-                        "assets/img/button/greenButton.png",
-                        "asstes/img/button/blackButton.png"
-                }); ALL.addActionListener(this);
-
-                this.MyDeck=MyDeck;//引き渡された値を代入
-                addOperation=ado;
-                showCardList=sc;
-                /*ここはカードの名前の記述*/
-                ex_Gu=new JLabel("グー"); ex_Chi=new JLabel("チー"); ex_Pa=new JLabel("パー");
-                ex_G_C=new JLabel("グーチー"); ex_C_P=new JLabel("チーパー"); ex_P_G=new JLabel("パーグー");
-                ex_ALL=new JLabel("グーチーパー");
-
-
-                this.setLayout(new GridLayout(7,2));//レイアウト設定　今回はGridLayoutを用いる
-                this.add(ex_Gu); this.add(Gu); //AddCard.add(ex_Gu);
-                this.add(ex_Chi); this.add(Chi); //AddCard.add(ex_Chi);
-                this.add(ex_Pa); this.add(Pa); //AddCard.add(ex_Pa);
-                this.add(ex_G_C); this.add(G_C); //AddCard.add(ex_G_C);
-                this.add(ex_C_P); this.add(C_P); //AddCard.add(ex_C_P);
-                this.add(ex_P_G); this.add(P_G); //AddCard.add(ex_P_G);
-                this.add(ex_ALL); this.add(ALL); //AddCard.add(ex_ALL);
-        }
-
-        public void actionPerformed(ActionEvent e){
-                /*デッキ追加時のカードの判定部分　switch文は定数のみでしか構成できないので長いがif文で構成*/
-                if(showCardList.getDeckSize()<20) {
-                        if(e.getSource()==Gu) {
-                                G=new Gu();
-                                addOperation.AddCardtoDeck(G, MyDeck);
-                        }
-                        if(e.getSource()==Pa) {
-                                P=new Pa();
-                                addOperation.AddCardtoDeck(P, MyDeck);
-                        }
-                        if(e.getSource()==Chi) {
-                                C=new Chi();
-                                addOperation.AddCardtoDeck(C, MyDeck);
-                        }
-                        if(e.getSource()==G_C) {
-                                GC=new G_C();
-                                addOperation.AddCardtoDeck(GC, MyDeck);
-                        }
-                        if(e.getSource()==C_P) {
-                                CP=new C_P();
-                                addOperation.AddCardtoDeck(CP, MyDeck);
-                        }
-                        if(e.getSource()==P_G) {
-                                PG=new P_G();
-                                addOperation.AddCardtoDeck(PG, MyDeck);
-                        }
-                        if(e.getSource()==ALL) {
-                                all=new ALL();
-                                addOperation.AddCardtoDeck(all, MyDeck);
-                        }
-                }
-                showCardList.setDeckSize(MyDeck.CheckDeck().size());
-        }
-}
-
-class DeleteOperation extends Observable {
-
-        public void DeleteCardforDeck(int number, DeckEditorModel MyDeck){
-
-                MyDeck.deleteCard(number);
-                setChanged();
-                notifyObservers();
-
-        }
-}
-
-class DeleteCardInDeck extends JPanel implements ActionListener {//削除操作を行うパネルのMVC
-        int number;
-        JButton delete;
-        DeckEditorModel MyDeck;
-        JTextField delNumber;
-        DeleteOperation deleteOperation;
-        ShowCardList showCardList;
-
-        public DeleteCardInDeck(DeckEditorModel MyDeck, DeleteOperation dO, ShowCardList sc){
-                delete=new JButton("番目を削除");
-                delNumber=new JTextField(2);
-                this.MyDeck=MyDeck;
-                this.setLayout(new GridLayout(1,2));
-                this.add(delNumber);
-                this.add(delete);
-                delete.addActionListener(this);
-                deleteOperation=dO;
-                showCardList=sc;
-        }
-
-        public void actionPerformed(ActionEvent e){
-                int j;
-                j=Integer.parseInt(delNumber.getText());
-                if(showCardList.getDeckSize()>0) {
-                        deleteOperation.DeleteCardforDeck(j-1, MyDeck);
-                        if(MyDeck.CheckDeck()==null) {
-                                showCardList.setDeckSize(0);
-                        }else{
-                                showCardList.setDeckSize(MyDeck.CheckDeck().size());
-                        }
-                }
-        }
-}
-
-class ListUpdate_Add implements Observer {//追加操作に対するObserver. Observerパターンの都合により分離.
-        ShowCardList showCardList;//リスト操作用
-        AddOperation addoperation;
-        String addList;//リストに表示する文
-        DeckEditorModel MyDeck;
-
-        public ListUpdate_Add(ShowCardList sl, AddOperation ao, DeckEditorModel Deck){
-                showCardList=sl;
-                addoperation=ao;
-                addList=" ";
-                MyDeck=Deck;
-                addoperation.addObserver(this);
-        }
-
-        public void update(Observable O, Object arg){
-                int i;
-                i=MyDeck.CheckDeck().size();
-                if(i==20) {
-                        showCardList.List[i].setText("これ以上カードを追加できません.");
-                }
-                addList=Integer.toString(i);
-                addList=addList+". "+MyDeck.getCard(i-1).getCardName();
-                showCardList.List[i-1].setText(addList);
-
-        }
-
-}
-
-class ListUpdate_Del implements Observer {//削除操作に対するObserver. Observerパターンの都合により分離.
-        ShowCardList Showcardlist;
-        DeleteOperation deloperation;
-        String delList;//リストに表示する文
-        DeckEditorModel MyDeck;
-
-        public ListUpdate_Del(ShowCardList sl, DeleteOperation delo, DeckEditorModel Deck){
-                Showcardlist=sl;
-                deloperation=delo;
-                delList=" ";
-                MyDeck=Deck;
-                deloperation.addObserver(this);
-        }
-
-        public void update(Observable O, Object arg){
-                for(int i=0; i<=20; i++) {
-                        Showcardlist.List[i].setText(" ");
-                }
-                for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
-                        delList=Integer.toString(i+1);
-                        delList=delList+". "+MyDeck.getCard(i).getCardName();
-                        Showcardlist.List[i].setText(delList);
-                        if(i==20) Showcardlist.List[20].setText("これ以上カードを追加できません");
-                }
-                if(MyDeck.CheckDeck().size()==0) Showcardlist.List[0].setText("カードが存在しません");
-        }
-}
-
-class ListUpdate_Load implements Observer {
-        ShowCardList showcardlist;
-        LoadOperation loadOperation;
-        String loadList;
-        DeckEditorModel MyDeck;
-
-        public ListUpdate_Load(ShowCardList sl, LoadOperation lo, DeckEditorModel Deck){
-                showcardlist=sl;
-                loadOperation=lo;
-                loadList=" ";
-                MyDeck=Deck;
-                loadOperation.addObserver(this);
-        }
-
-        public void update(Observable O, Object arg){
-                for(int i=0; i<=20; i++) {
-                        showcardlist.List[i].setText(" ");
-                }
-                for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
-                        if(MyDeck.CheckDeck().size()==0) {
-                                showcardlist.List[0].setText("カードが存在しません");
-                                break;
-                        }
-                        loadList=Integer.toString(i+1);
-                        loadList=loadList+". "+MyDeck.getCard(i).getCardName();
-                        showcardlist.List[i].setText(loadList);
-                }
-        }
-}
-
-class ShowCardList extends JPanel {        //デッキ内部のカードリストの表記を行うパネル
-        static JLabel[] List;        //デッキ内部表示用のJLabel配列
-        JLabel NoneDeck;        //デッキが存在しない時の表示用ラベル
-        String list;        //リスト文字列格納用変数
-        DeckEditorModel MyDeck;
-        int DeckSize;
-
-        public ShowCardList(DeckEditorModel Deck){
-                List=new JLabel[21];        //20番目はメッセージ用
-                for(int j=0; j<21; j++) {
-                        List[j]=new JLabel();
-                }
-                list=new String();
-                DeckSize=0;
-                this.setLayout(new GridLayout(21,1));
-                MyDeck=Deck;
-                for(int j=0; j<21; j++) {
-                        this.add(List[j]);
-                }
-                if(MyDeck.CheckDeck()!=null) {        //初期化時にデッキが存在する場合。
-                        for(int j=0; j<MyDeck.CheckDeck().size(); j++) {
-                                list=Integer.toString(j+1);
-                                list=list+". "+MyDeck.getCard(j).getCardName();
-                                List[j].setText(list);
-                                DeckSize=MyDeck.CheckDeck().size();
-                                if(j==19) {
-                                        List[20].setText("カードをこれ以上追加できません.");        //最大に達した場合のメッセージ
-                                }
-                        }
-                }else if(MyDeck.CheckDeck()==null) {
-                        List[20].setText("カードが存在しません.");
-                        //デッキが存在しない場合メッセージを表示
-                }
-        }
-
-        public void setDeckSize(int size){
-                DeckSize=size;
-        }
-
-        public int getDeckSize(){
-                return DeckSize;
-        }
-
-
-}
-
-class SaveOperation {
-
-        public void SaveDeck(int[] toSave, DeckEditorModel Deck, RW_csv save, int size){
-                int i=0;
-                for(CardBase_E SaveCard: Deck.CheckDeck()) {
-                        toSave[i]=SaveCard.getID();
-                        i++;
-                }
-                save.WriteCSV(toSave);
-        }
-}
-
-class LoadOperation extends Observable {
-
-        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;
-
-        public void LoadDeck(DeckEditorModel Deck, RW_csv Load, int size){
-                int[] fromLoad=Load.ReadCSV();
-                if(Deck.CheckDeck()!=null) {
-                        Deck.CheckDeck().clear();
-                }
-                for(int i=0; i<fromLoad.length; i++) {
-                        switch(fromLoad[i]) {
-
-                        case 1:
-                                G=new Gu();
-                                Deck.setCardToDeck(G);
-                                break;
-                        case 2:
-                                P=new Pa();
-                                Deck.setCardToDeck(P);
-                                break;
-                        case 3:
-                                C=new Chi();
-                                Deck.setCardToDeck(C);
-                                break;
-                        case 4:
-                                GC=new G_C();
-                                Deck.setCardToDeck(GC);
-                                break;
-                        case 5:
-                                CP=new C_P();
-                                Deck.setCardToDeck(CP);
-                                break;
-                        case 6:
-                                PG=new P_G();
-                                Deck.setCardToDeck(PG);
-                                break;
-                        case 7:
-                                all=new ALL();
-                                Deck.setCardToDeck(all);
-                                break;
-                        }
-                }
-                setChanged();
-                notifyObservers();
-        }
-}
-
-class SaveAndLoadPanel extends JPanel implements ActionListener {
-        /*csvファイルからデータを読み込み,デッキを生成、もしくはデッキデータをセーブするパネル部分のview&controller*/
-        int[] DeckData;
-        JButton Save, Load;
-        RW_csv DeckManager;
-        DeckEditorModel MyDeck;
-        SaveOperation saveOperation;
-        LoadOperation loadOperation;
-        ShowCardList showCardList;
-
-        public SaveAndLoadPanel(DeckEditorModel Deck, ShowCardList sc, SaveOperation so, LoadOperation lo){
-                DeckData=new int[20];         //最大カード格納数を配列のサイズとする.
-                MyDeck=Deck;
-                saveOperation=so;
-                loadOperation=lo;
-                showCardList=sc;
-                for(int i=0; i<20; i++) {
-                        DeckData[i]=0;        //初期化時にデータを受け取る配列内部の値をカードIDとして設定していない"0(ダミー)"にする.
-                }
-                DeckManager =new RW_csv(new File("assets/csv/main_deck.csv"));
-                this.setLayout(new GridLayout(2,1));
-                Save=new JButton("デッキをセーブ"); this.add(Save);
-                Load=new JButton("デッキをロード"); this.add(Load);
-                Save.addActionListener(this); Load.addActionListener(this);
-        }
-
-        public void actionPerformed(ActionEvent e){
-                /*セーブ,ロード,各操作をObserverパターンのために分離*/
-                if(e.getSource()==Save && showCardList.getDeckSize()>0)
-                        saveOperation.SaveDeck(DeckData, MyDeck, DeckManager, showCardList.getDeckSize());
-                if(e.getSource()==Load) {
-                        loadOperation.LoadDeck(MyDeck, DeckManager, showCardList.getDeckSize());
-                        showCardList.setDeckSize(MyDeck.CheckDeck().size());
-                }
-        }
-}
-
-// DeckEdit's Model & View & Controller
-final public class DeckEditPanel extends JPanel implements ActionListener {
-        FrameController frameCont;
-        JButton end;
-        DeckEditorModel EditDeck;
-        AddOperation Addoperation;
-        DeleteOperation Deleteoperation;
-        ListUpdate_Add Listupdate_a;
-        ListUpdate_Del Listupdate_d;
-        ListUpdate_Load Listupdate_l;
-        AddToDeck addtodeck;
-        DeleteCardInDeck deletecardindeck;
-        ShowCardList showcardlist;
-        SaveOperation saveOperation;
-        LoadOperation loadOperation;
-        SaveAndLoadPanel saveAndloadPanel;
-
-/* デッキ判定に関する変数の宣言*/
-        RW_csv DeckManege;
-        int[] Inisialize;
-        Boolean DeckExists;
-        ArrayList<CardBase_E> ExistsDeck;
-        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;
+// デッキ編集画面のView&Controller 操作に反応して画面上の再描画等を行う
+final public class DeckEditPanel extends JPanel implements ActionListener, Observer {
+        FrameController frameCont;//画面表示、遷移のための変数。詳細はFrameController.javaを参照
+        JButton end;//タイトルへ戻るためのボタン
+        ImageIcon BackGround;
+        int width, height;//背景画像用に高さと幅を格納するための変数
+        JPanel Additonal, ShowAndDelete, SaveAndLoad;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
+        JPanel CardList, Text;//ShowAndDeleteにてCardListはカードの表示、Textは使用方法とセーブ、ロードの通知を表示
+        ImageButton Gu, Pa, Chi, G_C, C_P, P_G, ALL;//追加操作パネル上でのボタン 詳細はImageButton.javaを参照
+        JButton Save, Load;//セーブ、ロードを行うボタン
+        JLabel HowTo, Message;//HowToは使用方法、Messageはセーブ、ロード通知
+        CardIconBase[] CardIcon;//デッキ内部のカード表示および削除ボタン担当　詳細はCardIconBase.javaを参照
+        DeckEditorModel MyDeck;//デッキ編集操作に関するModel 必要な処理はここにすべて入っている 詳細はDeckEditorModel.java参照
+        Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;//追加時に必要な各種カードデータ
 
 
         public DeckEditPanel(FrameController frameCont) {         // FrameControllerでPanelを管理するために引数にこれをとる
                 this.frameCont = frameCont;
 
-                DeckManege=new RW_csv(new File("assets/csv/main_deck.csv"));
-                Inisialize=DeckManege.ReadCSV();
-                DeckExists=true;
-                if(Inisialize==null) {
-                        EditDeck=new DeckEditorModel();
-                        DeckExists=false;
-                }else{
-                        for(int j=0; j<Inisialize.length && Inisialize[j]==0; j++) {
-                                if(j==Inisialize.length-1) {
-                                        DeckExists=false;
-                                        EditDeck=new DeckEditorModel();
-                                }
-                        }
-                        if(DeckExists==true) {
-                                ExistsDeck=new ArrayList<CardBase_E>();
-                                DeckReCreate(ExistsDeck, Inisialize);
-                                EditDeck=new DeckEditorModel(ExistsDeck);
-                        }
-                }
-                Deleteoperation=new DeleteOperation();
-                Addoperation=new AddOperation();
-                saveOperation=new SaveOperation();
-                loadOperation=new LoadOperation();
-                showcardlist=new ShowCardList(EditDeck);
-                addtodeck=new AddToDeck(EditDeck, Addoperation, showcardlist);
-                deletecardindeck=new DeleteCardInDeck(EditDeck, Deleteoperation, showcardlist);
-                saveAndloadPanel=new SaveAndLoadPanel(EditDeck, showcardlist, saveOperation, loadOperation);
-                Listupdate_l=new ListUpdate_Load(showcardlist, loadOperation, EditDeck);
-                Listupdate_a=new ListUpdate_Add(showcardlist, Addoperation, EditDeck);
-                Listupdate_d=new ListUpdate_Del(showcardlist, Deleteoperation, EditDeck);
-                end = new JButton("タイトルへ進む");
-                this.setLayout(new BorderLayout());        //BorderLayoutに設定しなおした。(沢畑)
-                this.add(end, BorderLayout.NORTH);
-                this.add(addtodeck, BorderLayout.WEST);
-                this.add(deletecardindeck, BorderLayout.SOUTH);
-                this.add(showcardlist, BorderLayout.CENTER);
-                this.add(saveAndloadPanel, BorderLayout.EAST);
+                BackGround=new ImageIcon("assets/img/background/tex_26.png");//背景画像用のImageIconを生成
+                width=BackGround.getIconWidth();//高さ、幅を測定、確保
+                height=BackGround.getIconHeight();
 
+                /* 各種操作ごとのパネルの初期化とレイアウト設定*/
+                this.setLayout(new BorderLayout());
+                setOpaque(false);
+                Additonal=new JPanel();
+
+                Additonal.setLayout(new GridLayout(7,1));
+                ShowAndDelete=new JPanel();
+                ShowAndDelete.setLayout(new BorderLayout());
+                SaveAndLoad=new JPanel();
+                SaveAndLoad.setLayout(new GridLayout(2,1));
+
+                /*追加操作部分に関するComponent*/
+                Gu=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/Gu.png",
+                        "assets/img/card/btnimg/Gu_pressed.png",
+                        "assets/img/card/btnimg/Gu_hover.png",
+                        "assets/img/card/btnimg/Gu_unable.png"
+                }); Gu.addActionListener(this); Additonal.add(Gu);
+                Pa=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/Pa.png",
+                        "assets/img/card/btnimg/Pa_pressed.png",
+                        "assets/img/card/btnimg/Pa_hover.png",
+                        "assets/img/card/btnimg/Pa_unable.png"
+                }); Pa.addActionListener(this); Additonal.add(Pa);
+                Chi=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/Chi.png",
+                        "assets/img/card/btnimg/Chi_pressed.png",
+                        "assets/img/card/btnimg/Chi_hover.png",
+                        "assets/img/card/btnimg/Chi_unable.png"
+                }); Chi.addActionListener(this); Additonal.add(Chi);
+                G_C=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/GuChi.png",
+                        "assets/img/card/btnimg/GuChi_pressed.png",
+                        "assets/img/card/btnimg/GuChi_hover.png",
+                        "assets/img/card/btnimg/GuChi_unable.png"
+                }); G_C.addActionListener(this); Additonal.add(G_C);
+                C_P=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/ChiPa.png",
+                        "assets/img/card/btnimg/ChiPa_pressed.png",
+                        "assets/img/card/btnimg/ChiPa_hover.png",
+                        "assets/img/card/btnimg/ChiPa_unable.png"
+                }); C_P.addActionListener(this); Additonal.add(C_P);
+                P_G=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/PaGu.png",
+                        "assets/img/card/btnimg/PaGu_pressed.png",
+                        "assets/img/card/btnimg/PaGu_hover.png",
+                        "assets/img/card/btnimg/PaGu_unable.png"
+                }); P_G.addActionListener(this); Additonal.add(P_G);
+                ALL=new ImageButton(new String[] {
+                        "assets/img/card/btnimg/All.png",
+                        "assets/img/card/btnimg/All_pressed.png",
+                        "assets/img/card/btnimg/All_hover.png",
+                        "assets/img/card/btnimg/All_unable.png"
+                }); ALL.addActionListener(this); Additonal.add(ALL);
+                this.add(Additonal, BorderLayout.WEST);
+
+                /*セーブとロードに関するComponent*/
+                Save=new JButton("デッキをセーブ");
+                Save.addActionListener(this); SaveAndLoad.add(Save);
+                Load=new JButton("デッキをロード");
+                Load.addActionListener(this); SaveAndLoad.add(Load);
+                this.add(SaveAndLoad, BorderLayout.EAST);
+
+                /*カード表記と削除に関するComponent*/
+                MyDeck=new DeckEditorModel();//デッキを初期化
+                MyDeck.addObserver(this);//監視対象に登録
+                CardList=new JPanel();
+                CardList.setOpaque(false);
+                CardList.setLayout(new GridLayout(5,8));
+                CardIcon=new CardIconBase[40];
+                for(int i=0; i<40; i++) {
+                        CardIcon[i]=new CardIconBase(i, MyDeck);//CardIconBaseごとに初期化
+                        CardList.add(CardIcon[i]);//配置　基本的に表示の切り替えと反応のOnOffのみ行うので配置後の削除は行わない
+                }
+                Message=new JLabel("カードが存在しません");
+                Message.setOpaque(false);
+                Message.setHorizontalAlignment(JLabel.CENTER);
+                if(MyDeck.CheckDeck()!=null) {//ここで、デッキにカードが一枚でも格納されている場合アイコンを表示する
+                        for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
+                                CardIcon[i].setCardIcon();
+                        }
+                        MyDeck.Inform();
+                        Message.setText("ロードしました");
+                }
+                Text=new JPanel();
+                Text.setOpaque(false);
+                Text.setLayout(new GridLayout(2,1));
+                HowTo=new JLabel("右クリックで削除します");
+                HowTo.setOpaque(false);
+                HowTo.setHorizontalAlignment(JLabel.CENTER);
+                Text.add(HowTo); Text.add(Message);
+                ShowAndDelete.add(Text, BorderLayout.NORTH);
+                ShowAndDelete.add(CardList, BorderLayout.CENTER);
+                ShowAndDelete.setBorder(new EmptyBorder(2,2,2,0));//見やすくするためにBorderを設定
+                this.add(ShowAndDelete, BorderLayout.CENTER);
+
+                /*タイトルに戻るためのComponent*/
+                end=new JButton("タイトルへ戻る");
                 end.addActionListener(this);
+                this.add(end, BorderLayout.NORTH);
+                Additonal.setOpaque(false);
+                ShowAndDelete.setOpaque(false);
+                SaveAndLoad.setOpaque(false);
 
 
         }
@@ -480,41 +150,74 @@ final public class DeckEditPanel extends JPanel implements ActionListener {
                         // 現在表示しているJPanelを破棄するため自分自身のインスタンス(this)を渡す。
                         frameCont.showTitle(this);
                 }
-        }
-
-        public void DeckReCreate(ArrayList<CardBase_E> Deck, int[] List){
-                for(int i=0; i<List.length; i++) {
-                        switch(List[i]) {
-
-                        case 1:
+                if(MyDeck.CheckDeck()==null || MyDeck.CheckDeck().size()<40) {//追加操作ボタンに対する動作
+                        if(e.getSource()==Gu) {
                                 G=new Gu();
-                                Deck.add(G);
-                                break;
-                        case 2:
+                                MyDeck.AddCardToDeck(G);
+                        }
+                        if(e.getSource()==Pa) {
                                 P=new Pa();
-                                Deck.add(P);
-                                break;
-                        case 3:
+                                MyDeck.AddCardToDeck(P);
+                        }
+                        if(e.getSource()==Chi) {
                                 C=new Chi();
-                                Deck.add(C);
-                                break;
-                        case 4:
+                                MyDeck.AddCardToDeck(C);
+                        }
+                        if(e.getSource()==G_C) {
                                 GC=new G_C();
-                                Deck.add(GC);
-                                break;
-                        case 5:
+                                MyDeck.AddCardToDeck(GC);
+                        }
+                        if(e.getSource()==C_P) {
                                 CP=new C_P();
-                                Deck.add(CP);
-                                break;
-                        case 6:
+                                MyDeck.AddCardToDeck(CP);
+                        }
+                        if(e.getSource()==P_G) {
                                 PG=new P_G();
-                                Deck.add(PG);
-                                break;
-                        case 7:
+                                MyDeck.AddCardToDeck(PG);
+                        }
+                        if(e.getSource()==ALL) {
                                 all=new ALL();
-                                Deck.add(all);
-                                break;
+                                MyDeck.AddCardToDeck(all);
                         }
                 }
+                if(e.getSource()==Save && MyDeck.CheckDeck()!=null) { //セーブ、ロードボタンに対する操作
+                        MyDeck.SaveDeck();
+                        Message.setText("セーブしました");
+                }
+                if(e.getSource()==Load && MyDeck.CheckDeck()!=null) {
+                        MyDeck.LoadDeck();
+                        Message.setText("ロードしました");
+                }
+        }
+
+        public void update(Observable o, Object arg){
+                Boolean[] Flag;
+                Gu.Enabled(); Chi.Enabled(); Pa.Enabled();//追加ボタン、リストアイコンの初期化
+                G_C.Enabled(); C_P.Enabled(); P_G.Enabled();
+                ALL.Enabled();
+                MyDeck.CountChecker(); //ここでカウンターをチェック、フラグを更新する
+                for(int i=0; i<40; i++) {
+                        CardIcon[i].IconClear();
+                }
+                if(MyDeck.CheckDeck()!=null) {//ここでデッキ内にカードが存在する場合、アイコンの再配置、
+                        for(int i=0; i<MyDeck.CheckDeck().size(); i++) { //及び追加ボタンの使用可否を判定する
+                                CardIcon[i].setCardIcon();
+                        }
+                        Flag=MyDeck.getChekerList();//CheckerをここでFlagに代入、判定を行う
+                        if(Flag[0]==false) G_C.Disabled();
+                        if(Flag[1]==false) C_P.Disabled();
+                        if(Flag[2]==false) P_G.Disabled();
+                        if(Flag[3]==false) ALL.Disabled();
+                        if(MyDeck.CheckDeck().size()>=40) {//最終的に40枚を超えた場合(超えることは直接データを
+                                Gu.Disabled(); Chi.Disabled(); Pa.Disabled();//いじらないと起きないが)全てのボタンを使用不可にする
+                                G_C.Disabled(); C_P.Disabled(); P_G.Disabled();
+                                ALL.Disabled();
+                        }
+                }
+
+        }
+        public void paintComponent(Graphics g){
+                g.drawImage(BackGround.getImage(), 0, 0, width, height, null);
+                super.paintComponent(g);
         }
 }
