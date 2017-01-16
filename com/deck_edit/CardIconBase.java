@@ -27,10 +27,7 @@ public class CardIconBase extends JLabel implements MouseListener {
                 ImagePath=new String[4];
                 setIcon(null);//念のため、JLabelのアイコンを再初期化
                 Card=null;//一度内部をnullにしておく
-<<<<<<< HEAD
-=======
                 setOpaque(false);
->>>>>>> 68909310226b5c262d556af84a0999cad3d45ea8
         }
 
 
