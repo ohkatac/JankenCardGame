@@ -41,7 +41,6 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 this.setLayout(new BorderLayout());
                 setOpaque(false);
                 Additonal=new JPanel();
-
                 Additonal.setLayout(new GridLayout(7,1));
                 ShowAndDelete=new JPanel();
                 ShowAndDelete.setLayout(new BorderLayout());
@@ -214,7 +213,6 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                                 ALL.Disabled();
                         }
                 }
-
         }
         public void paintComponent(Graphics g){
                 g.drawImage(BackGround.getImage(), 0, 0, width, height, null);

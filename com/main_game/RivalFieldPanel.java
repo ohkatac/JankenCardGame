@@ -1,6 +1,10 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
   
+=======
+  相手のフィールドのViewをつかさどるJPanel
+>>>>>>> 68909310226b5c262d556af84a0999cad3d45ea8
 =======
   相手のフィールドのViewをつかさどるJPanel
 >>>>>>> 68909310226b5c262d556af84a0999cad3d45ea8
@@ -56,8 +60,7 @@ public class RivalFieldPanel extends JPanel {
   public void closeCards() {
     this.removeAll();
     for(int i = 0; i < rivalHands.size(); i++) {
-<<<<<<< HEAD
-      this.add(new ImageIcon(new File("assets/img/card/btnimg/back.png") ));
+      this.add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png" )) );
     }
     this.add(deckImg);
     deckImg.setVisible(true);
