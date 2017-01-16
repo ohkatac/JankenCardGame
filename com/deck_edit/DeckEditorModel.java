@@ -149,7 +149,7 @@ public class DeckEditorModel extends Observable {
         }
 
         public void ReConstarctDeck(){//初期化時に行う再構成メソッド 基本的にはLoadDeckと同じだが、
-                int[] Initialize;         //全てが0の場合ロードを行わない, 通知を行わないという点で異なる
+                int[] Initialize;         //全てが0の場合ロードを行わない, 最終処理に通知を行わないという点で異なる
                 Boolean Exists;
                 Initialize=DeckManager.ReadCSV();
                 Exists=true;
