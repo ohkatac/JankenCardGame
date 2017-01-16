@@ -18,6 +18,8 @@ import java.io.*;
 final public class DeckEditPanel extends JPanel implements ActionListener, Observer {
         FrameController frameCont;//画面表示、遷移のための変数。詳細はFrameController.javaを参照
         JButton end;//タイトルへ戻るためのボタン
+        ImageIcon BackGround;
+        int width, height;//背景画像用に高さと幅を格納するための変数
         JPanel Additonal, ShowAndDelete, SaveAndLoad;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
         JPanel CardList, Text;//ShowAndDeleteにてCardListはカードの表示、Textは使用方法とセーブ、ロードの通知を表示
         ImageButton Gu, Pa, Chi, G_C, C_P, P_G, ALL;//追加操作パネル上でのボタン 詳細はImageButton.javaを参照
@@ -31,9 +33,15 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
         public DeckEditPanel(FrameController frameCont) {         // FrameControllerでPanelを管理するために引数にこれをとる
                 this.frameCont = frameCont;
 
+                BackGround=new ImageIcon("assets/img/background/tex_26.png");//背景画像用のImageIconを生成
+                width=BackGround.getIconWidth();//高さ、幅を測定、確保
+                height=BackGround.getIconHeight();
+
                 /* 各種操作ごとのパネルの初期化とレイアウト設定*/
                 this.setLayout(new BorderLayout());
+                setOpaque(false);
                 Additonal=new JPanel();
+
                 Additonal.setLayout(new GridLayout(7,1));
                 ShowAndDelete=new JPanel();
                 ShowAndDelete.setLayout(new BorderLayout());
@@ -96,6 +104,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 MyDeck=new DeckEditorModel();//デッキを初期化
                 MyDeck.addObserver(this);//監視対象に登録
                 CardList=new JPanel();
+                CardList.setOpaque(false);
                 CardList.setLayout(new GridLayout(5,8));
                 CardIcon=new CardIconBase[40];
                 for(int i=0; i<40; i++) {
@@ -103,6 +112,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         CardList.add(CardIcon[i]);//配置　基本的に表示の切り替えと反応のOnOffのみ行うので配置後の削除は行わない
                 }
                 Message=new JLabel("カードが存在しません");
+                Message.setOpaque(false);
                 Message.setHorizontalAlignment(JLabel.CENTER);
                 if(MyDeck.CheckDeck()!=null) {//ここで、デッキにカードが一枚でも格納されている場合アイコンを表示する
                         for(int i=0; i<MyDeck.CheckDeck().size(); i++) {
@@ -112,8 +122,10 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         Message.setText("ロードしました");
                 }
                 Text=new JPanel();
+                Text.setOpaque(false);
                 Text.setLayout(new GridLayout(2,1));
                 HowTo=new JLabel("右クリックで削除します");
+                HowTo.setOpaque(false);
                 HowTo.setHorizontalAlignment(JLabel.CENTER);
                 Text.add(HowTo); Text.add(Message);
                 ShowAndDelete.add(Text, BorderLayout.NORTH);
@@ -125,6 +137,9 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 end=new JButton("タイトルへ戻る");
                 end.addActionListener(this);
                 this.add(end, BorderLayout.NORTH);
+                Additonal.setOpaque(false);
+                ShowAndDelete.setOpaque(false);
+                SaveAndLoad.setOpaque(false);
 
 
         }
@@ -200,5 +215,9 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         }
                 }
 
+        }
+        public void paintComponent(Graphics g){
+                g.drawImage(BackGround.getImage(), 0, 0, width, height, null);
+                super.paintComponent(g);
         }
 }
