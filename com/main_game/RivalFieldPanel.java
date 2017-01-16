@@ -1,5 +1,5 @@
 /*
-  
+  相手のフィールドのViewをつかさどるJPanel
 */
 
 package com.main_game;
@@ -52,7 +52,7 @@ public class RivalFieldPanel extends JPanel {
   public void closeCards() {
     this.removeAll();
     for(int i = 0; i < rivalHands.size(); i++) {
-      this.add(new ImageIcon(new File("assets/img/card/btnimg/back.png") ));
+      this.add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png" )) );
     }
     this.add(deckImg);
     deckImg.setVisible(true);
