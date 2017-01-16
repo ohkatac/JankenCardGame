@@ -1,3 +1,14 @@
+/*Controller, ゲームのメインの流れはここに書いていく 主な流れはMainGameModel
+  Classであるmodelを受け取り、その中に入っているモデルたちを取り出してPanelに張り付けたりなどして扱っていく
+  基本は
+  FirstJankenPhase
+  というフェイズで先攻後攻を決めた後
+  PlayerPhase
+  RivalPhase
+  BattlePhase
+  の3つのフェイズの流れをGotoNextPhase()メソッドを使って制御していくという方針
+*/
+
 package com.main_game.main_game_controller;
 
 import java.util.ArrayList;
@@ -12,8 +23,6 @@ import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
 import com.asset_controller.ImageButton;
 
-// Controller, ゲームのメインの流れはここに書いていく 主な流れはMainGameModel 
-// Classであるmodelを受け取り、その中に入っているモデルたちを取り出してPanelに張り付けたりなどして扱っていく
 
 final public class MainGameController {
   private MainGameModel model;

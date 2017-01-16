@@ -1,3 +1,10 @@
+/*
+  それぞれのフェイズ(FirstJankenPhase, PlayerPhase, RivalPhase, BattlePhase)
+  の継承元のクラスである。
+  この量だとインターフェースとしてもかまわないかなと考えたが複数実装すべきものなどはないので
+  今回はクラスにした。
+*/
+
 package com.main_game.main_game_controller;
 
 public class BasePhase {

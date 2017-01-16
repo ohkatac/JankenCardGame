@@ -1,3 +1,8 @@
+/*
+  場に出されたカードをもとに勝敗判定をするためのフェイズクラス
+
+*/
+
 package com.main_game.main_game_controller;
 
 import java.util.ArrayList;
@@ -26,6 +31,9 @@ public class BattlePhase extends BasePhase implements ActionListener{
     nextBtn = mainCont.getNextBtn();
   }
 
+// 子のフェイズの初めにMainGameControllerより呼び出されるメソッド
+
+  // Override
   public void startThisPhase() {
     judge = isWinPlayer(player.getPoppingCard(), rival.getPoppingCard());
 
@@ -46,6 +54,8 @@ public class BattlePhase extends BasePhase implements ActionListener{
     nextBtn.addActionListener(this);
   }
 
+// このフェイズを終了するときに呼び出されるメソッド ActionLisetenerなどの後始末が基本となっている。
+// Override
   public void endThisPhase() {
     mainCont.getBattleField().RemoveCards();
     mainCont.getRivalSide().deleteCaption();
@@ -67,7 +77,7 @@ public class BattlePhase extends BasePhase implements ActionListener{
     if (e.getSource() == nextBtn) { endThisPhase(); }
   }
 
-// 
+// 勝敗判定をするためのメソッド playerが勝ったら1, 引き分けなら0, 負けなら-1が返るようになっている。
   public int isWinPlayer(CardModel plCard, CardModel riCard) {
     // 単色カード同士のバトルの場合
     int pl = plCard.getID();

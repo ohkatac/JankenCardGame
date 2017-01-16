@@ -1,3 +1,8 @@
+/*
+  カードのモデルクラス
+  コンストラクタで自分自身の画像(myImage, btLabelPath)を取得する。
+*/
+
 package com.main_game.main_game_model.card_model;
 /* カードそのもののModel デッキ編集用とは別のモデルとする*/
 import java.util.*;
@@ -12,7 +17,7 @@ public class CardModel {//全カードにおける継承元のクラス
   private int cost;
   private Boolean flag;//カードを使用済みかどうかの確認
   private ImageButton myImage = null;
-  private String btLabelPath;
+  private String btLabelPath; // 元画像のPath, 場に出すカードに使う画像
 
   public static final String[][] imgPath = {
     {     

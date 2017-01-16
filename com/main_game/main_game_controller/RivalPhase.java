@@ -1,3 +1,9 @@
+/*
+  RivalPhaseをつかさどるConttollerクラス
+  ネットワーク対戦にも対応するためにrival_signal/ComSignal.javaクラスを生成し、
+  そこから信号を受け取る(String)ことで
+*/
+
 package com.main_game.main_game_controller;
 
 import java.awt.event.*;
@@ -30,6 +36,8 @@ public class RivalPhase extends BasePhase {
     signal = new ComSignal(this, rival);
   }
 
+// このフェイズが始まるときにMainGameControllerから呼び出されるメソッド
+// Override
   public void startThisPhase() {
     rivalField.setImvisible();
     rival.DrawCard();
@@ -38,20 +46,28 @@ public class RivalPhase extends BasePhase {
     signal.startSignal();
   }
 
+// このフェイズが始まるときにMainGameControllerから呼び出されるメソッド
+// Override
   public void endThisPhase() {
     signal.destroySignal();
   }
 
+// 場に出すカードを決めるメソッド
   public void DecideEvent() {
     endThisPhase();
     mainCont.GotoNextPhase();
   }
 
+// 相手のカードを場に出すメソッド
   private void PopRivalCard(int index) {
+    // rivalクラスの中のpoppingCardに手札のindexに相当するカードを代入する。
     rival.PopCard(index);
     battleField.setRivalCard(rival.getPoppingCard());
   }
 
+
+// ComSignalクラスからこのメソッドが呼び出される。 ちなみにComSignalクラスはTimer駆動でString変数をその都度送ってくるという仕様
+// Override
   public void signalAction(String st) {
     if(st == "decide") {
       if(rival.getPoppingCard() != null) {

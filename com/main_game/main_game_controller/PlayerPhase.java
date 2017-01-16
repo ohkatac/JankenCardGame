@@ -1,3 +1,9 @@
+/*
+  自分のターン(フェイズ)のController
+  一番初めはdecideBtnを無効化しておく
+  自分の手札からカードが選ばれたら(ActionListenerによって)
+*/
+
 package com.main_game.main_game_controller;
 
 import java.awt.event.*;
@@ -60,8 +66,12 @@ public class PlayerPhase extends BasePhase implements ActionListener {
     }
   }
 
+// 自分の手札からカードを一枚場に出すメソッド。 この段階では手札からカードをremoveする処理は行わない
+// またdecideBtnを有効化させて次のフェイズに進めるようにする。
   private void PopMyCard(int index) {
+    // playerクラスのpoppingCardメンバに今場に出しているカードを指定する。
     player.PopCard(index);
+    // 場にカードをセットする。
     battleField.setMyCard(player.getPoppingCard());
     if(decideBtn.isEnabled() == false) { // 連続してListenerにComponentをaddするのを避けるためif文を入れる
       decideBtn.setEnabled(true);
