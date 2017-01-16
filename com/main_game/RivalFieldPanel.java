@@ -1,13 +1,5 @@
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
   相手のフィールドのViewをつかさどるJPanel
->>>>>>> 68909310226b5c262d556af84a0999cad3d45ea8
-=======
-  相手のフィールドのViewをつかさどるJPanel
->>>>>>> 68909310226b5c262d556af84a0999cad3d45ea8
 */
 
 package com.main_game;
