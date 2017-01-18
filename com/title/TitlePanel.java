@@ -91,8 +91,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     if (e.getSource() == start_1) {
       frameCont.showMainGame(this);
     }
-    else if(e.getSource() == start_2){
-    　　//通信対戦用のボタン
+    else if(e.getSource() == start_2){ //通信対戦用のボタン
     }
     else if (e.getSource() == deckEdit) {
       frameCont.showDeckEdit(this);
