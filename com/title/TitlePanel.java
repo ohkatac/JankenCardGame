@@ -3,8 +3,13 @@ package com.title;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+// import for background image
 import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import com.FrameController;
 import com.asset_controller.*;
@@ -21,8 +26,18 @@ final public class TitlePanel extends JPanel implements ActionListener {
   RW_csv mainDeck = null;
   Boolean gameBtnFlag;
 
+  BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
+
   public TitlePanel(FrameController frameCont) {
     this.frameCont = frameCont;
+
+    // Titleの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
+    try {
+      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
+    } catch (Exception e) {
+      e.printStackTrace();
+      backgroundImage = null;
+    }
 
     setLayout(new GridBagLayout());
     GridBagLayout layout = new GridBagLayout();
@@ -30,8 +45,8 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
     setLayout(layout);
 
-    label = new JLabel("じゃんけんゲーム", JLabel.CENTER);
-    label.setFont(new Font("MS 明朝", Font.PLAIN, 30));
+    label = new JLabel("Janken Fight!!", JLabel.CENTER);
+    label.setFont(new Font("Arial", Font.ITALIC, 70));
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.weighty = 1.0d;
@@ -85,6 +100,16 @@ final public class TitlePanel extends JPanel implements ActionListener {
     add(start_2);
     add(deckEdit);
     add(explain);
+  }
+
+  // paintComponentによりJPanelを背景画像で上塗りする処理
+  // Override
+  public void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D)g;
+
+    if(backgroundImage != null) {
+      g2.drawImage(backgroundImage, 0, 0, this);
+    }
   }
 
   public void actionPerformed(ActionEvent e) {

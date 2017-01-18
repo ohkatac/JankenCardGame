@@ -16,14 +16,14 @@ import javax.swing.JLabel;
 
 import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
-import com.main_game.main_game_controller.rival_signal.ComSignal;
+import com.main_game.main_game_controller.rival_signal.*;
 
 public class FirstJankenPhase extends BasePhase implements ActionListener {
   MainGameController mainCont;
   private int plBattleId, riBattleId;
   private CardModel gu, chi, pa;
 
-  private ComSignal signal;
+  private BaseSignal signal;
 
   public FirstJankenPhase(MainGameController mainCont) {
     super(BasePhase.FIRST);
@@ -75,7 +75,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   public void signalAction(String data) {
     if(riBattleId == -1) {
       InputJanken(Integer.parseInt(data), BasePlayer.RIVAL);
-      signal.destroySignal();
+      signal.stopSignal();
     }
   }
 
@@ -109,7 +109,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
         case 1:
           // 後攻に設定する
           mainCont.setIsPlayFirst(false);
-          signal.destroySignal();
+          signal.stopSignal();
 
           // フェイズ終了処理
           gu.DisableButton();
@@ -124,7 +124,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
         case 2:
           // 先攻に設定する
           mainCont.setIsPlayFirst(true);
-          signal.destroySignal();
+          signal.stopSignal();
 
           // フェイズ終了処理
           gu.DisableButton();

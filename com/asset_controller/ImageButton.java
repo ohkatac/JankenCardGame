@@ -54,6 +54,7 @@ public class ImageButton extends JButton implements MouseListener {
   }
 
 // ボタンの描画
+  // Override
   public void paintComponent(Graphics g) {
     g.drawImage(image.getImage(), 0, 0, w, h, null);
   }

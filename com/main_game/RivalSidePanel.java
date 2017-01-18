@@ -15,6 +15,7 @@ public class RivalSidePanel extends JPanel {
 
   public RivalSidePanel(MainGameModel model) {
     super();
+    this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
     this.model = model;
 
     this.setPreferredSize(new Dimension(200, 0));
