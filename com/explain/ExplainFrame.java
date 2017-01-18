@@ -1,6 +1,12 @@
 package com.explain;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.*;
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
@@ -13,10 +19,19 @@ final public class ExplainFrame extends JFrame implements ActionListener{
   JPanel cardPanel;
   CardLayout layout;
 
+  BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
+
   public ExplainFrame(){
 
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setBounds(100,100,820,600);
+
+    try {
+      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
+    } catch (Exception e) {
+      e.printStackTrace();
+      backgroundImage = null;
+    }
 
   //1ページ目
     JPanel card1 = new JPanel();
@@ -89,11 +104,11 @@ final public class ExplainFrame extends JFrame implements ActionListener{
   //カード移動用ボタン追加
     JButton firstButton = new JButton("前ページへ");
     firstButton.addActionListener(this);
-    firstButton.setActionCommand("Previous");
+    firstButton.setActionCommand("Next");
 
     JButton lastButton = new JButton("次ページへ");
     lastButton.addActionListener(this);
-    lastButton.setActionCommand("Next");
+    lastButton.setActionCommand("Previous");
 
     JPanel btnPanel = new JPanel();
     btnPanel.add(firstButton);
@@ -111,13 +126,23 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     this.setVisible(true);
   }
 
+  public void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D)g;
+
+    if(backgroundImage != null) {
+      g2.drawImage(backgroundImage, 0, 0, this);
+    }
+  }
+
   public void actionPerformed(ActionEvent e){
     String cmd = e.getActionCommand();
 
-    if (cmd.equals("Previous")){
-      layout.next(cardPanel);
-    }else if (cmd.equals("Next")){
+    if (cmd.equals("First")){
+      layout.first(cardPanel);
+    }else if(cmd.equals("Previous")){
       layout.previous(cardPanel);
+    }else if(cmd.equals("Next")){
+      layout.next(cardPanel);
     }
   }
 

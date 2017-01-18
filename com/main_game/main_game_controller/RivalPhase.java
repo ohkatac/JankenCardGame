@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import com.main_game.*;
 import com.main_game.main_game_model.card_model.*;
 import com.main_game.main_game_model.player_model.*;
-import com.main_game.main_game_controller.rival_signal.ComSignal;
+import com.main_game.main_game_controller.rival_signal.*;
 
 public class RivalPhase extends BasePhase {
-  public ComSignal signal;
+  public BaseSignal signal;
 
   private MainGameController mainCont;
   private BasePlayer rival;
@@ -49,7 +49,7 @@ public class RivalPhase extends BasePhase {
 // このフェイズが始まるときにMainGameControllerから呼び出されるメソッド
 // Override
   public void endThisPhase() {
-    signal.destroySignal();
+    signal.stopSignal();
   }
 
 // 場に出すカードを決めるメソッド

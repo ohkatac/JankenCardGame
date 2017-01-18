@@ -22,6 +22,7 @@ public class RivalFieldPanel extends JPanel {
   public RivalFieldPanel(MainGameModel model, JPanel mainPanel) {
     super();
     this.model = model;
+    this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
     // カードの画像の高さが140pxなので160に設定
     this.setPreferredSize( new Dimension(mainPanel.getPreferredSize().width, 160) );
 

@@ -16,6 +16,13 @@ package com.main_game;
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
+// import for background image
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import com.FrameController;
 import com.main_game.main_game_model.MainGameModel;
@@ -31,6 +38,8 @@ final public class MainGamePanel extends JPanel {
   MainGameModel gameModel;
   MainGameController gameController;
 
+  BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
+
   // 手札置き場、デッキ置き場などのフィールドをJPanelとして定義、そのあとにBorderLayoutとして適用させていく。
   MyFieldPanel myField;
   MySidePanel mySide;
@@ -42,6 +51,14 @@ final public class MainGamePanel extends JPanel {
     this.frameCont = frameCont;
     gameModel = new MainGameModel();
     this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
+
+    // MainGameの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
+    try {
+      backgroundImage = ImageIO.read(new File("assets/img/background/maingame.png"));
+    } catch (Exception e) {
+      e.printStackTrace();
+      backgroundImage = null;
+    }
 
 // 5つのフィールドをつかさどるViewであるJPanelのインスタンスの生成
     myField = new MyFieldPanel(gameModel, this);
@@ -59,6 +76,16 @@ final public class MainGamePanel extends JPanel {
     this.add(rivalField, BorderLayout.NORTH);
     this.add(rivalSide, BorderLayout.WEST);
 
+  }
+
+  // paintComponentによりJPanelを背景画像で上塗りする処理
+  // Override
+  public void paintComponent(Graphics g) {
+    Graphics2D g2 = (Graphics2D)g;
+
+    if(backgroundImage != null) {
+      g2.drawImage(backgroundImage, 0, 0, this);
+    }
   }
 
   public MyFieldPanel getMyField() { return myField;}

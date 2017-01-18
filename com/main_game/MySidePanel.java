@@ -1,6 +1,5 @@
 /*
   右側にあるnextBtnなどが配置されているJPanel
-  単なるViewなのでActionLisetenerはControllerで定義する。
 */
 
 package com.main_game;
@@ -20,6 +19,7 @@ public class MySidePanel extends JPanel {
   public MySidePanel(MainGameModel model) {
     super();
     this.model = model;
+    this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
 
     this.setLayout( new GridLayout(8, 1) );
 

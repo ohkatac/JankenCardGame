@@ -7,12 +7,13 @@ import javax.swing.Timer;
 import com.main_game.main_game_controller.BasePhase;
 import com.main_game.main_game_model.player_model.*;
 
-public class ComSignal implements ActionListener{
+public class ComSignal extends BaseSignal implements ActionListener{
   private BasePhase signalTo;
   private Timer timer;
   private BasePlayer rival;
 
   public ComSignal(BasePhase signalTo, BasePlayer rival) {
+    super();
     this.signalTo = signalTo;
     this.rival = rival;
     timer = new Timer(1000, this);
@@ -45,7 +46,7 @@ public class ComSignal implements ActionListener{
     timer.start();
   }
 
-  public void destroySignal() {
+  public void stopSignal() {
     timer.stop();
   }
 }

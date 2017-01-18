@@ -33,7 +33,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
         public DeckEditPanel(FrameController frameCont) {         // FrameControllerでPanelを管理するために引数にこれをとる
                 this.frameCont = frameCont;
 
-                BackGround=new ImageIcon("assets/img/background/tex_26.png");//背景画像用のImageIconを生成
+                BackGround=new ImageIcon("assets/img/background/edit.png");//背景画像用のImageIconを生成
                 width=BackGround.getIconWidth();//高さ、幅を測定、確保
                 height=BackGround.getIconHeight();
 

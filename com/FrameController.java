@@ -8,6 +8,7 @@ import java.io.File;
 
 import com.deck_edit.*;
 import com.main_game.MainGamePanel;
+import com.main_game_2.MainGamePanel2;
 import com.result.*;
 import com.title.*;
 import com.explain.*;
@@ -19,6 +20,7 @@ public final class FrameController extends JFrame{
     private TitlePanel titlePanel; 
     private DeckEditPanel editPanel; 
     private MainGamePanel gamePanel; 
+    private MainGamePanel2 gamePanel2;
     private ResultPanel resultPanel; 
     private ExplainFrame explainFrame; 
 
@@ -75,6 +77,18 @@ public final class FrameController extends JFrame{
       this.add(gamePanel);
       // JPanelを見える状態にする
       this.gamePanel.setVisible(true);
+    }
+
+    public void showMainGame2(JPanel currentPanel) {
+      // 現在JFrame上に表示してあるJPanelを削除
+      currentPanel.setVisible(false);
+      currentPanel = null;
+      // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
+      gamePanel2 = new MainGamePanel2(this);
+      // JPanelを追加
+      this.add(gamePanel2);
+      // JPanelを見える状態にする
+      this.gamePanel2.setVisible(true);
     }
 
     public void showResult(JPanel currentPanel, int myLife, int riLife) {
