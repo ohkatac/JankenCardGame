@@ -28,7 +28,7 @@ final public class ExplainFrame extends JFrame implements ActionListener{
       "<h4>〇カード紹介<h4>"+
       "　・カードの種類<br />"+
       "　　グー、チョキ、パー、グーチー、チーパー、パーグー、グーチョキパーの計7種類のカードがあります。<br />"+
-      "　　カードの相性は次のページで説明します。<br />"+
+      "　　カードの相性は次ページのカード相性表で確認してください。<br />"+
       "　・点数計算<br />"+
       "　　カードの種類によって、勝った時相手に与えるダメージが変わります。<br />"+
       "　　(1)グー、チョキ、パー : 2point<br />"+
@@ -53,7 +53,6 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     card1.add(label,BorderLayout.NORTH);
 
   //2ページ目
-    long serialVersionUID = 1L;
     JTable table;
     JScrollPane pane;
     JPanel card2 = new JPanel();
@@ -73,6 +72,11 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     pane = new JScrollPane(table);
     card2.add(pane,BorderLayout.CENTER);
+
+    JScrollPane sp = new JScrollPane(table);
+    sp.setPreferredSize(new Dimension(605, 135));
+    card2.add(sp);
+
 
   //新しくパネル生成
     cardPanel = new JPanel();

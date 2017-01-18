@@ -9,7 +9,8 @@ import com.FrameController;
 // Result's Model & View & Controller
 final public class ResultPanel extends JPanel implements ActionListener {
   FrameController frameCont;
-  JLabel result;
+  JLabel result_win;
+  JLabel result_lose;
   JLabel life;
   JLabel card;
   JButton title;
@@ -22,39 +23,50 @@ final public class ResultPanel extends JPanel implements ActionListener {
     GridBagConstraints gbc = new GridBagConstraints();
 
     setLayout(layout);
+    
+    if(my_life>ri_life){
+      result_win = new JLabel("YOU WIN!!", JLabel.CENTER);
+      result_win.setFont(new Font("Arial", Font.PLAIN, 30));
+      gbc.gridx = 0;
+      gbc.gridy = 0;
+      gbc.weighty = 0.9d;
+      gbc.gridwidth = 3; 
+      layout.setConstraints(result_win, gbc);
+      add(result_win);
+    }else{
+      result_lose = new JLabel("YOU LOSE...", JLabel.CENTER);
+      result_lose.setFont(new Font("Arial", Font.PLAIN, 30));
+      gbc.gridx = 0;
+      gbc.gridy = 0;
+      gbc.weighty = 0.9d;
+      gbc.gridwidth = 3; 
+      layout.setConstraints(result_lose, gbc);
+      add(result_lose);
+    }
 
-    //JLabel resultのところに場合分けをしてYou win, You loseみたいにできればなお良い
-    //結果のデータをどうやって表示するかはこれから。
-
-    result = new JLabel("結果発表", JLabel.CENTER);
-    result.setFont(new Font("MS 明朝", Font.PLAIN, 30));
-    gbc.gridx = 2;
-    gbc.gridy = 0;
-    gbc.weighty = 0.9d;
-    gbc.gridwidth = 5; 
-    layout.setConstraints(result, gbc);
-
-    life = new JLabel("残りライフ : ", JLabel.CENTER);
+    life = new JLabel("あなたの残りライフ : " + my_life, JLabel.CENTER);
     gbc.gridx = 1;
     gbc.gridy = 1;
-    gbc.weighty = 0.3d;
+    gbc.weighty = 0.2d;
+    gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(life, gbc);
 
-    card = new JLabel("残り枚数 : ", JLabel.CENTER);
+    card = new JLabel("相手の残りライフ : " + ri_life, JLabel.CENTER);
     gbc.gridx = 1;
     gbc.gridy = 2;
-    gbc.weighty = 0.3d;
+    gbc.weighty = 0.2d;
+    gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(card, gbc);
 
     title = new JButton("タイトルへ進む");
-    gbc.gridx = 4;
+    gbc.gridx = 2;
     gbc.gridy = 3;
-    gbc.weighty = 0.3d;
+    gbc.weighty = 0.5d;
+    gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(title, gbc);
 
     title.addActionListener(this);
 
-    add(result);
     add(life);
     add(card);
     add(title);
