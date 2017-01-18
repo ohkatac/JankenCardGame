@@ -36,11 +36,14 @@ public class BattleFieldPanel extends JPanel {
 
   public BattleFieldPanel(MainGameModel model) {
     this.model = model;
+    this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
 
     myBattleF = new JPanel();
     myBattleF.setLayout( new FlowLayout() ); // とりあえず一番簡単なFlowLayoutに設定
+    myBattleF.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
     riBattleF = new JPanel();
     riBattleF.setLayout( new FlowLayout() ); // とりあえず一番簡単なFlowLayoutに設定
+    riBattleF.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
 
     this.setLayout( new BorderLayout() );
     this.add(myBattleF, BorderLayout.EAST); // 自分のバトルフィールドを右側に配置

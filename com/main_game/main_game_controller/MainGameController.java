@@ -24,7 +24,7 @@ import com.main_game.main_game_model.card_model.*;
 import com.asset_controller.ImageButton;
 
 
-final public class MainGameController {
+final public class MainGameController implements ActionListener {
   private MainGameModel model;
   private MainGamePanel panel;
 
@@ -42,9 +42,11 @@ final public class MainGameController {
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
 
 // 一番初めはすべてのボタンを無効化
-    model.getResultBtn().setEnabled(false);
     model.getDecideBtn().setEnabled(false);
     model.getNextBtn().setEnabled(false);
+
+// ただし強制終了ボタンだけはActionListenerに追加
+    model.getResultBtn().addActionListener(this);
 
 // 始めのフェイズのクラスのインスタンスを生成
     nowPhase = new FirstJankenPhase(this);
@@ -65,8 +67,8 @@ final public class MainGameController {
       model.getRival().DrawCard();
     }
 
-    panel.getMyField().setVisible(true);
-    panel.getRivalField().setVisible(true);
+    panel.getMyField().ReshowCard();
+    panel.getRivalField().ReshowCard();
 
     if(isPlayFirst == true){
       nowPhase = playerPhase;
@@ -109,7 +111,15 @@ final public class MainGameController {
         nowPhase.startThisPhase();
       }
     }
+  }
 
+
+// ここのインスタンス渡しはどうしても複雑になってしまったので流れがつかめない場合はすぐに聞いてください。
+  // Override
+  public void actionPerformed(ActionEvent e) {
+    if(e.getSource() == model.getResultBtn()) {
+      FinishMainGame();
+    }
   }
 
 // メインゲームを終了しリザルト画面へ進むメソッド

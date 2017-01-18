@@ -69,7 +69,12 @@ public class BattlePhase extends BasePhase implements ActionListener{
     player.RemoveHandsCard(player.getBattleHandIndex());
     rival.RemoveHandsCard(rival.getBattleHandIndex());
 
-    mainCont.GotoNextPhase();
+    mainCont.getMyField().ReshowCard();
+    mainCont.getRivalField().ReshowCard();
+
+    if(player.getLife() < 0 || rival.getLife() < 0) { mainCont.FinishMainGame(); }
+    else { mainCont.GotoNextPhase(); }
+
   }
 
   public void actionPerformed(ActionEvent e) {

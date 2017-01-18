@@ -15,7 +15,7 @@ final public class ExplainFrame extends JFrame implements ActionListener{
 
   public ExplainFrame(){
 
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setBounds(100,100,820,600);
 
   //1ページ目
