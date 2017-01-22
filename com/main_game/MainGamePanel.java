@@ -47,7 +47,7 @@ final public class MainGamePanel extends JPanel {
   RivalFieldPanel rivalField;
   RivalSidePanel rivalSide;
 
-  public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
+  public MainGamePanel(FrameController frameCont, Boolean isLocalhost) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
     gameModel = new MainGameModel();
     this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う

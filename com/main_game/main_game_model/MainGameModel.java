@@ -37,7 +37,11 @@ final public class MainGameModel{
   private int[] pl_deck = new int[20];
   private int[] ri_deck = new int[20];
 
-  public MainGameModel() {
+  Boolean isLocalhost = false;
+
+  public MainGameModel(Boolean isLocalhost) {
+    this.isLocalhost = isLocalhost;
+
     resultBtn = new JButton("Go Result");
     decideBtn = new JButton("カードを出す");
     nextBtn = new JButton("次のバトルへ進む");
@@ -61,4 +65,5 @@ final public class MainGameModel{
   public BasePlayer getPlayer() { return player; }
   public BasePlayer getRival() { return rival; }
   public JPanel getBattleCaption() { return battleCaption; }
+  public Boolean getIsLocalhost() { return isLocalhost; }
 }

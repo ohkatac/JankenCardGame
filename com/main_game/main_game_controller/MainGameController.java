@@ -17,12 +17,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import com.main_game.main_game_model.rival_signal.*;
 import com.main_game.main_game_model.MainGameModel;
 import com.main_game.*;
 import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
 import com.asset_controller.ImageButton;
-
 
 final public class MainGameController implements ActionListener {
   private MainGameModel model;
@@ -35,6 +35,8 @@ final public class MainGameController implements ActionListener {
   private PlayerPhase playerPhase;
   private RivalPhase rivalPhase;
   private BattlePhase battlePhase;
+
+  private BaseSignal signal;
 
   public MainGameController(MainGameModel model, MainGamePanel panel) 
   {
@@ -55,6 +57,9 @@ final public class MainGameController implements ActionListener {
     playerPhase = new PlayerPhase(this);
     rivalPhase = new RivalPhase(this);
     battlePhase = new BattlePhase(this);
+
+    if(true) signal = new ComSignal();
+    else // ここにネットワークモードを実装する。
   }
 
   // 先攻か後攻かを記録する変数に記録するためのメソッド
@@ -82,7 +87,7 @@ final public class MainGameController implements ActionListener {
 
 // 次のフェイズへ進むメソッド、 それぞれのフェイズクラス内部から呼び出すこととする
   public void GotoNextPhase() {
-    if(isPlayFirst == true) {
+    if(isPlayFirst) {
       if (nowPhase.getId() == BasePhase.PLAYER) {
         nowPhase = rivalPhase;
         nowPhase.startThisPhase();
@@ -97,7 +102,7 @@ final public class MainGameController implements ActionListener {
       }
     }
 
-    else if(isPlayFirst == false) {
+    else if(!isPlayFirst) {
       if (nowPhase.getId() == BasePhase.RIVAL) {
         nowPhase = playerPhase;
         nowPhase.startThisPhase();
