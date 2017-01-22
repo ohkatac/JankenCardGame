@@ -14,10 +14,15 @@ import java.awt.event.*;
 import java.awt.Dimension;
 import javax.swing.table.DefaultTableModel;
 
+import com.FrameController;
+import com.asset_controller.*;
+
 final public class ExplainFrame extends JFrame implements ActionListener{
 
   JPanel cardPanel;
   CardLayout layout;
+  ImageButton previousButton;
+  ImageButton nextButton;
 
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
@@ -26,20 +31,13 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setBounds(100,100,820,600);
 
-    try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
-    } catch (Exception e) {
-      e.printStackTrace();
-      backgroundImage = null;
-    }
-
   //1ページ目
     JPanel card1 = new JPanel();
     JLabel label = new JLabel(
       "<html><body><h3>＜遊び方説明＞<h3>"+
       "<h4>〇概要<h4>"+
       "　7種類のじゃんけんカードで40枚のデッキを作り、カードを用いてじゃんけんをするゲーム。<br />"+
-      "　先に15ポイントある相手のライフポイントを0にするか、相手のデッキにカードが無くなると勝ちになります。<br />"+
+      "　先に20ポイントある相手のライフポイントを0にするか、相手のデッキにカードが無くなると勝ちになります。<br />"+
       "<h4>〇カード紹介<h4>"+
       "　・カードの種類<br />"+
       "　　グー、チョキ、パー、グーチー、チーパー、パーグー、グーチョキパーの計7種類のカードがあります。<br />"+
@@ -52,7 +50,7 @@ final public class ExplainFrame extends JFrame implements ActionListener{
       "<h4>〇ゲームの進め方<h4>"+
       "　１．ゲームを始める前に、[デッキ編集]でデッキを作ります。<br />"+
       "　　　デッキは全部で40枚で、グーチーパーが3枚、グーチー、チーパー、パーグーがそれぞれ5枚ずつまでの枚数制限があります。<br />"+
-      "　２．デッキ編集が終了したら、ホーム画面に戻り、[ゲームスタート]でゲーム開始です。<br />"+
+      "　２．デッキ編集が終了したら、ホーム画面に戻り、[1人で遊ぶ]、[2人で遊ぶ]でゲーム開始です。<br />"+
       "　３．ゲーム画面の説明です。<br />"+
       "　　　画面下に自分のデッキと5枚の手札、画面中央にバトルフィールド、画面上に相手のデッキと5枚の手札があります。<br />"+
       "　４．始めに先攻を決めるじゃんけんをします。<br />"+
@@ -98,21 +96,36 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     layout = new CardLayout();
     cardPanel.setLayout(layout);
 
-    cardPanel.add(card1);
-    cardPanel.add(card2);
+    cardPanel.add(card1, "description");
+    cardPanel.add(card2, "flagSheet");
+    // cardPanel.show(this,card1);
 
   //カード移動用ボタン追加
-    JButton firstButton = new JButton("前ページへ");
-    firstButton.addActionListener(this);
-    firstButton.setActionCommand("Next");
+    previousButton = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toPreviousButton.png", 
+        "assets/img/edit_button/toPreviousButton_hover.png", 
+        "assets/img/edit_button/toPreviousButton_pressed.png", 
+        "assets/img/edit_button/toPreviousButton_unable.png"  
+      }
+    );
+    previousButton.addActionListener(this);
+    previousButton.setActionCommand("Previous");
 
-    JButton lastButton = new JButton("次ページへ");
-    lastButton.addActionListener(this);
-    lastButton.setActionCommand("Previous");
+    nextButton = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toNextButton.png", 
+        "assets/img/edit_button/toNextButton_hover.png", 
+        "assets/img/edit_button/toNextButton_pressed.png", 
+        "assets/img/edit_button/toNextButton_unable.png"  
+      }
+    );
+    nextButton.addActionListener(this);
+    nextButton.setActionCommand("Next");
 
     JPanel btnPanel = new JPanel();
-    btnPanel.add(firstButton);
-    btnPanel.add(lastButton);
+    btnPanel.add(previousButton);
+    btnPanel.add(nextButton);
 
     add(cardPanel, BorderLayout.CENTER);
     add(btnPanel, BorderLayout.PAGE_END);
@@ -122,6 +135,13 @@ final public class ExplainFrame extends JFrame implements ActionListener{
     scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     cardPanel.add(scrollpane);
+
+    try {
+      backgroundImage = ImageIO.read(new File("assets/img/background/explain.png"));
+    } catch (Exception e) {
+      e.printStackTrace();
+      backgroundImage = null;
+    }
 
     this.setVisible(true);
   }
@@ -137,9 +157,7 @@ final public class ExplainFrame extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e){
     String cmd = e.getActionCommand();
 
-    if (cmd.equals("First")){
-      layout.first(cardPanel);
-    }else if(cmd.equals("Previous")){
+    if(cmd.equals("Previous")){
       layout.previous(cardPanel);
     }else if(cmd.equals("Next")){
       layout.next(cardPanel);

@@ -18,11 +18,10 @@ import com.asset_controller.*;
 final public class TitlePanel extends JPanel implements ActionListener {
   FrameController frameCont;
   JLabel label;
-  JButton start_1;
-  JButton start_2;
-  JButton deckEdit;
-  JButton explain;
-  ImageButton samplebtn;
+  ImageButton start_1;
+  ImageButton start_2;
+  ImageButton deckEdit;
+  ImageButton explain;
   RW_csv mainDeck = null;
   Boolean gameBtnFlag;
 
@@ -52,28 +51,56 @@ final public class TitlePanel extends JPanel implements ActionListener {
     gbc.weighty = 1.0d;
     layout.setConstraints(label, gbc);
     
-    start_1 = new JButton("1人で遊ぶ");
+    start_1 = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toMainButton.png", 
+        "assets/img/edit_button/toMainButton_pressed.png", 
+        "assets/img/edit_button/toMainButton_hover.png", 
+        "assets/img/edit_button/toMainButton_unable.png"  
+      }
+    );
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(start_1, gbc);
 
-    start_2 = new JButton("2人で遊ぶ");
+    start_2 = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toMainButton2.png", 
+        "assets/img/edit_button/toMainButton2_pressed.png", 
+        "assets/img/edit_button/toMainButton2_hover.png", 
+        "assets/img/edit_button/toMainButton2_unable.png"  
+      }
+    );
     gbc.gridx = 0;
     gbc.gridy = 2;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(start_2, gbc);
 
-    deckEdit = new JButton("デッキ編集");
+    deckEdit = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toDeckEditButton.png", 
+        "assets/img/edit_button/toDeckEditButton_pressed.png", 
+        "assets/img/edit_button/toDeckEditButton_hover.png", 
+        "assets/img/edit_button/toDeckEditButton_unable.png"  
+      }
+    );
     gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(deckEdit, gbc);
 
-    explain = new JButton("遊び方説明");
+    explain = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toExplainButton.png", 
+        "assets/img/edit_button/toExplainButton_pressed.png", 
+        "assets/img/edit_button/toExplainButton_hover.png", 
+        "assets/img/edit_button/toExplainButton_unable.png"  
+      }
+    );
     gbc.gridx = 0;
     gbc.gridy = 4;
     gbc.weighty = 0.4d;

@@ -26,9 +26,9 @@ import com.asset_controller.*;
 
 // MainGame's Model
 final public class MainGameModel{
-  private JButton resultBtn;
-  private JButton decideBtn;
-  private JButton nextBtn;
+  private ImageButton resultBtn;
+  private ImageButton decideBtn;
+  private ImageButton nextBtn;
   private BasePlayer player;
   private BasePlayer rival;
   private JPanel battleCaption;
@@ -38,9 +38,30 @@ final public class MainGameModel{
   private int[] ri_deck = new int[20];
 
   public MainGameModel() {
-    resultBtn = new JButton("Go Result");
-    decideBtn = new JButton("カードを出す");
-    nextBtn = new JButton("次のバトルへ進む");
+    resultBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/goResultButton.png", 
+        "assets/img/edit_button/goResultButton_pressed.png", 
+        "assets/img/edit_button/goResultButton_hover.png", 
+        "assets/img/edit_button/goResultButton_unable.png"  
+      }
+    );
+    decideBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/cardButton.png", 
+        "assets/img/edit_button/cardButton_pressed.png", 
+        "assets/img/edit_button/cardButton_hover.png", 
+        "assets/img/edit_button/cardButton_unable.png"  
+      }
+    );
+    nextBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/battleButton.png", 
+        "assets/img/edit_button/battleButton_pressed.png", 
+        "assets/img/edit_button/battleButton_hover.png", 
+        "assets/img/edit_button/battleButton_unable.png"  
+      }
+    );
 
     // Player Deckの読み込みと確保
     RW_csv mainDeckdata = new RW_csv( new File("assets/csv/main_deck.csv") );

@@ -17,16 +17,17 @@ import java.io.*;
 // デッキ編集画面のView&Controller 操作に反応して画面上の再描画等を行う
 final public class DeckEditPanel extends JPanel implements ActionListener, Observer {
         FrameController frameCont;//画面表示、遷移のための変数。詳細はFrameController.javaを参照
-        JButton end;//タイトルへ戻るためのボタン
-        ImageIcon BackGround;
+        ImageButton end;//タイトルへ戻るためのボタン
+        ImageIcon BackGround;//背景の画像
         int width, height;//背景画像用に高さと幅を格納するための変数
-        JPanel Additonal, ShowAndDelete, SaveAndLoad;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
+        JPanel Additonal, ShowAndDelete, SaveAndLoad, toTitle;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
         JPanel CardList, Text;//ShowAndDeleteにてCardListはカードの表示、Textは使用方法とセーブ、ロードの通知を表示
         ImageButton Gu, Pa, Chi, G_C, C_P, P_G, ALL;//追加操作パネル上でのボタン 詳細はImageButton.javaを参照
-        JButton Save, Load;//セーブ、ロードを行うボタン
+        ImageButton Save, Load;//セーブ、ロードを行うボタン
         JLabel HowTo, Message;//HowToは使用方法、Messageはセーブ、ロード通知
         CardIconBase[] CardIcon;//デッキ内部のカード表示および削除ボタン担当　詳細はCardIconBase.javaを参照
         DeckEditorModel MyDeck;//デッキ編集操作に関するModel 必要な処理はここにすべて入っている 詳細はDeckEditorModel.java参照
+        GridBagConstraints SaveLoad, BackTitle;//レイアウト調整用の変数
         Gu G; Pa P; Chi C; G_C GC; C_P CP; P_G PG; ALL all;//追加時に必要な各種カードデータ
 
 
@@ -45,7 +46,11 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 ShowAndDelete=new JPanel();
                 ShowAndDelete.setLayout(new BorderLayout());
                 SaveAndLoad=new JPanel();
-                SaveAndLoad.setLayout(new GridLayout(2,1));
+                SaveLoad=new GridBagConstraints();
+                SaveAndLoad.setLayout(new GridBagLayout());
+                toTitle=new JPanel();
+                BackTitle=new GridBagConstraints();
+                toTitle.setLayout(new GridBagLayout());
 
                 /*追加操作部分に関するComponent*/
                 Gu=new ImageButton(new String[] {
@@ -93,10 +98,22 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 this.add(Additonal, BorderLayout.WEST);
 
                 /*セーブとロードに関するComponent*/
-                Save=new JButton("デッキをセーブ");
-                Save.addActionListener(this); SaveAndLoad.add(Save);
-                Load=new JButton("デッキをロード");
-                Load.addActionListener(this); SaveAndLoad.add(Load);
+                Save=new ImageButton(new String[] {
+                        "assets/img/edit_button/saveButton.png",
+                        "assets/img/edit_button/saveButton_pressed.png",
+                        "assets/img/edit_button/saveButton_hover.png",
+                        "assets/img/edit_button/saveButton_unable.png"
+                });
+                SaveLoad.gridx=0; SaveLoad.gridy=0;
+                Save.addActionListener(this); SaveAndLoad.add(Save, SaveLoad);
+                Load=new ImageButton(new String[] {
+                        "assets/img/edit_button/loadButton.png",
+                        "assets/img/edit_button/loadButton_pressed.png",
+                        "assets/img/edit_button/loadButton_hover.png",
+                        "assets/img/edit_button/loadButton_unable.png"
+                });
+                SaveLoad.gridx=0; SaveLoad.gridy=1;
+                Load.addActionListener(this); SaveAndLoad.add(Load, SaveLoad);
                 this.add(SaveAndLoad, BorderLayout.EAST);
 
                 /*カード表記と削除に関するComponent*/
@@ -133,12 +150,20 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                 this.add(ShowAndDelete, BorderLayout.CENTER);
 
                 /*タイトルに戻るためのComponent*/
-                end=new JButton("タイトルへ戻る");
+                end=new ImageButton(new String[] {
+                        "assets/img/edit_button/toTitleButton.png",
+                        "assets/img/edit_button/toTitleButton_pressed.png",
+                        "assets/img/edit_button/toTitleButton_hover.png",
+                        "assets/img/edit_button/toTitleButton_unable.png"
+                });
+                BackTitle.gridx=1; BackTitle.gridy=0;
                 end.addActionListener(this);
-                this.add(end, BorderLayout.NORTH);
+                toTitle.add(end, BackTitle);
+                this.add(toTitle, BorderLayout.NORTH);
                 Additonal.setOpaque(false);
                 ShowAndDelete.setOpaque(false);
                 SaveAndLoad.setOpaque(false);
+                toTitle.setOpaque(false);
 
 
         }
@@ -179,21 +204,26 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                                 MyDeck.AddCardToDeck(all);
                         }
                 }
-                if(e.getSource()==Save && MyDeck.CheckDeck()!=null) { //セーブ、ロードボタンに対する操作
+                if(e.getSource()==Save) { //セーブ、ロードボタンに対する操作
                         MyDeck.SaveDeck();
                         Message.setText("セーブしました");
                 }
-                if(e.getSource()==Load && MyDeck.CheckDeck()!=null) {
+                if(e.getSource()==Load) {
                         MyDeck.LoadDeck();
-                        Message.setText("ロードしました");
+                        if(MyDeck.CheckDeck()==null) {
+                                Message.setText("カードが存在しません");
+                        }else{
+                                Message.setText("ロードしました");
+                        }
                 }
         }
 
         public void update(Observable o, Object arg){
                 Boolean[] Flag;
-                Gu.Enabled(); Chi.Enabled(); Pa.Enabled();//追加ボタン、リストアイコンの初期化
+                Gu.Enabled(); Chi.Enabled(); Pa.Enabled();//追加, セーブロードボタン、リストアイコンの初期化
                 G_C.Enabled(); C_P.Enabled(); P_G.Enabled();
                 ALL.Enabled();
+                Save.Enabled(); Load.Enabled();
                 MyDeck.CountChecker(); //ここでカウンターをチェック、フラグを更新する
                 for(int i=0; i<40; i++) {
                         CardIcon[i].IconClear();
@@ -212,6 +242,8 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                                 G_C.Disabled(); C_P.Disabled(); P_G.Disabled();
                                 ALL.Disabled();
                         }
+                }else{
+                        Save.Disabled();
                 }
         }
         public void paintComponent(Graphics g){

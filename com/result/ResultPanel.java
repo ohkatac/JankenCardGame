@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import com.FrameController;
+import com.asset_controller.*;
 
 // Result's Model & View & Controller
 final public class ResultPanel extends JPanel implements ActionListener {
@@ -20,7 +21,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
   JLabel result_lose;
   JLabel m_life;
   JLabel r_life;
-  JButton title;
+  ImageButton title;
 
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
@@ -29,7 +30,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
 
     // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
+      backgroundImage = ImageIO.read(new File("assets/img/background/result.png"));
     } catch (Exception e) {
       e.printStackTrace();
       backgroundImage = null;
@@ -77,7 +78,14 @@ final public class ResultPanel extends JPanel implements ActionListener {
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(r_life, gbc);
 
-    title = new JButton("タイトルに戻る");
+    title = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toTitleButton2.png", 
+        "assets/img/edit_button/toTitleButton2_pressed.png", 
+        "assets/img/edit_button/toTitleButton2_hover.png", 
+        "assets/img/edit_button/toTitleButton2_unable.png"  
+      }
+    );
     gbc.gridx = 2;
     gbc.gridy = 3;
     gbc.weighty = 0.5d;
