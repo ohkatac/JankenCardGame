@@ -23,7 +23,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   private int plBattleId, riBattleId;
   private CardModel gu, chi, pa;
 
-  private BaseSignal signal;
+  private ComSignal signal;
 
   public FirstJankenPhase(MainGameController mainCont) {
     super(BasePhase.FIRST);

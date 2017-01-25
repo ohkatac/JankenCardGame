@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.io.File;
 
 import com.deck_edit.*;
+import com.game_select.GameSelectPanel;
 import com.main_game.MainGamePanel;
 import com.result.*;
 import com.title.*;
@@ -18,6 +19,7 @@ public final class FrameController extends JFrame{
 
     private TitlePanel titlePanel; 
     private DeckEditPanel editPanel; 
+    private GameSelectPanel gameSelectPanel;
     private MainGamePanel gamePanel; 
     private ResultPanel resultPanel; 
     private ExplainFrame explainFrame; 
@@ -65,12 +67,36 @@ public final class FrameController extends JFrame{
       this.editPanel.setVisible(true);
     }
 
-    public void showMainGame(JPanel currentPanel) {
+    public void showGameSelect(JPanel currentPanel) {
       // 現在JFrame上に表示してあるJPanelを削除
       currentPanel.setVisible(false);
       currentPanel = null;
       // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
-      gamePanel = new MainGamePanel(this);
+      gameSelectPanel = new GameSelectPanel(this);
+      // JPanelを追加
+      this.add(gameSelectPanel);
+      // JPanelを見える状態にする
+      this.gameSelectPanel.setVisible(true);
+    }
+
+    public void showMainGame(JPanel currentPanel, int[] ri_deck) {
+      // 現在JFrame上に表示してあるJPanelを削除
+      currentPanel.setVisible(false);
+      currentPanel = null;
+      // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
+      gamePanel = new MainGamePanel(this, ri_deck);
+      // JPanelを追加
+      this.add(gamePanel);
+      // JPanelを見える状態にする
+      this.gamePanel.setVisible(true);
+    }
+
+    public void showMainGame(JPanel currentPanel, int[] ri_deck, int port, Boolean isServer) {
+      // 現在JFrame上に表示してあるJPanelを削除
+      currentPanel.setVisible(false);
+      currentPanel = null;
+      // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
+      gamePanel = new MainGamePanel(this, ri_deck, port, isServer);
       // JPanelを追加
       this.add(gamePanel);
       // JPanelを見える状態にする
