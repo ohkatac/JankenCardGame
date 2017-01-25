@@ -1,4 +1,4 @@
-package com.result;
+package com.main_game_2;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,69 +14,61 @@ import java.awt.Graphics2D;
 import com.FrameController;
 import com.asset_controller.*;
 
-// Result's Model & View & Controller
-final public class ResultPanel extends JPanel implements ActionListener {
+// Title's Model & View & Controller
+final public class MainGamePanel2 extends JPanel implements ActionListener {
   FrameController frameCont;
-  JLabel result_win;
-  JLabel result_lose;
-  JLabel m_life;
-  JLabel r_life;
+  JLabel label;
+  JButton server;
+  JButton client;
+  JTextField text;
+  ImageButton samplebtn;
   ImageButton title;
 
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
-  public ResultPanel(FrameController frameCont, int my_life, int ri_life) { // FrameControllerでPanelを管理するために引数にこれをとる
+  public MainGamePanel2(FrameController frameCont) {
     this.frameCont = frameCont;
 
-    // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
+    // Titleの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/result.png"));
+      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
     } catch (Exception e) {
       e.printStackTrace();
       backgroundImage = null;
     }
 
-    setLayout(new GridBagLayout()); 
+    setLayout(new GridBagLayout());
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
     setLayout(layout);
-    
-    if(my_life>ri_life){
-      result_win = new JLabel("YOU WIN!!", JLabel.CENTER);
-      result_win.setFont(new Font("Arial", Font.ITALIC, 70));
-      gbc.gridx = 0;
-      gbc.gridy = 0;
-      gbc.weighty = 0.9d;
-      gbc.gridwidth = 3; 
-      layout.setConstraints(result_win, gbc);
-      add(result_win);
-    }else{
-      result_lose = new JLabel("YOU LOSE...", JLabel.CENTER);
-      result_lose.setFont(new Font("Arial", Font.ITALIC, 70));
-      gbc.gridx = 0;
-      gbc.gridy = 0;
-      gbc.weighty = 0.9d;
-      gbc.gridwidth = 3; 
-      layout.setConstraints(result_lose, gbc);
-      add(result_lose);
-    }
 
-    m_life = new JLabel("あなたの残りライフ : " + my_life, JLabel.CENTER);
-    m_life.setFont(new Font("MS 明朝", Font.PLAIN, 20));
+    label = new JLabel("ポート番号", JLabel.CENTER);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.weighty = 0.9d;
+    layout.setConstraints(label, gbc);
+
+    text = new JTextField(20);
     gbc.gridx = 1;
+    gbc.gridy = 0;
+    layout.setConstraints(text, gbc);
+
+    server = new JButton("サーバーとして接続");
+    gbc.gridx = 0;
     gbc.gridy = 1;
+    gbc.gridwidth = 2;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
-    layout.setConstraints(m_life, gbc);
+    layout.setConstraints(server, gbc);
 
-    r_life = new JLabel("相手の残りライフ : " + ri_life, JLabel.CENTER);
-    r_life.setFont(new Font("MS 明朝", Font.PLAIN, 20));
-    gbc.gridx = 1;
+    client = new JButton("クライアントとして接続");
+    gbc.gridx = 0;
     gbc.gridy = 2;
+    gbc.gridwidth = 2;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
-    layout.setConstraints(r_life, gbc);
+    layout.setConstraints(client, gbc);
 
     title = new ImageButton(
       new String[] {
@@ -86,19 +78,21 @@ final public class ResultPanel extends JPanel implements ActionListener {
         "assets/img/edit_button/toTitleButton2_unable.png"  
       }
     );
-    gbc.gridx = 2;
+    gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.weighty = 0.5d;
     gbc.anchor = GridBagConstraints.CENTER;
     layout.setConstraints(title, gbc);
 
+    server.addActionListener(this);
+    client.addActionListener(this);
     title.addActionListener(this);
 
-
-    add(r_life);
-    add(m_life);
+    add(label);
+    add(server);
+    add(client);
+    add(text);
     add(title);
-
   }
 
   // paintComponentによりJPanelを背景画像で上塗りする処理
@@ -112,8 +106,16 @@ final public class ResultPanel extends JPanel implements ActionListener {
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == title) {
+    if (e.getSource() == server) {
+
+    }
+    else if(e.getSource() == client){
+
+    }
+    else if(e.getSource() == title){
       frameCont.showTitle(this);
     }
   }
+
 }
+

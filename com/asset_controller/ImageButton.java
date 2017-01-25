@@ -75,6 +75,20 @@ public class ImageButton extends JButton implements MouseListener {
     repaint(); // JPanel(JButton)の再描画
   }
 
+  // Override
+  public void setEnabled(boolean b) {
+    super.setEnabled(b);
+    if(b) {
+      image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
+      enable = true;
+    }
+    else {
+      image = new javax.swing.ImageIcon(disablePath); // ボタンの画像を通常状態に設定する
+      enable = false;
+    }
+    repaint(); // JPanel(JButton)の再描画
+  }
+
 // ボタンの画像変化処理の記述
   public void mouseClicked(MouseEvent e) { }
   public void mousePressed(MouseEvent e) {

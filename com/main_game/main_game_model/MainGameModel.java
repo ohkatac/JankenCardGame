@@ -26,14 +26,15 @@ import com.asset_controller.*;
 
 // MainGame's Model
 final public class MainGameModel{
-  private JButton resultBtn;
-  private JButton decideBtn;
-  private JButton nextBtn;
+  private ImageButton resultBtn;
+  private ImageButton decideBtn;
+  private ImageButton nextBtn;
   private BasePlayer player;
   private BasePlayer rival;
   private JPanel battleCaption;
 
   // temporary data for pl, ri deck
+
   private int[] pl_deck;
   private int[] ri_deck;
 
@@ -43,17 +44,38 @@ final public class MainGameModel{
     pl_deck = mainDeckdata.ReadCSV();
     this.ri_deck = ri_deck;
 
-    resultBtn = new JButton("Go Result");
-    decideBtn = new JButton("カードを出す");
-    nextBtn = new JButton("次のバトルへ進む");
+    resultBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/goResultButton.png", 
+        "assets/img/edit_button/goResultButton_pressed.png", 
+        "assets/img/edit_button/goResultButton_hover.png", 
+        "assets/img/edit_button/goResultButton_unable.png"  
+      }
+    );
+    decideBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/cardButton.png", 
+        "assets/img/edit_button/cardButton_pressed.png", 
+        "assets/img/edit_button/cardButton_hover.png", 
+        "assets/img/edit_button/cardButton_unable.png"  
+      }
+    );
+    nextBtn = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/battleButton.png", 
+        "assets/img/edit_button/battleButton_pressed.png", 
+        "assets/img/edit_button/battleButton_hover.png", 
+        "assets/img/edit_button/battleButton_unable.png"  
+      }
+    );
 
     player = new MyPlayer(pl_deck); // Player Modelを生成
     rival = new ComPlayer(ri_deck); // Rival Modelを生成
   }
 
-  public JButton getResultBtn() { return resultBtn; }
-  public JButton getDecideBtn() { return decideBtn; }
-  public JButton getNextBtn() { return nextBtn; }
+  public ImageButton getResultBtn() { return resultBtn; }
+  public ImageButton getDecideBtn() { return decideBtn; }
+  public ImageButton getNextBtn() { return nextBtn; }
   public BasePlayer getPlayer() { return player; }
   public BasePlayer getRival() { return rival; }
   public JPanel getBattleCaption() { return battleCaption; }
