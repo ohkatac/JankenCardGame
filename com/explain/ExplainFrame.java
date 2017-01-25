@@ -108,8 +108,8 @@ final public class ExplainFrame extends JFrame implements ActionListener {
                 previousButton = new ImageButton(
                         new String[] {
                         "assets/img/edit_button/toPreviousButton.png",
-                        "assets/img/edit_button/toPreviousButton_hover.png",
                         "assets/img/edit_button/toPreviousButton_pressed.png",
+                        "assets/img/edit_button/toPreviousButton_hover.png",
                         "assets/img/edit_button/toPreviousButton_unable.png"
                 }
                         );
@@ -119,8 +119,8 @@ final public class ExplainFrame extends JFrame implements ActionListener {
                 nextButton = new ImageButton(
                         new String[] {
                         "assets/img/edit_button/toNextButton.png",
-                        "assets/img/edit_button/toNextButton_hover.png",
                         "assets/img/edit_button/toNextButton_pressed.png",
+                        "assets/img/edit_button/toNextButton_hover.png",
                         "assets/img/edit_button/toNextButton_unable.png"
                 }
                         );
