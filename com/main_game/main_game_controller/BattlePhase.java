@@ -130,8 +130,8 @@ public class BattlePhase extends BasePhase implements ActionListener{
         }
       case 4:
         switch(ri) {
-          case 1: return 1;
-          case 2: return 0;
+          case 1: return 0;
+          case 2: return 1;
           case 3: return 1;
           case 4: return 0;
           case 5: return -1;
@@ -144,8 +144,8 @@ public class BattlePhase extends BasePhase implements ActionListener{
       case 5:
         switch(ri) {
           case 1: return 1;
-          case 2: return 1;
-          case 3: return 0;
+          case 2: return 0;
+          case 3: return 1;
           case 4: return 1;
           case 5: return 0;
           case 6: return -1;
@@ -156,9 +156,9 @@ public class BattlePhase extends BasePhase implements ActionListener{
         }
       case 6:
         switch(ri) {
-          case 1: return 0;
+          case 1: return 1;
           case 2: return 1;
-          case 3: return 1;
+          case 3: return 0;
           case 4: return -1;
           case 5: return 1;
           case 6: return 0;

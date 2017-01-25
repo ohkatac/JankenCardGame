@@ -1,4 +1,4 @@
-package com.main_game.main_game_controller.rival_signal;
+package com.localhost_model;
 
 import java.util.Random;
 import java.awt.event.*;
@@ -7,7 +7,7 @@ import javax.swing.Timer;
 import com.main_game.main_game_controller.BasePhase;
 import com.main_game.main_game_model.player_model.*;
 
-public class ComSignal implements ActionListener{
+public class ComSignal implements ActionListener, CommMethods {
   private BasePhase signalTo;
   private Timer timer;
   private BasePlayer rival;

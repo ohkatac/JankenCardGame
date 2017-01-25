@@ -47,11 +47,34 @@ final public class MainGamePanel extends JPanel {
   RivalFieldPanel rivalField;
   RivalSidePanel rivalSide;
 
-  public MainGamePanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
-    this.frameCont = frameCont;
-    gameModel = new MainGameModel();
-    this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
+  private int port;
+  private Boolean isLocalhost;
 
+  public MainGamePanel(FrameController frameCont, int[] ri_deck) { // FrameControllerでPanelを管理するために引数にこれをとる
+    this.frameCont = frameCont;
+    gameModel = new MainGameModel(ri_deck);
+    
+    loadBackgroundImage();
+    setMainGamePanel();
+
+// MainGameの流れを制御するためのコントローラーを定義
+    gameController = new MainGameController(gameModel, this);
+
+  }
+
+  public MainGamePanel(FrameController frameCont, int[] ri_deck, int port, Boolean isServer) {
+    this.frameCont = frameCont;
+
+    gameModel = new MainGameModel(ri_deck);
+
+    loadBackgroundImage();
+    setMainGamePanel();
+    // Maingameの流れを制御するためのControllerを生成
+    gameController = new MainGameController(gameModel, this, port, isServer);
+
+  }
+
+  private void loadBackgroundImage() {
     // MainGameの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
       backgroundImage = ImageIO.read(new File("assets/img/background/maingame.png"));
@@ -59,6 +82,10 @@ final public class MainGamePanel extends JPanel {
       e.printStackTrace();
       backgroundImage = null;
     }
+  }
+
+  private void setMainGamePanel() {
+    this.setLayout(new BorderLayout()); // それぞれのFieldを再現するためにBorderLayoutを使う
 
 // 5つのフィールドをつかさどるViewであるJPanelのインスタンスの生成
     myField = new MyFieldPanel(gameModel, this);
@@ -67,15 +94,11 @@ final public class MainGamePanel extends JPanel {
     rivalField = new RivalFieldPanel(gameModel, this);
     rivalSide = new RivalSidePanel(gameModel);
 
-// MainGameの流れを制御するためのコントローラーを定義
-    gameController = new MainGameController(gameModel, this);
-
     this.add(myField, BorderLayout.SOUTH);
     this.add(mySide, BorderLayout.EAST);
     this.add(battleField, BorderLayout.CENTER);
     this.add(rivalField, BorderLayout.NORTH);
     this.add(rivalSide, BorderLayout.WEST);
-
   }
 
   // paintComponentによりJPanelを背景画像で上塗りする処理

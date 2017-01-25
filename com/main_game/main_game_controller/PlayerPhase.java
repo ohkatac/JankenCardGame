@@ -21,6 +21,10 @@ public class PlayerPhase extends BasePhase implements ActionListener {
   private JButton decideBtn;
   private BasePlayer player;
 
+  private Boolean isLocalhost;
+  private Boolean isServer;
+  private int port;
+
   public PlayerPhase(MainGameController mainCont) {
     super(PLAYER);
     this.mainCont = mainCont;
@@ -28,6 +32,13 @@ public class PlayerPhase extends BasePhase implements ActionListener {
     myField = mainCont.getMyField();
     decideBtn = mainCont.getDecideBtn();
     player = mainCont.getPlayer();
+    this.isLocalhost = mainCont.getIsLocalhost();
+  }
+
+  public PlayerPhase(MainGameController mainCont, int port, Boolean isServer) {
+    this(mainCont);
+    this.port = port;
+    this.isServer = isServer;
   }
 
 // Override
