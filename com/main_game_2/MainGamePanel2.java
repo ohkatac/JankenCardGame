@@ -22,6 +22,7 @@ final public class MainGamePanel2 extends JPanel implements ActionListener {
   JButton client;
   JTextField text;
   ImageButton samplebtn;
+  ImageButton title;
 
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
@@ -45,7 +46,7 @@ final public class MainGamePanel2 extends JPanel implements ActionListener {
     label = new JLabel("ポート番号", JLabel.CENTER);
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.weighty = 1.0d;
+    gbc.weighty = 0.9d;
     layout.setConstraints(label, gbc);
 
     text = new JTextField(20);
@@ -57,7 +58,7 @@ final public class MainGamePanel2 extends JPanel implements ActionListener {
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.gridwidth = 2;
-    gbc.weighty = 0.5d;
+    gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(server, gbc);
 
@@ -65,17 +66,33 @@ final public class MainGamePanel2 extends JPanel implements ActionListener {
     gbc.gridx = 0;
     gbc.gridy = 2;
     gbc.gridwidth = 2;
-    gbc.weighty = 0.5d;
+    gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(client, gbc);
 
+    title = new ImageButton(
+      new String[] {
+        "assets/img/edit_button/toTitleButton2.png", 
+        "assets/img/edit_button/toTitleButton2_pressed.png", 
+        "assets/img/edit_button/toTitleButton2_hover.png", 
+        "assets/img/edit_button/toTitleButton2_unable.png"  
+      }
+    );
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.weighty = 0.5d;
+    gbc.anchor = GridBagConstraints.CENTER;
+    layout.setConstraints(title, gbc);
+
     server.addActionListener(this);
     client.addActionListener(this);
+    title.addActionListener(this);
 
     add(label);
     add(server);
     add(client);
     add(text);
+    add(title);
   }
 
   // paintComponentによりJPanelを背景画像で上塗りする処理
@@ -94,6 +111,9 @@ final public class MainGamePanel2 extends JPanel implements ActionListener {
     }
     else if(e.getSource() == client){
 
+    }
+    else if(e.getSource() == title){
+      frameCont.showTitle(this);
     }
   }
 
