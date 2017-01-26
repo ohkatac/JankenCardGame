@@ -33,6 +33,7 @@ final public class ExplainFrame extends JFrame implements ActionListener {
 
                 //1ページ目
                 JPanel card1 = new JPanel();
+                card1.setLayout(new BorderLayout());
                 JLabel label = new JLabel(
                         "<html><body><h3>＜遊び方説明＞<h3>"+
                         "<h4>〇概要<h4>"+
