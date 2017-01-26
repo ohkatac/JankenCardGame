@@ -38,10 +38,9 @@ final public class MainGameModel{
   private int[] pl_deck;
   private int[] ri_deck;
 
-  public MainGameModel(int[] ri_deck) {
+  public MainGameModel(int[] pl_deck, int[] ri_deck) {
     // Player Deckの読み込みと確保
-    RW_csv mainDeckdata = new RW_csv( new File("assets/csv/main_deck.csv") );
-    pl_deck = mainDeckdata.ReadCSV();
+    this.pl_deck = pl_deck;
     this.ri_deck = ri_deck;
 
     resultBtn = new ImageButton(

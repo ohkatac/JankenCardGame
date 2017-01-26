@@ -3,16 +3,23 @@ package com.localhost_model;
 import java.net.*;
 import java.io.*;
 
-public class CommServer implements CommMethods {
+public class CommServer implements Communicate {
   private ServerSocket serverS = null;
   private Socket clientS = null;
   private PrintWriter out = null;
   private BufferedReader in = null;
-  private int port=0;
+
+  private int port;
+
+  public static final int SEND = 0, RECEIVE = 1;
+  private int mode = -1;
 
   public CommServer() {}
   public CommServer(int port) { open(port); }
   public CommServer(CommServer cs) { serverS=cs.getServerSocket(); open(cs.getPortNo()); }
+
+  public int getMode() { return mode; }
+  public void setMode(int mode) { this.mode = mode; }
 
   public ServerSocket getServerSocket() { return serverS; } 
   public int getPortNo() { return port; }
@@ -21,7 +28,7 @@ public class CommServer implements CommMethods {
 // サーバ用のソケットはクライアントからの接続待ち専用．
 // ポート番号のみを指定する．
   public boolean open(int port){
-    this.port=port;
+    this.port = port;
     try{ 
       if (serverS == null) { serverS = new ServerSocket(port); }
     } catch (IOException e) {
@@ -38,6 +45,8 @@ public class CommServer implements CommMethods {
     }
     return true;
   }
+
+  public boolean open(String host,int port) { return false; }
 
 // データ送信
   public boolean send(String msg){
@@ -85,4 +94,8 @@ public class CommServer implements CommMethods {
     in=null; out=null;
     clientS=null; serverS=null;
   }
+
+  // Override
+  // 別スレッドでこのクラスを使用するためのメソッド
+  public void run() {}
 }

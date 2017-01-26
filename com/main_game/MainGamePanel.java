@@ -31,6 +31,9 @@ import com.main_game.main_game_model.card_model.*;
 import com.main_game.main_game_model.player_model.*;
 import com.asset_controller.ImageButton;
 
+// import for localhost network
+import com.localhost_model.*;
+
 // MainGame's View
 final public class MainGamePanel extends JPanel {
   FrameController frameCont;
@@ -50,9 +53,9 @@ final public class MainGamePanel extends JPanel {
   private int port;
   private Boolean isLocalhost;
 
-  public MainGamePanel(FrameController frameCont, int[] ri_deck) { // FrameControllerでPanelを管理するために引数にこれをとる
+  public MainGamePanel(FrameController frameCont, int[] pl_deck, int[] ri_deck) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
-    gameModel = new MainGameModel(ri_deck);
+    gameModel = new MainGameModel(pl_deck, ri_deck);
     
     loadBackgroundImage();
     setMainGamePanel();
@@ -62,15 +65,15 @@ final public class MainGamePanel extends JPanel {
 
   }
 
-  public MainGamePanel(FrameController frameCont, int[] ri_deck, int port, Boolean isServer) {
+  public MainGamePanel(FrameController frameCont, int[] pl_deck, int[] ri_deck, Communicate comm, Boolean isServer) {
     this.frameCont = frameCont;
 
-    gameModel = new MainGameModel(ri_deck);
+    gameModel = new MainGameModel(pl_deck, ri_deck);
 
     loadBackgroundImage();
     setMainGamePanel();
     // Maingameの流れを制御するためのControllerを生成
-    gameController = new MainGameController(gameModel, this, port, isServer);
+    gameController = new MainGameController(gameModel, this, comm, isServer);
 
   }
 

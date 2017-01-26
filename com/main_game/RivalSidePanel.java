@@ -8,6 +8,8 @@ import com.main_game.main_game_model.MainGameModel;
 import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
 
+import com.main_game.main_game_controller.BasePhase;
+
 public class RivalSidePanel extends JPanel {
   MainGameModel model;
   JButton someBtn;
@@ -47,6 +49,26 @@ public class RivalSidePanel extends JPanel {
       "自分のライフ: "+player.getLife()+"<br>"+
       "</html>"
     );
+    this.add(captionValue);
+    captionValue.setVisible(true);
+  }
+
+// BasePhase
+  public void showNowPhase(int phaseId) {
+    switch(phaseId) {
+      case BasePhase.PLAYER :
+        captionValue = new JLabel("あなたのターンです");
+        break;
+      case BasePhase.RIVAL :
+        captionValue = new JLabel("相手ののターンです");
+        break;
+      case BasePhase.FIRST :
+        captionValue = new JLabel("先攻後攻を決めるじゃんけんです");
+        break;
+      case BasePhase.BATTLE :
+        captionValue = new JLabel("バトルフェイズです");
+        break;
+    }
     this.add(captionValue);
     captionValue.setVisible(true);
   }

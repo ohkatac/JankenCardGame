@@ -98,6 +98,23 @@ public class RW_csv {
     return intData;
   }
 
+  public String readString() {
+    String data;
+
+    try {
+      // csvファイルリーダーを宣言
+      BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(this.file), "UTF-8"));
+
+      data = br.readLine(); // CSVファイルの先頭の一行を読み込む
+    } catch (IOException e) {
+      data = null;
+      System.out.println(e);
+      System.exit(1);
+    }
+
+    return data;
+  }
+
   // 2次元配列をCSVに書き込むためのメソッド(拡張性を持たせるためにあえて作りました。 最終的に使わないようでしたら削除します。)
   public void WriteCSV2(String[][] data) {
     try {

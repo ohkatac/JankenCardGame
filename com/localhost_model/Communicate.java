@@ -1,7 +1,8 @@
 package com.localhost_model;
 
-public interface CommMethods {
+public interface Communicate {
   //.ポート開放
+  public boolean open(int port);
   public boolean open(String host,int port);
   // データ送信
   public boolean send(String msg);
@@ -11,4 +12,7 @@ public interface CommMethods {
   public int setTimeout(int to);
   // ソケットのクローズ (通信終了)
   public void close();
+
+  public int getMode();
+  public void setMode(int mode);
 }

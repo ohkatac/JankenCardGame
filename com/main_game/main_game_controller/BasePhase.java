@@ -29,4 +29,8 @@ public class BasePhase {
 
 // 拡張性を高めるため固定のフェイズのみではなくBasePhaseに定義しておく
   public void signalAction(String data) {}
+
+  public void receiveSignalAction(String data) {}
+
+  public void sendSignalAction(String data) {}
 }

@@ -39,7 +39,7 @@ public class RivalFieldPanel extends JPanel {
     deckImg.setVisible(false);
   }
 
-// Debug用に相手のカードを表示させるメソッドを残しておく
+// 相手のカードを表示させるメソッドを残しておく
   // public void ReshowCard(){
   //   this.removeAll();
   //   for(CardModel cm : rivalHands) {

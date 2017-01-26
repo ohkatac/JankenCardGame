@@ -44,12 +44,17 @@ public class RivalPhase extends BasePhase {
     rivalField.ReshowCard();
 
     signal.startSignal();
+
+    // 今がなんのフェイズなのかを表示
+    mainCont.getRivalSide().showNowPhase(super.id);
   }
 
 // このフェイズが始まるときにMainGameControllerから呼び出されるメソッド
 // Override
   public void endThisPhase() {
     signal.stopSignal();
+    // ターンの詳細を消す
+    mainCont.getRivalSide().deleteCaption();
   }
 
 // 場に出すカードを決めるメソッド
