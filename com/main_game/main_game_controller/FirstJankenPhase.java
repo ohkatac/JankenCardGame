@@ -96,15 +96,21 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
     }
   }
   public void receiveSignalAction(String data) {
-    data = data.trim();
-    // Debug
-    System.out.println(data);
-    if(data == "1") {
+    if(isNumber(data)) {
       // Debug
       System.out.println(data);
       InputJanken(Integer.parseInt(data), BasePlayer.RIVAL);
     }
 
+  }
+
+  public boolean isNumber(String val) {
+    try {
+      Integer.parseInt(val);
+      return true;
+    } catch (NumberFormatException nfex) {
+      return false;
+    }
   }
 
   public void sendSignalAction(String data) {}
@@ -134,12 +140,12 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
           chi.EnableButton();
           pa.EnableButton();
 
-          signal.startSignal(); // 再び信号発信を再開させる。
+          if(!mainCont.getIsLocalhost()) signal.startSignal(); // 再び信号発信を再開させる。
           break;
         case 1:
           // 後攻に設定する
           mainCont.setIsPlayFirst(false);
-          signal.stopSignal();
+          if(!mainCont.getIsLocalhost()) signal.stopSignal();
 
           // フェイズ終了処理
           endThisPhase();
@@ -147,7 +153,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
         case 2:
           // 先攻に設定する
           mainCont.setIsPlayFirst(true);
-          signal.stopSignal();
+          if(!mainCont.getIsLocalhost()) signal.stopSignal();
           // フェイズ終了処理
           endThisPhase();
           break;
