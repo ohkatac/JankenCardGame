@@ -12,9 +12,12 @@ public class RunnableComm implements Runnable {
   private String sendMessage = "";
   private String recMessage = "";
 
+  private Boolean isAlive;
+
   public RunnableComm(Communicate comm, BasePhase basePhase) {
     this.comm = comm;
     callbackTo = basePhase;
+    isAlive = true;
   }
 
   public void setMode(int mode) { this.mode = mode; }
@@ -24,19 +27,21 @@ public class RunnableComm implements Runnable {
 
   public String getRecMessage() { return recMessage; }
 
+  public void setIsAlive(Boolean isAlive) { this.isAlive = isAlive; }
+
   // OVerride
   public void run() {
     if(mode == SEND) {
-      while(true) {
-        comm.send(sendMessage);
-        if(comm.recv() == "ack") break;
-      }
+      comm.send(sendMessage);
     }
     else if(mode == REC) {
-      recMessage = comm.recv();
-      sendMessage = "ack";
-      comm.send(sendMessage);
-      callbackTo.receiveSignalAction(recMessage);
+      while(true) {
+        recMessage = comm.recv();
+        if(!isAlive) break;
+        sendMessage = "ack";
+        comm.send(sendMessage);
+        callbackTo.receiveSignalAction(recMessage);
+      }
     }
   }
 }

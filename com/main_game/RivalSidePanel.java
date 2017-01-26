@@ -60,7 +60,7 @@ public class RivalSidePanel extends JPanel {
         captionValue = new JLabel("あなたのターンです");
         break;
       case BasePhase.RIVAL :
-        captionValue = new JLabel("相手ののターンです");
+        captionValue = new JLabel("相手のターンです");
         break;
       case BasePhase.FIRST :
         captionValue = new JLabel("先攻後攻を決めるじゃんけんです");

@@ -73,18 +73,18 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     // ここに初めのじゃんけんの処理を入れる
     if (e.getSource() == gu.getImageBtn()) {
-      runnableSendComm.setSendMessage( String.valueOf(CardModel.GU) );
+      if(mainCont.getIsLocalhost()) runnableSendComm.setSendMessage( String.valueOf(CardModel.GU) );
       InputJanken(CardModel.GU, BasePlayer.PLAYER);
     }
     else if (e.getSource() == chi.getImageBtn()) {
-      runnableSendComm.setSendMessage( String.valueOf(CardModel.CHI) );
+      if(mainCont.getIsLocalhost()) runnableSendComm.setSendMessage( String.valueOf(CardModel.CHI) );
       InputJanken(CardModel.CHI, BasePlayer.PLAYER);
     }
     else if (e.getSource() == pa.getImageBtn()) {
-      runnableSendComm.setSendMessage( String.valueOf(CardModel.PA) );
+      if(mainCont.getIsLocalhost()) runnableSendComm.setSendMessage( String.valueOf(CardModel.PA) );
       InputJanken(CardModel.PA, BasePlayer.PLAYER);
     }
-    sendCommThread.start();
+    if(mainCont.getIsLocalhost()) sendCommThread.start();
   }
 
   // 相手が何を出したのかを読み取るためのメソッド。 rival_signal側でこのメソッドが呼び出され、それによって動きを再現している。
@@ -101,7 +101,6 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
       System.out.println(data);
       InputJanken(Integer.parseInt(data), BasePlayer.RIVAL);
     }
-
   }
 
   public boolean isNumber(String val) {
@@ -194,6 +193,18 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
 
 // RivalSideの詳細を消す
     mainCont.getRivalSide().deleteCaption();
+
+    if(mainCont.getIsLocalhost()) {
+      runnableSendComm.setIsAlive(false);
+      runnableSendComm.setSendMessage( "finish" );
+    }
+
+      // // runnableSendComm.stop();
+      // runnableSendComm.setMode(RunnableComm.SEND);
+      // runnableRecComm = new RunnableComm(mainCont.getComm(), this);
+      // runnableRecComm.setMode(RunnableComm.REC);
+      // sendCommThread = new Thread(runnableSendComm);
+      // recCommThread = new Thread(runnableRecComm);
 
     mainCont.StartMainGame();
   }
