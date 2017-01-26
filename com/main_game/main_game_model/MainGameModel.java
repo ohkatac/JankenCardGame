@@ -34,10 +34,16 @@ final public class MainGameModel{
   private JPanel battleCaption;
 
   // temporary data for pl, ri deck
-  private int[] pl_deck = new int[20];
-  private int[] ri_deck = new int[20];
 
-  public MainGameModel() {
+  private int[] pl_deck;
+  private int[] ri_deck;
+
+  public MainGameModel(int[] ri_deck) {
+    // Player Deckの読み込みと確保
+    RW_csv mainDeckdata = new RW_csv( new File("assets/csv/main_deck.csv") );
+    pl_deck = mainDeckdata.ReadCSV();
+    this.ri_deck = ri_deck;
+
     resultBtn = new ImageButton(
       new String[] {
         "assets/img/edit_button/goResultButton.png", 
@@ -63,22 +69,13 @@ final public class MainGameModel{
       }
     );
 
-    // Player Deckの読み込みと確保
-    RW_csv mainDeckdata = new RW_csv( new File("assets/csv/main_deck.csv") );
-    pl_deck = mainDeckdata.ReadCSV();
-
-    // 相手のデッキを生成する 将来的には改善する あくまでダミーデータ
-    for(int i = 0; i < ri_deck.length; i++) {
-      ri_deck[i] = i%3 + 1;
-    }
-
     player = new MyPlayer(pl_deck); // Player Modelを生成
     rival = new ComPlayer(ri_deck); // Rival Modelを生成
   }
 
-  public JButton getResultBtn() { return resultBtn; }
-  public JButton getDecideBtn() { return decideBtn; }
-  public JButton getNextBtn() { return nextBtn; }
+  public ImageButton getResultBtn() { return resultBtn; }
+  public ImageButton getDecideBtn() { return decideBtn; }
+  public ImageButton getNextBtn() { return nextBtn; }
   public BasePlayer getPlayer() { return player; }
   public BasePlayer getRival() { return rival; }
   public JPanel getBattleCaption() { return battleCaption; }

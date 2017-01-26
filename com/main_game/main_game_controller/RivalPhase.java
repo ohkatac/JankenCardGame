@@ -1,7 +1,7 @@
 /*
   RivalPhaseをつかさどるConttollerクラス
   ネットワーク対戦にも対応するためにrival_signal/ComSignal.javaクラスを生成し、
-  そこから信号を受け取る(String)ことで
+  そこから信号を受け取る(String)
 */
 
 package com.main_game.main_game_controller;
@@ -15,7 +15,7 @@ import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_controller.rival_signal.*;
 
 public class RivalPhase extends BasePhase {
-  public BaseSignal signal;
+  public ComSignal signal;
 
   private MainGameController mainCont;
   private BasePlayer rival;

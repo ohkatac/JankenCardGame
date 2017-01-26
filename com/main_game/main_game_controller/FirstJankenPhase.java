@@ -23,7 +23,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   private int plBattleId, riBattleId;
   private CardModel gu, chi, pa;
 
-  private BaseSignal signal;
+  private ComSignal signal;
 
   public FirstJankenPhase(MainGameController mainCont) {
     super(BasePhase.FIRST);
@@ -57,6 +57,7 @@ public class FirstJankenPhase extends BasePhase implements ActionListener {
   }
 
 // 自分が何を出したのかをよみとるコールバックメソッド。 
+// Override
   public void actionPerformed(ActionEvent e) {
     // ここに初めのじゃんけんの処理を入れる
     if (e.getSource() == gu.getImageBtn()) {

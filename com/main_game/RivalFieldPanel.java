@@ -40,17 +40,17 @@ public class RivalFieldPanel extends JPanel {
   }
 
 // Debug用に相手のカードを表示させるメソッドを残しておく
-  public void ReshowCard(){
-    this.removeAll();
-    for(CardModel cm : rivalHands) {
-      this.add(cm.getImageBtn());
-      cm.getImageBtn().setVisible(true);
-    }
-    this.add(deckImg);
-    deckImg.setVisible(true);
-  }
+  // public void ReshowCard(){
+  //   this.removeAll();
+  //   for(CardModel cm : rivalHands) {
+  //     this.add(cm.getImageBtn());
+  //     cm.getImageBtn().setVisible(true);
+  //   }
+  //   this.add(deckImg);
+  //   deckImg.setVisible(true);
+  // }
 // 
-  public void closeCards() {
+  public void ReshowCard() {
     this.removeAll();
     for(int i = 0; i < rivalHands.size(); i++) {
       this.add(new JLabel(new ImageIcon("assets/img/card/btnimg/back.png" )) );

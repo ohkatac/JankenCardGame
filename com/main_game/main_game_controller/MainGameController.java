@@ -17,12 +17,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import com.main_game.main_game_model.MainGameModel;
 import com.main_game.*;
+import com.main_game.main_game_model.MainGameModel;
 import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
+import com.main_game.main_game_controller.rival_signal.*;
 import com.asset_controller.ImageButton;
-
 
 final public class MainGameController implements ActionListener {
   private MainGameModel model;
@@ -36,7 +36,34 @@ final public class MainGameController implements ActionListener {
   private RivalPhase rivalPhase;
   private BattlePhase battlePhase;
 
-  public MainGameController(MainGameModel model, MainGamePanel panel) 
+  // ネットワーク対戦のポート指定用変数、Computer対戦の時は使わない。
+  private Boolean isLocalhost;
+  private Boolean isServer;
+  private int port;
+
+  public MainGameController(MainGameModel model, MainGamePanel panel) {
+    this.model = model; // モデルを設定
+    this.panel = panel; // MainGameのパネルのインスタンスを受け取る
+
+// 一番初めはすべてのボタンを無効化
+    model.getDecideBtn().setEnabled(false);
+    model.getNextBtn().setEnabled(false);
+
+// ただし強制終了ボタンだけはActionListenerに追加
+    model.getResultBtn().addActionListener(this);
+
+// 始めのフェイズのクラスのインスタンスを生成
+    nowPhase = new FirstJankenPhase(this);
+
+// あらかじめそれぞれのフェイズのインスタンスを作成しておく
+    playerPhase = new PlayerPhase(this);
+    rivalPhase = new RivalPhase(this);
+    battlePhase = new BattlePhase(this);
+
+    isLocalhost = false;
+  }
+
+  public MainGameController(MainGameModel model, MainGamePanel panel, int port, Boolean isServer) 
   {
     this.model = model; // モデルを設定
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
@@ -55,6 +82,10 @@ final public class MainGameController implements ActionListener {
     playerPhase = new PlayerPhase(this);
     rivalPhase = new RivalPhase(this);
     battlePhase = new BattlePhase(this);
+
+    this.isLocalhost = true;
+    this.isServer = isServer;
+    this.port = port;
   }
 
   // 先攻か後攻かを記録する変数に記録するためのメソッド
@@ -82,7 +113,7 @@ final public class MainGameController implements ActionListener {
 
 // 次のフェイズへ進むメソッド、 それぞれのフェイズクラス内部から呼び出すこととする
   public void GotoNextPhase() {
-    if(isPlayFirst == true) {
+    if(isPlayFirst) {
       if (nowPhase.getId() == BasePhase.PLAYER) {
         nowPhase = rivalPhase;
         nowPhase.startThisPhase();
@@ -97,7 +128,7 @@ final public class MainGameController implements ActionListener {
       }
     }
 
-    else if(isPlayFirst == false) {
+    else if(!isPlayFirst) {
       if (nowPhase.getId() == BasePhase.RIVAL) {
         nowPhase = playerPhase;
         nowPhase.startThisPhase();
@@ -121,6 +152,8 @@ final public class MainGameController implements ActionListener {
       FinishMainGame();
     }
   }
+
+  public Boolean getIsLocalhost() { return isLocalhost; }
 
 // メインゲームを終了しリザルト画面へ進むメソッド
   public void FinishMainGame() { panel.GotoResult(); }

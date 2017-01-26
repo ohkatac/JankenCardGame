@@ -18,8 +18,7 @@ import com.asset_controller.*;
 final public class TitlePanel extends JPanel implements ActionListener {
   FrameController frameCont;
   JLabel label;
-  ImageButton start_1;
-  ImageButton start_2;
+  ImageButton start;
   ImageButton deckEdit;
   ImageButton explain;
   RW_csv mainDeck = null;
@@ -50,8 +49,8 @@ final public class TitlePanel extends JPanel implements ActionListener {
     gbc.gridy = 0;
     gbc.weighty = 1.0d;
     layout.setConstraints(label, gbc);
-    
-    start_1 = new ImageButton(
+
+    start = new ImageButton(
       new String[] {
         "assets/img/edit_button/toMainButton.png", 
         "assets/img/edit_button/toMainButton_pressed.png", 
@@ -63,21 +62,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     gbc.gridy = 1;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
-    layout.setConstraints(start_1, gbc);
-
-    start_2 = new ImageButton(
-      new String[] {
-        "assets/img/edit_button/toMainButton2.png", 
-        "assets/img/edit_button/toMainButton2_pressed.png", 
-        "assets/img/edit_button/toMainButton2_hover.png", 
-        "assets/img/edit_button/toMainButton2_unable.png"  
-      }
-    );
-    gbc.gridx = 0;
-    gbc.gridy = 2;
-    gbc.weighty = 0.2d;
-    gbc.anchor = GridBagConstraints.NORTH;
-    layout.setConstraints(start_2, gbc);
+    layout.setConstraints(start, gbc);
 
     deckEdit = new ImageButton(
       new String[] {
@@ -88,7 +73,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
       }
     );
     gbc.gridx = 0;
-    gbc.gridy = 3;
+    gbc.gridy = 2;
     gbc.weighty = 0.2d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(deckEdit, gbc);
@@ -102,7 +87,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
       }
     );
     gbc.gridx = 0;
-    gbc.gridy = 4;
+    gbc.gridy = 3;
     gbc.weighty = 0.4d;
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(explain, gbc);
@@ -112,19 +97,19 @@ final public class TitlePanel extends JPanel implements ActionListener {
     int[] checkData = mainDeck.ReadCSV();
 
 // デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)
-    for(int i=0; i<=39; i++){
-      if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40) start_1.setEnabled(false); 
-      if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40) start_2.setEnabled(false); 
+    for(int i=0; i < checkData.length; i++){
+      if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40){
+        start.setEnabled(false);
+        break;
+      }
     }
 
-    start_1.addActionListener(this);
-    start_2.addActionListener(this);
+    start.addActionListener(this);
     deckEdit.addActionListener(this);
     explain.addActionListener(this);
 
     add(label);
-    add(start_1);
-    add(start_2);
+    add(start);
     add(deckEdit);
     add(explain);
   }
@@ -140,11 +125,8 @@ final public class TitlePanel extends JPanel implements ActionListener {
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == start_1) {
-      frameCont.showMainGame(this);
-    }
-    else if(e.getSource() == start_2){ 
-      frameCont.showMainGame2(this);
+    if (e.getSource() == start) {
+      frameCont.showGameSelect(this);
     }
     else if (e.getSource() == deckEdit) {
       frameCont.showDeckEdit(this);
@@ -155,4 +137,3 @@ final public class TitlePanel extends JPanel implements ActionListener {
   }
 
 }
-
