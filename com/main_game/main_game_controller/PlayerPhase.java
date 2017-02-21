@@ -52,6 +52,9 @@ public class PlayerPhase extends BasePhase implements ActionListener {
       cm.EnableButton();
       cm.getImageBtn().addActionListener(this);
     }
+
+    // 今がなんのフェイズなのかを表示
+    mainCont.getRivalSide().showNowPhase(super.id);
   }
 
 // Override
@@ -63,6 +66,9 @@ public class PlayerPhase extends BasePhase implements ActionListener {
       cm.DisableButton();
       cm.getImageBtn().removeActionListener(this);
     }
+    // ターンの詳細を消す
+    mainCont.getRivalSide().deleteCaption();
+
     mainCont.GotoNextPhase();
   }
 

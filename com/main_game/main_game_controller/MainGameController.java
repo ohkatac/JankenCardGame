@@ -24,6 +24,9 @@ import com.main_game.main_game_model.card_model.*;
 import com.main_game.main_game_controller.rival_signal.*;
 import com.asset_controller.ImageButton;
 
+// localhost controller
+import com.localhost_model.*;
+
 final public class MainGameController implements ActionListener {
   private MainGameModel model;
   private MainGamePanel panel;
@@ -41,9 +44,12 @@ final public class MainGameController implements ActionListener {
   private Boolean isServer;
   private int port;
 
+  private Communicate comm;
+
   public MainGameController(MainGameModel model, MainGamePanel panel) {
     this.model = model; // モデルを設定
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
+    isLocalhost = false;
 
 // 一番初めはすべてのボタンを無効化
     model.getDecideBtn().setEnabled(false);
@@ -59,14 +65,15 @@ final public class MainGameController implements ActionListener {
     playerPhase = new PlayerPhase(this);
     rivalPhase = new RivalPhase(this);
     battlePhase = new BattlePhase(this);
-
-    isLocalhost = false;
   }
 
-  public MainGameController(MainGameModel model, MainGamePanel panel, int port, Boolean isServer) 
+  public MainGameController(MainGameModel model, MainGamePanel panel, Communicate comm, Boolean isServer) 
   {
     this.model = model; // モデルを設定
     this.panel = panel; // MainGameのパネルのインスタンスを受け取る
+    this.isLocalhost = true;
+
+    this.comm = comm;
 
 // 一番初めはすべてのボタンを無効化
     model.getDecideBtn().setEnabled(false);
@@ -83,7 +90,6 @@ final public class MainGameController implements ActionListener {
     rivalPhase = new RivalPhase(this);
     battlePhase = new BattlePhase(this);
 
-    this.isLocalhost = true;
     this.isServer = isServer;
     this.port = port;
   }
@@ -153,8 +159,6 @@ final public class MainGameController implements ActionListener {
     }
   }
 
-  public Boolean getIsLocalhost() { return isLocalhost; }
-
 // メインゲームを終了しリザルト画面へ進むメソッド
   public void FinishMainGame() { panel.GotoResult(); }
 
@@ -177,4 +181,9 @@ final public class MainGameController implements ActionListener {
   // プレイヤーモデルのインスタンスを取得
   public BasePlayer getPlayer() { return model.getPlayer(); }
   public BasePlayer getRival() { return model.getRival(); }
+
+  // Communicate Interfaceが持つインスタンスを各フェイズに渡すメソッド
+  public Communicate getComm() { return comm; }
+  public Boolean getIsServer() { return isServer; }
+  public Boolean getIsLocalhost() { return isLocalhost; }
 }

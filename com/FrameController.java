@@ -13,6 +13,9 @@ import com.result.*;
 import com.title.*;
 import com.explain.*;
 
+// import for localhost network
+import com.localhost_model.*;
+
 // GameMode Controller : TitlePanel, DeckEditPanel, MainGamePanel, ResultPanel
 // このController兼JFrameをMainで生成して、その上に画面を担うJPanelを載せていく
 public final class FrameController extends JFrame {
@@ -79,24 +82,24 @@ public final class FrameController extends JFrame {
                 this.gameSelectPanel.setVisible(true);
         }
 
-        public void showMainGame(JPanel currentPanel, int[] ri_deck) {
+        public void showMainGame(JPanel currentPanel, int[] my_deck, int[] ri_deck) {
                 // 現在JFrame上に表示してあるJPanelを削除
                 currentPanel.setVisible(false);
                 currentPanel = null;
                 // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
-                gamePanel = new MainGamePanel(this, ri_deck);
+                gamePanel = new MainGamePanel(this, my_deck, ri_deck);
                 // JPanelを追加
                 this.add(gamePanel);
                 // JPanelを見える状態にする
                 this.gamePanel.setVisible(true);
         }
 
-        public void showMainGame(JPanel currentPanel, int[] ri_deck, int port, Boolean isServer) {
+        public void showMainGame(JPanel currentPanel, int[] pl_deck, int[] ri_deck, Communicate comm, Boolean isServer) {
                 // 現在JFrame上に表示してあるJPanelを削除
                 currentPanel.setVisible(false);
                 currentPanel = null;
                 // 画面のJPanelのインスタンスを新しく生成(JPanelを使いまわすと状態が残ってしまい初期化が面倒なので一回破棄してから新しく生成することにした。)
-                gamePanel = new MainGamePanel(this, ri_deck, port, isServer);
+                gamePanel = new MainGamePanel(this, pl_deck, ri_deck, comm, isServer);
                 // JPanelを追加
                 this.add(gamePanel);
                 // JPanelを見える状態にする
