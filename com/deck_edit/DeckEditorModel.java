@@ -104,6 +104,7 @@ public class DeckEditorModel extends Observable {
                 fromLoad=DeckManager.ReadCSV();
                 if(CheckDeck()!=null) {//内部にカードが残っている場合、一度中身をリセット
                         MyDeck.clear();
+                        countPG=0; countCP=0; countGC=0; countALL=0;
                 }
                 if(fromLoad!=null) {
                         for(int i=0; i<fromLoad.length; i++) {
