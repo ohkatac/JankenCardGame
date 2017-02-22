@@ -17,14 +17,14 @@ import com.asset_controller.*;
 // Result's Model & View & Controller
 final public class ResultPanel extends JPanel implements ActionListener {
   FrameController frameCont;
-  JLabel result_win;
+  JLabel result_win; 
   JLabel result_lose;
-  JLabel m_life;
-  JLabel r_life;
+  JLabel m_life; // 自分の残りライフを格納するフィールド
+  JLabel r_life; // 相手の残りライフを格納するフィールド
   ImageButton title;
-
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
+  // Result画面の表示にmy_life, ri_lifeを使う。
   public ResultPanel(FrameController frameCont, int my_life, int ri_life) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
 
@@ -36,12 +36,15 @@ final public class ResultPanel extends JPanel implements ActionListener {
       backgroundImage = null;
     }
 
+    // レイアウトをGridBagLayoutに指定する。
     setLayout(new GridBagLayout()); 
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
     setLayout(layout);
     
+    // ラベル、ボタンをPanelに配置する。
+    // 勝者によって結果発表の表示を変える。
     if(my_life>ri_life){
       result_win = new JLabel("YOU WIN!!", JLabel.CENTER);
       result_win.setFont(new Font("Arial", Font.ITALIC, 70));
@@ -94,7 +97,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
 
     title.addActionListener(this);
 
-
+    // ラベル、ボタンをPanelに配置する。
     add(r_life);
     add(m_life);
     add(title);
@@ -111,6 +114,7 @@ final public class ResultPanel extends JPanel implements ActionListener {
     }
   }
 
+  // ボタンを押した際の処理
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == title) {
       frameCont.showTitle(this);

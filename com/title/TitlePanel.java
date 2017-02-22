@@ -21,9 +21,8 @@ final public class TitlePanel extends JPanel implements ActionListener {
   ImageButton start;
   ImageButton deckEdit;
   ImageButton explain;
-  RW_csv mainDeck = null;
+  RW_csv mainDeck = null; // 編集されたデッキを格納するためのフィールド
   Boolean gameBtnFlag;
-
   BufferedImage backgroundImage = null; // 背景画像のインスタンスを保存するための変数
 
   public TitlePanel(FrameController frameCont) {
@@ -37,12 +36,14 @@ final public class TitlePanel extends JPanel implements ActionListener {
       backgroundImage = null;
     }
 
+    // レイアウトをGridBagLayoutに指定する。
     setLayout(new GridBagLayout());
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
     setLayout(layout);
 
+    //ラベル、ボタンをPanelに配置する。
     label = new JLabel("Janken Fight!!", JLabel.CENTER);
     label.setFont(new Font("Arial", Font.ITALIC, 70));
     gbc.gridx = 0;
@@ -92,11 +93,11 @@ final public class TitlePanel extends JPanel implements ActionListener {
     gbc.anchor = GridBagConstraints.NORTH;
     layout.setConstraints(explain, gbc);
 
-// デッキデータのcsvファイルの中身を取り出す。
+    // デッキデータのcsvファイルの中身を取り出す。
     mainDeck = new RW_csv( new File("assets/csv/main_deck.csv") );
     int[] checkData = mainDeck.ReadCSV();
 
-// デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)
+    // デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)
     for(int i=0; i < checkData.length; i++){
       if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40){
         start.setEnabled(false);
@@ -108,6 +109,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     deckEdit.addActionListener(this);
     explain.addActionListener(this);
 
+    // ラベル、ボタンをPanelに配置する。
     add(label);
     add(start);
     add(deckEdit);
@@ -124,6 +126,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     }
   }
 
+  // ボタンを押した際の処理
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == start) {
       frameCont.showGameSelect(this);
