@@ -46,7 +46,7 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 								try {
 									backgroundImage = ImageIO.read(new File(
 										getClass().getClassLoader().getResource(
-											"assets/img/background/result.png"
+											"assets/img/background/edit.png"
 										).toURI()
 									));
 								} catch (URISyntaxException e) {
