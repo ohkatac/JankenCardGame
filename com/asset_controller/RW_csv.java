@@ -14,19 +14,22 @@ import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 // CSVファイルの入出力をするためのクラスです。 このクラスでは.csvの中身を書くとき中を初期化して一から書く仕様に
 // なっているので中のデータを保持したいときはいったんReadで別のint[]変数に避難させてからwrite系メソッドを使うようにしてください。
 
 /* 使い方(パスの指定方法はMain.javaがあるディレクトリからの相対パスです。)
-RW_csv mainDeck_csv = new RW_csv(new File("ファイルのパスをここにいれる(文字列で入れる)") );
+RW_csv mainDeck_csv = new RW_csv("ファイルのパスをここにいれる(文字列で入れる)" );
 mainDeck_csv.WriteCSV(data); // dataはint[]一次元配列、これで指定ファイルにdataがcsv形式で代入される
 mainDeck_csv.ReadCSV(); // これで指定されたcsvファイルの中身を取り出せる。 返り値はint[]
 またReadCSV2(), WriteCSV2は拡張性を高めるために将来のことを考えて実装した。
 いらなくなれば後で消します。
 
 MainGameやDeckEditパネルで.csvファイルを取り出したいなぁと思ったら
-RW_csv mainDeck = new RW_csv(new File("assets/css/main_deck.csv")); 
+RW_csv mainDeck = new RW_csv("assets/css/main_deck.csv"); 
 // この時ファイルが存在していなかったら新しく空の.csvが生成されます。
 int[] data = mainDeck.ReadCSV();
 ・・・・・・dataの中身をいろいろ変えたりする。
@@ -36,11 +39,19 @@ ReadCSV2(), WriteCSV2()についてですが複数のデッキを保存すると
 例えばデッキのお気に入り機能とか実装するときに・・・
 */
 public class RW_csv {
+	String path;
   File file = null;
 
-  public RW_csv(File file) {
-    this.file = file;
-    if(!this.file.exists()) { // もし指定されたファイル名のファイルが存在しなかったら新しく生成する
+  public RW_csv(String path) {
+		this.path = path;
+		URL url =  this.getClass().getClassLoader().getResource(path);
+		try {
+			this.file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			System.out.println(e);
+		}
+		
+		if(!this.file.exists()) { // もし指定されたファイル名のファイルが存在しなかったら新しく生成する
       try {
         file.createNewFile();
       } catch(IOException e) {

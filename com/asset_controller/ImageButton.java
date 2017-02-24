@@ -3,6 +3,7 @@ package com.asset_controller;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.net.URL;
 
 // assetsの中のimgをJButtonのように扱うことができるクラスです。
 
@@ -32,17 +33,18 @@ btn.Enabled();
 public class ImageButton extends JButton implements MouseListener {
   private javax.swing.ImageIcon image; // 画像ファイルを扱うためのクラスの宣言
   int w, h; // 画像の横幅、縦幅を格納する変数
-  private String path, pressPath, hoverPath, disablePath;
   // 通常、押された状態、覆いかぶさった状態、無効状態のボタンの画像のパス。
+	private URL path, pressPath, hoverPath, disablePath;
+    
   Boolean enable = true;
 
   public ImageButton(String[] imagePath) {
     // それぞれのPathを格納
-    path = imagePath[0];
-    pressPath = imagePath[1];
-    hoverPath = imagePath[2];
-    disablePath = imagePath[3];
-
+		path = this.getClass().getClassLoader().getResource(imagePath[0]);
+    pressPath = this.getClass().getClassLoader().getResource(imagePath[1]);
+    hoverPath = this.getClass().getClassLoader().getResource(imagePath[2]);
+    disablePath = this.getClass().getClassLoader().getResource(imagePath[3]);
+		
     this.image = new javax.swing.ImageIcon(this.path); // 表示画像を通常状態に設定
     setOpaque(false); // JButton panelの背景を透明にする。
     this.setBorderPainted(false); // 枠線をなしにする。
@@ -98,12 +100,10 @@ public class ImageButton extends JButton implements MouseListener {
     }
   }
   public void mouseReleased(MouseEvent e) {
-    if(image.toString() != path) {
-      if(enable) {
-        image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
-        repaint(); // JPanel(JButton)の再描画
-      }
-    }
+		if(enable) {
+			image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+			repaint(); // JPanel(JButton)の再描画
+		}
   }
   public void mouseEntered(MouseEvent e) {
     if(enable){

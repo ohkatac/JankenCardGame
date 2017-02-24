@@ -14,11 +14,20 @@ import com.asset_controller.ImageButton;
 import com.asset_controller.RW_csv;
 import java.io.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+// import for URL, URI
+import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 // デッキ編集画面のView&Controller 操作に反応して画面上の再描画等を行う
 final public class DeckEditPanel extends JPanel implements ActionListener, Observer {
         FrameController frameCont;//画面表示、遷移のための変数。詳細はFrameController.javaを参照
         ImageButton end;//タイトルへ戻るためのボタン
-        ImageIcon BackGround;//背景の画像
+        Image backgroundImage; //背景の画像
         int width, height;//背景画像用に高さと幅を格納するための変数
         JPanel Additonal, ShowAndDelete, SaveAndLoad, toTitle;//それぞれ、追加操作、表示・削除操作、セーブロード操作を担当
         JPanel CardList, Text;//ShowAndDeleteにてCardListはカードの表示、Textは使用方法とセーブ、ロードの通知を表示
@@ -34,9 +43,19 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
         public DeckEditPanel(FrameController frameCont) {         // FrameControllerでPanelを管理するために引数にこれをとる
                 this.frameCont = frameCont;
 
-                BackGround=new ImageIcon("assets/img/background/edit.png");//背景画像用のImageIconを生成
-                width=BackGround.getIconWidth();//高さ、幅を測定、確保
-                height=BackGround.getIconHeight();
+								try {
+									backgroundImage = ImageIO.read(new File(
+										getClass().getClassLoader().getResource(
+											"assets/img/background/result.png"
+										).toURI()
+									));
+								} catch (URISyntaxException e) {
+									e.printStackTrace();
+									backgroundImage = null;
+								} catch (IOException e) {
+									e.printStackTrace();
+									backgroundImage = null;
+								}
 
                 /* 各種操作ごとのパネルの初期化とレイアウト設定*/
                 this.setLayout(new BorderLayout());
@@ -246,8 +265,13 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
                         Save.Disabled();
                 }
         }
-        public void paintComponent(Graphics g){
-                g.drawImage(BackGround.getImage(), 0, 0, width, height, null);
-                super.paintComponent(g);
-        }
+				 // paintComponentによりJPanelを背景画像で上塗りする処理
+				// Override
+				public void paintComponent(Graphics g) {
+					Graphics2D g2 = (Graphics2D)g;
+
+					if(backgroundImage != null) {
+						g2.drawImage(backgroundImage, 0, 0, this);
+					}
+				}
 }

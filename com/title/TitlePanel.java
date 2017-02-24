@@ -11,6 +11,10 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.FrameController;
 import com.asset_controller.*;
 
@@ -30,8 +34,14 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
     // Titleの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/title.png"));
-    } catch (Exception e) {
+      backgroundImage = ImageIO.read(new File(
+				getClass().getClassLoader().getResource(
+					"assets/img/background/title.png"
+				).toURI()
+			));
+    } catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
       e.printStackTrace();
       backgroundImage = null;
     }
@@ -94,7 +104,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
     layout.setConstraints(explain, gbc);
 
     // デッキデータのcsvファイルの中身を取り出す。
-    mainDeck = new RW_csv( new File("assets/csv/main_deck.csv") );
+    mainDeck = new RW_csv( "assets/csv/main_deck.csv" );
     int[] checkData = mainDeck.ReadCSV();
 
     // デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)

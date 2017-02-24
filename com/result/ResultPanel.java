@@ -11,6 +11,11 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+// import for URL, URI
+import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.FrameController;
 import com.asset_controller.*;
 
@@ -29,9 +34,16 @@ final public class ResultPanel extends JPanel implements ActionListener {
     this.frameCont = frameCont;
 
     // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
-    try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/result.png"));
-    } catch (Exception e) {
+		try {
+      backgroundImage = ImageIO.read(new File(
+				getClass().getClassLoader().getResource(
+					"assets/img/background/result.png"
+				).toURI()
+			));
+    } catch (URISyntaxException e) {
+			e.printStackTrace();
+      backgroundImage = null;
+		} catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }

@@ -13,6 +13,11 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+// import for URL, URI
+import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.FrameController;
 
 // import for network
@@ -44,9 +49,16 @@ final public class GameSelectPanel extends JPanel implements ActionListener {
   public GameSelectPanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
 
     // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
-    try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/select_port.png"));
-    } catch (Exception e) {
+		try {
+      backgroundImage = ImageIO.read(new File(
+				getClass().getClassLoader().getResource(
+					"assets/img/background/select_port.png"
+				).toURI()
+			));
+    } catch (URISyntaxException e) {
+			e.printStackTrace();
+      backgroundImage = null;
+		} catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }
@@ -114,7 +126,7 @@ final public class GameSelectPanel extends JPanel implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if( e.getSource() == comBattleBtn ) {
       // 自分のデッキの取得及びシャッフル
-      RW_csv mainDeck = new RW_csv(new File("assets/csv/main_deck.csv"));
+      RW_csv mainDeck = new RW_csv("assets/csv/main_deck.csv");
       int my_deck[] = mainDeck.ReadCSV();
 
       ArrayList<Integer> temp = new ArrayList<Integer>();
@@ -146,7 +158,7 @@ final public class GameSelectPanel extends JPanel implements ActionListener {
 
       if ( port < 1025 && port > 65536 ) return; // 1025～65536 内のポート番号でないならば何も処理をしない。
 
-      RW_csv mainDeck = new RW_csv(new File("assets/csv/main_deck.csv"));
+      RW_csv mainDeck = new RW_csv("assets/csv/main_deck.csv");
       String pl_deckData = mainDeck.readString();
       String ri_deckData;
 

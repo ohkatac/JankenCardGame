@@ -32,7 +32,7 @@ public class DeckEditorModel extends Observable {
                 for(int i=0; i<40; i++) {
                         CardList[i]=0;//ダミーIDを初期値とする.
                 }
-                DeckManager=new RW_csv(new File("assets/csv/main_deck.csv"));
+                DeckManager=new RW_csv("assets/csv/main_deck.csv");
                 ReConstarctDeck();//初期化時に再構成。カードリストがなければ初期値のまま、存在すれば更新する
                 CountChecker();//一度カウンターをチェック
         }
