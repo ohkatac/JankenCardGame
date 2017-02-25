@@ -5,14 +5,11 @@ import java.util.*;
 
 public class ALL extends CardBase_E {
 
-        public ALL(){
-                setCardName("グーチーパー");
-                setID(7);
-                setPath(
-                        "assets/img/card/btnimg/All.png",
-                        "assets/img/card/btnimg/All_pressed.png",
-                        "assets/img/card/btnimg/All_hover.png"
-                        );
-        }
+	public ALL() {
+		setCardName("グーチーパー");
+		setID(7);
+		setPath("assets/img/card/btnimg/All.png", "assets/img/card/btnimg/All_pressed.png",
+				"assets/img/card/btnimg/All_hover.png");
+	}
 }
 //グーチーパーのカードデータ

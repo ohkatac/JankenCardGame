@@ -138,13 +138,16 @@ final public class ExplainFrame extends JFrame implements ActionListener {
 
      add(cardPanel, BorderLayout.CENTER);
      add(btnPanel, BorderLayout.PAGE_END);
-
-     try {
-        backgroundImage = ImageIO.read(new File("assets/img/background/explain.png"));
-     } catch (Exception e) {
-        e.printStackTrace();
-        backgroundImage = null;
-     }
+    try {
+      backgroundImage = ImageIO.read(
+        getClass().getClassLoader().getResourceAsStream(
+          "assets/img/background/explain.png"
+        )
+      );
+    } catch (IOException e) {
+      e.printStackTrace();
+      backgroundImage = null;
+    }
 
      this.setVisible(true);
    }

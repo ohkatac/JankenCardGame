@@ -49,16 +49,13 @@ final public class GameSelectPanel extends JPanel implements ActionListener {
   public GameSelectPanel(FrameController frameCont) { // FrameControllerでPanelを管理するために引数にこれをとる
 
     // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
-		try {
-      backgroundImage = ImageIO.read(new File(
-				getClass().getClassLoader().getResource(
-					"assets/img/background/select_port.png"
-				).toURI()
-			));
-    } catch (URISyntaxException e) {
-			e.printStackTrace();
-      backgroundImage = null;
-		} catch (IOException e) {
+    try {
+      backgroundImage = ImageIO.read(
+        getClass().getClassLoader().getResourceAsStream(
+          "assets/img/background/select_port.png"
+        )
+      );
+    } catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }

@@ -34,14 +34,12 @@ final public class TitlePanel extends JPanel implements ActionListener {
 
     // Titleの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
-      backgroundImage = ImageIO.read(new File(
-				getClass().getClassLoader().getResource(
-					"assets/img/background/title.png"
-				).toURI()
-			));
-    } catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
+      backgroundImage = ImageIO.read(
+        getClass().getClassLoader().getResourceAsStream(
+          "assets/img/background/title.png"
+        )
+      );
+    } catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }

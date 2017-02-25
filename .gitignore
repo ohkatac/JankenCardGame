@@ -1,3 +1,5 @@
 # .~ ファイルを除去
 *.class
 *.csv
+manifest.txt
+*.jar

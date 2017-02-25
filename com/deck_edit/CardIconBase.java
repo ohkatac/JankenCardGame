@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.net.URL;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 //  デッキ編集画面上のカードリストのアイコン兼削除ボタンを担当するView&Contorller ただし再描画や
 //  画像のクリアを行うメソッドはここでは直接呼び出されない
@@ -16,7 +18,7 @@ public class CardIconBase extends JLabel implements MouseListener {
 	int number;//デッキ内での番号
 	DeckEditorModel MyDeck;//削除操作用
 	CardBase_E Card;//アイコンのパスを確保するため
-	URL[] ImagePath;//アイコンとなる画像のパス群
+	private BufferedImage[] iconImages; //各種追加ボタンやパネルのアイコン生成時用
 	ImageIcon Normal, Pressed, Hover;//それぞれの状態に対応するアイコン
 	//Normal: 通常時に表示する画像
 	//Pressed: 押しているときに表示する画像
@@ -25,7 +27,7 @@ public class CardIconBase extends JLabel implements MouseListener {
 	public CardIconBase(int number, DeckEditorModel Deck){
 		this.number=number; //デッキ内での番号を格納
 		MyDeck=Deck; //削除操作を行うので引数を格納、保存
-		ImagePath=new URL[3];
+		iconImages = new BufferedImage[3];
 		setIcon(null);//念のため、JLabelのアイコンを再初期化
 		Card=null;//一度内部をnullにしておく
 		setOpaque(false);
@@ -34,10 +36,10 @@ public class CardIconBase extends JLabel implements MouseListener {
 
 	public void setCardIcon(){ //アイコンをセットするメソッド
 		Card=MyDeck.getCard(number);//カード情報を格納
-		ImagePath=Card.getPath();//対応する画像のパスを格納 詳細はCardBase_E.javaを参照
-		Normal=new ImageIcon(ImagePath[0]);//ImageIconコンストラクタを実行
-		Pressed=new ImageIcon(ImagePath[1]);
-		Hover=new ImageIcon(ImagePath[2]);
+		iconImages = Card.getIconImages(); //対応する画像のパスを格納 詳細はCardBase_E.javaを参照
+		Normal = new ImageIcon(iconImages[0]); //ImageIconコンストラクタを実行
+		Pressed = new ImageIcon(iconImages[1]);
+		Hover = new ImageIcon(iconImages[2]);
 		setIcon(Normal);//通常時アイコンをセット
 		addMouseListener(this);//操作対象に加える
 	}
@@ -45,7 +47,7 @@ public class CardIconBase extends JLabel implements MouseListener {
 	public void IconClear(){ //アイコンを解除するメソッド
 		setIcon(null);//JLabelのImageIconの値を初期化 非表示にする
 		Card=null;//アイコン表示に必要な値を一度すべてクリアする
-		ImagePath=null;
+		iconImages = null;
 		Normal=null;
 		Pressed=null;
 		Hover=null;

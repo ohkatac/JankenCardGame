@@ -34,27 +34,23 @@ final public class ResultPanel extends JPanel implements ActionListener {
     this.frameCont = frameCont;
 
     // Resultの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
-		try {
-      backgroundImage = ImageIO.read(new File(
-				getClass().getClassLoader().getResource(
-					"assets/img/background/result.png"
-				).toURI()
-			));
-    } catch (URISyntaxException e) {
-			e.printStackTrace();
-      backgroundImage = null;
-		} catch (IOException e) {
+    try {
+      backgroundImage = ImageIO.read(
+        getClass().getClassLoader().getResourceAsStream(
+          "assets/img/background/result.png"
+        )
+      );
+    } catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }
 
     // レイアウトをGridBagLayoutに指定する。
-    setLayout(new GridBagLayout()); 
+    setLayout(new GridBagLayout());
     GridBagLayout layout = new GridBagLayout();
     GridBagConstraints gbc = new GridBagConstraints();
 
     setLayout(layout);
-    
     // ラベル、ボタンをPanelに配置する。
     // 勝者によって結果発表の表示を変える。
     if(my_life>ri_life){

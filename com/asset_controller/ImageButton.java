@@ -2,6 +2,11 @@ package com.asset_controller;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.imageio.ImageIO;
+
+import java.io.IOException;
+import java.io.InputStream;
 import javax.swing.*;
 import java.net.URL;
 
@@ -15,7 +20,7 @@ new String[] {
   "assets/img/button/pinkButton.png", // マウスがボタンに覆いかぶさったときに表示する画像
   "assets/img/button/pinkButton.png"  // ボタンの機能を無効化させているときに表示する画像
 }
-); 
+);
 また、assetのパスの指定の仕方はMain.javaがあるディレクトリからの相対パスとなります。
 これをやるだけであとはJButtonと同じように使うことができます。
 this.add(btn);
@@ -34,18 +39,22 @@ public class ImageButton extends JButton implements MouseListener {
   private javax.swing.ImageIcon image; // 画像ファイルを扱うためのクラスの宣言
   int w, h; // 画像の横幅、縦幅を格納する変数
   // 通常、押された状態、覆いかぶさった状態、無効状態のボタンの画像のパス。
-	private URL path, pressPath, hoverPath, disablePath;
-    
+  private ImageIcon normal, pressed, hovered, disabled;
+
   Boolean enable = true;
 
   public ImageButton(String[] imagePath) {
     // それぞれのPathを格納
-		path = this.getClass().getClassLoader().getResource(imagePath[0]);
-    pressPath = this.getClass().getClassLoader().getResource(imagePath[1]);
-    hoverPath = this.getClass().getClassLoader().getResource(imagePath[2]);
-    disablePath = this.getClass().getClassLoader().getResource(imagePath[3]);
-		
-    this.image = new javax.swing.ImageIcon(this.path); // 表示画像を通常状態に設定
+    try {
+      normal = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[0])) );
+      pressed = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[1])) );
+      hovered = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[2])) );
+      disabled = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[3])) );
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    this.image = normal; // 表示画像を通常状態に設定
     setOpaque(false); // JButton panelの背景を透明にする。
     this.setBorderPainted(false); // 枠線をなしにする。
     this.w = image.getIconWidth(); // 画像の横幅を格納。
@@ -64,7 +73,7 @@ public class ImageButton extends JButton implements MouseListener {
 // ボタンの機能を有効化するメソッド
   public void Enabled() {
     this.setEnabled(true); // JButtonとしての機能を有効化する。
-    image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
+    image = normal; // ボタンの画像を通常状態に設定する
     enable = true;
     repaint(); // JPanel(JButton)の再描画
   }
@@ -72,7 +81,7 @@ public class ImageButton extends JButton implements MouseListener {
  // ボタンの機能を無効化するメソッド
   public void Disabled() {
     this.setEnabled(false); // JButtonとしての機能を無効化する。
-    image = new javax.swing.ImageIcon(disablePath); // ボタンの画像を通常状態に設定する
+    image = disabled; // ボタンの画像を通常状態に設定する
     enable = false;
     repaint(); // JPanel(JButton)の再描画
   }
@@ -81,11 +90,11 @@ public class ImageButton extends JButton implements MouseListener {
   public void setEnabled(boolean b) {
     super.setEnabled(b);
     if(b) {
-      image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
+      image = normal; // ボタンの画像を通常状態に設定する
       enable = true;
     }
     else {
-      image = new javax.swing.ImageIcon(disablePath); // ボタンの画像を通常状態に設定する
+      image = disabled; // ボタンの画像を通常状態に設定する
       enable = false;
     }
     repaint(); // JPanel(JButton)の再描画
@@ -95,25 +104,25 @@ public class ImageButton extends JButton implements MouseListener {
   public void mouseClicked(MouseEvent e) { }
   public void mousePressed(MouseEvent e) {
     if(enable) {
-      image = new javax.swing.ImageIcon(pressPath);// ボタンの画像を押された状態に設定する
+      image = pressed;// ボタンの画像を押された状態に設定する
       repaint(); // JPanel(JButton)の再描画
     }
   }
   public void mouseReleased(MouseEvent e) {
 		if(enable) {
-			image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+			image = hovered; // ボタンの画像をhover状態に設定する
 			repaint(); // JPanel(JButton)の再描画
 		}
   }
   public void mouseEntered(MouseEvent e) {
     if(enable){
-      image = new javax.swing.ImageIcon(hoverPath); // ボタンの画像をhover状態に設定する
+      image = hovered; // ボタンの画像をhover状態に設定する
       repaint(); // JPanel(JButton)の再描画
     }
   }
   public void mouseExited(MouseEvent e) {
     if(enable) {
-      image = new javax.swing.ImageIcon(path); // ボタンの画像を通常状態に設定する
+      image = normal; // ボタンの画像を通常状態に設定する
       repaint(); // JPanel(JButton)の再描画
     }
   }

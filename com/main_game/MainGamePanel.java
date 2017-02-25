@@ -56,7 +56,7 @@ final public class MainGamePanel extends JPanel {
   public MainGamePanel(FrameController frameCont, int[] pl_deck, int[] ri_deck) { // FrameControllerでPanelを管理するために引数にこれをとる
     this.frameCont = frameCont;
     gameModel = new MainGameModel(pl_deck, ri_deck);
-    
+
     loadBackgroundImage();
     setMainGamePanel();
 
@@ -80,8 +80,12 @@ final public class MainGamePanel extends JPanel {
   private void loadBackgroundImage() {
     // MainGameの背景画像を取得 例外が発生したらコンソールにエラー内容を表示する。
     try {
-      backgroundImage = ImageIO.read(new File("assets/img/background/maingame.png"));
-    } catch (Exception e) {
+      backgroundImage = ImageIO.read(
+        getClass().getClassLoader().getResourceAsStream(
+          "assets/img/background/title.png"
+        )
+      );
+    } catch (IOException e) {
       e.printStackTrace();
       backgroundImage = null;
     }

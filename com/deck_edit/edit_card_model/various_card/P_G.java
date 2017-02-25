@@ -5,14 +5,11 @@ import java.util.*;
 
 public class P_G extends CardBase_E {
 
-        public P_G(){
-                setCardName("パーグー");
-                setID(6);
-                setPath(
-                        "assets/img/card/btnimg/PaGu.png",
-                        "assets/img/card/btnimg/PaGu_pressed.png",
-                        "assets/img/card/btnimg/PaGu_hover.png"
-                        );
-        }
+	public P_G() {
+		setCardName("パーグー");
+		setID(6);
+		setPath("assets/img/card/btnimg/PaGu.png", "assets/img/card/btnimg/PaGu_pressed.png",
+				"assets/img/card/btnimg/PaGu_hover.png");
+	}
 }
 //パーグーのカードデータ

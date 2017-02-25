@@ -20,7 +20,7 @@ public class CardModel {//全カードにおける継承元のクラス
   private String btLabelPath; // 元画像のPath, 場に出すカードに使う画像
 
   public static final String[][] imgPath = {
-    {     
+    {
           "assets/img/card/btnimg/Gu.png",
           "assets/img/card/btnimg/Gu_pressed.png",
           "assets/img/card/btnimg/Gu_hover.png",

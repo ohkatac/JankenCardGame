@@ -5,15 +5,12 @@ import java.util.*;
 
 public class G_C extends CardBase_E {
 
-        public G_C(){
-                setCardName("グーチー");
-                setID(4);
-                setPath(
-                        "assets/img/card/btnimg/GuChi.png",
-                        "assets/img/card/btnimg/GuChi_pressed.png",
-                        "assets/img/card/btnimg/GuChi_hover.png"
-                        );
+	public G_C() {
+		setCardName("グーチー");
+		setID(4);
+		setPath("assets/img/card/btnimg/GuChi.png", "assets/img/card/btnimg/GuChi_pressed.png",
+				"assets/img/card/btnimg/GuChi_hover.png");
 
-        }
+	}
 }
 //グーチーのカードデータ

@@ -50,7 +50,8 @@ public class RW_csv {
 		} catch (URISyntaxException e) {
 			System.out.println(e);
 		}
-		
+
+    /* jarファイルに変換するとFileクラスが使えないためコメントアウトする
 		if(!this.file.exists()) { // もし指定されたファイル名のファイルが存在しなかったら新しく生成する
       try {
         file.createNewFile();
@@ -58,27 +59,24 @@ public class RW_csv {
         System.out.println(e);
       }
     } // 処理ここまで
+    */
   }
 
   // 1次元配列を書き込むためのメソッド
   public void WriteCSV(int[] data) {
     try {
-      if (checkBeforeWriteFile(this.file)) { // 書き込みがされていなかったらエラーメッセージを表示する
-        // CSVに書き込みをするためのオブジェクト
-        PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.file), "UTF-8")));
-        String writeData = ""; // 書き込むデータを入れる変数
+      // CSVに書き込みをするためのオブジェクト
+      PrintWriter pr = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(this.file), "UTF-8")));
+      String writeData = ""; // 書き込むデータを入れる変数
 
-        for (int i = 0; i < data.length; i++) {
-          writeData += Integer.toString(data[i]); // 数値を文字に変換しつつ代入していく
-          if (i < data.length - 1) writeData += ","; // CSVファイルなので間に','を入れる
-        }
-
-        pr.println(writeData); // ファイルに書き込み&改行
-
-        pr.close(); // writerを閉じる。
-      } else {
-        System.out.println("failed to write file!");
+      for (int i = 0; i < data.length; i++) {
+        writeData += Integer.toString(data[i]); // 数値を文字に変換しつつ代入していく
+        if (i < data.length - 1) writeData += ","; // CSVファイルなので間に','を入れる
       }
+
+      pr.println(writeData); // ファイルに書き込み&改行
+
+      pr.close(); // writerを閉じる。
     } catch (IOException e) {
       System.out.println(e);
     }

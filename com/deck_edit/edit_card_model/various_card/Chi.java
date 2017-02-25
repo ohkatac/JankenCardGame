@@ -5,14 +5,11 @@ import java.util.*;
 
 public class Chi extends CardBase_E {
 
-        public Chi(){
-                setCardName("チー");
-                setID(3);
-                setPath(
-                        "assets/img/card/btnimg/Chi.png",
-                        "assets/img/card/btnimg/Chi_pressed.png",
-                        "assets/img/card/btnimg/Chi_hover.png"
-                        );
-        }
+	public Chi() {
+		setCardName("チー");
+		setID(3);
+		setPath("assets/img/card/btnimg/Chi.png", "assets/img/card/btnimg/Chi_pressed.png",
+				"assets/img/card/btnimg/Chi_hover.png");
+	}
 }
 //チーのカードデータ

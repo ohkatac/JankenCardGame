@@ -5,14 +5,11 @@ import java.util.*;
 
 public class Pa extends CardBase_E {
 
-        public Pa(){
-                setCardName("パー");
-                setID(2);
-                setPath(
-                        "assets/img/card/btnimg/Pa.png",
-                        "assets/img/card/btnimg/Pa_pressed.png",
-                        "assets/img/card/btnimg/Pa_hover.png"
-                        );
-        }
+	public Pa() {
+		setCardName("パー");
+		setID(2);
+		setPath("assets/img/card/btnimg/Pa.png", "assets/img/card/btnimg/Pa_pressed.png",
+				"assets/img/card/btnimg/Pa_hover.png");
+	}
 }
 //パーのカードデータ

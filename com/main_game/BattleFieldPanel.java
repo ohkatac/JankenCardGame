@@ -7,6 +7,8 @@ package com.main_game;
 
 import java.util.ArrayList;
 import java.awt.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.main_game.main_game_model.MainGameModel;
@@ -34,6 +36,10 @@ public class BattleFieldPanel extends JPanel {
   Boolean isMycard;
   Boolean isRicard;
 
+  // 各種Iconを格納する変数
+  ImageIcon emptyIcon;
+  ImageIcon backIcon;
+
   public BattleFieldPanel(MainGameModel model) {
     this.model = model;
     this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
@@ -53,17 +59,37 @@ public class BattleFieldPanel extends JPanel {
     isRicard = false;
 
     // 一番初めはカードが何もない状態を表す画像を表示
-    myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
-    myBattleF.add(myCard);
-    riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
-    riBattleF.add(riCard);
+    try {
+      myCard = new JLabel(new ImageIcon(
+        ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+          "assets/img/card/origin/empty.png"
+        ))
+      ));
+      myBattleF.add(myCard);
 
+      riCard = new JLabel(new ImageIcon(
+        ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+          "assets/img/card/origin/empty.png"
+        ))
+      ));
+      riBattleF.add(riCard);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 // 自分のフィールドにカードを設置するメソッド
   public void setMyCard( CardModel card ){
     isMycard = true; // フラグをtrueにする
-    mycardIcon = new ImageIcon(card.getImgPath()); // 自分が出すカードの画像をサブ用変数にコピーしておく
+    try {
+      mycardIcon = new ImageIcon(
+          ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+            card.getImgPath()
+          ))
+      ); // 自分が出すカードの画像をサブ用変数にコピーしておく
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     myCard.setVisible(false); // いったん場のコンポーネントを見えなくする
     myBattleF.remove(myCard); // もともとあるmyCardコンポーネントを場から取り除いておく
@@ -74,11 +100,25 @@ public class BattleFieldPanel extends JPanel {
 
   public void setRivalCard( CardModel card ){
     isRicard = true;
-    ricardIcon = new ImageIcon(card.getImgPath());
+    try {
+      ricardIcon = new ImageIcon(
+        ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+          card.getImgPath()
+        ))
+      ); // 自分が出すカードの画像をサブ用変数にコピーしておく
 
-    riCard.setVisible(false);
-    riBattleF.remove(riCard);
-    riCard = new JLabel( new ImageIcon("assets/img/card/origin/back.png") );
+      riCard.setVisible(false);
+      riBattleF.remove(riCard);
+      riCard = new JLabel(
+        new ImageIcon(
+          ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+            "assets/img/card/origin/back.png"
+          ))
+        )
+      );
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     riBattleF.add(riCard);
     riCard.setVisible(true);
   }
@@ -93,20 +133,32 @@ public class BattleFieldPanel extends JPanel {
   public void RemoveCards() {
     isMycard = isRicard = false;
     mycardIcon = ricardIcon = null;
-    
-    // 場のカードを空カードに設定
-    myCard.setVisible(false);
-    myBattleF.remove(myCard);
-    myCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
-    myBattleF.add(myCard);
-    myCard.setVisible(true);
 
-    // 場のカードを空カードに設定
-    riCard.setVisible(false);
-    myBattleF.remove(riCard);
-    riCard = new JLabel(new ImageIcon("assets/img/card/origin/empty.png"));
-    riBattleF.add(riCard);
-    riCard.setVisible(true);
+    try {
+      // 場のカードを空カードに設定
+      myCard.setVisible(false);
+      myBattleF.remove(myCard);
+      myCard = new JLabel(new ImageIcon(
+        ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+          "assets/img/card/origin/empty.png"
+        ))
+      ));
+      myBattleF.add(myCard);
+      myCard.setVisible(true);
+
+      // 場のカードを空カードに設定
+      riCard.setVisible(false);
+      myBattleF.remove(riCard);
+      riCard = new JLabel(new ImageIcon(
+        ImageIO.read(getClass().getClassLoader().getResourceAsStream(
+          "assets/img/card/origin/empty.png"
+        ))
+      ));
+      riBattleF.add(riCard);
+      riCard.setVisible(true);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public Boolean isSetCards() {
