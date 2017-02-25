@@ -70,47 +70,99 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 		toTitle.setLayout(new GridBagLayout());
 
 		/*追加操作部分に関するComponent*/
-		Gu = new ImageButton(new String[] { "assets/img/card/btnimg/Gu.png", "assets/img/card/btnimg/Gu_pressed.png",
-				"assets/img/card/btnimg/Gu_hover.png", "assets/img/card/btnimg/Gu_unable.png" });
+		Gu = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/Gu.png",
+				"assets/img/card/btnimg/Gu_pressed.png",
+				"assets/img/card/btnimg/Gu_hover.png",
+				"assets/img/card/btnimg/Gu_unable.png"
+			}
+		);
 		Gu.addActionListener(this);
 		Additonal.add(Gu);
-		Pa = new ImageButton(new String[] { "assets/img/card/btnimg/Pa.png", "assets/img/card/btnimg/Pa_pressed.png",
-				"assets/img/card/btnimg/Pa_hover.png", "assets/img/card/btnimg/Pa_unable.png" });
+		Pa = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/Pa.png",
+				"assets/img/card/btnimg/Pa_pressed.png",
+				"assets/img/card/btnimg/Pa_hover.png",
+				"assets/img/card/btnimg/Pa_unable.png"
+			}
+		);
 		Pa.addActionListener(this);
 		Additonal.add(Pa);
-		Chi = new ImageButton(new String[] { "assets/img/card/btnimg/Chi.png", "assets/img/card/btnimg/Chi_pressed.png",
-				"assets/img/card/btnimg/Chi_hover.png", "assets/img/card/btnimg/Chi_unable.png" });
+		Chi = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/Chi.png",
+				"assets/img/card/btnimg/Chi_pressed.png",
+				"assets/img/card/btnimg/Chi_hover.png",
+				"assets/img/card/btnimg/Chi_unable.png"
+			}
+		);
 		Chi.addActionListener(this);
 		Additonal.add(Chi);
-		G_C = new ImageButton(new String[] { "assets/img/card/btnimg/GuChi.png", "assets/img/card/btnimg/GuChi_pressed.png",
-				"assets/img/card/btnimg/GuChi_hover.png", "assets/img/card/btnimg/GuChi_unable.png" });
+		G_C = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/GuChi.png",
+				"assets/img/card/btnimg/GuChi_pressed.png",
+				"assets/img/card/btnimg/GuChi_hover.png",
+				"assets/img/card/btnimg/GuChi_unable.png"
+			}
+		);
 		G_C.addActionListener(this);
 		Additonal.add(G_C);
-		C_P = new ImageButton(new String[] { "assets/img/card/btnimg/ChiPa.png", "assets/img/card/btnimg/ChiPa_pressed.png",
-				"assets/img/card/btnimg/ChiPa_hover.png", "assets/img/card/btnimg/ChiPa_unable.png" });
+		C_P = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/ChiPa.png",
+				"assets/img/card/btnimg/ChiPa_pressed.png",
+				"assets/img/card/btnimg/ChiPa_hover.png",
+				"assets/img/card/btnimg/ChiPa_unable.png"
+			}
+		);
 		C_P.addActionListener(this);
 		Additonal.add(C_P);
-		P_G = new ImageButton(new String[] { "assets/img/card/btnimg/PaGu.png", "assets/img/card/btnimg/PaGu_pressed.png",
-				"assets/img/card/btnimg/PaGu_hover.png", "assets/img/card/btnimg/PaGu_unable.png" });
+		P_G = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/PaGu.png",
+				"assets/img/card/btnimg/PaGu_pressed.png",
+				"assets/img/card/btnimg/PaGu_hover.png",
+				"assets/img/card/btnimg/PaGu_unable.png"
+			}
+		);
 		P_G.addActionListener(this);
 		Additonal.add(P_G);
-		ALL = new ImageButton(new String[] { "assets/img/card/btnimg/All.png", "assets/img/card/btnimg/All_pressed.png",
-				"assets/img/card/btnimg/All_hover.png", "assets/img/card/btnimg/All_unable.png" });
+		ALL = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/All.png",
+				"assets/img/card/btnimg/All_pressed.png",
+				"assets/img/card/btnimg/All_hover.png",
+				"assets/img/card/btnimg/All_unable.png"
+			}
+		);
 		ALL.addActionListener(this);
 		Additonal.add(ALL);
 		this.add(Additonal, BorderLayout.WEST);
 
 		/*セーブとロードに関するComponent*/
 		Save = new ImageButton(
-				new String[] { "assets/img/edit_button/saveButton.png", "assets/img/edit_button/saveButton_pressed.png",
-						"assets/img/edit_button/saveButton_hover.png", "assets/img/edit_button/saveButton_unable.png" });
+			new String[] {
+				"assets/img/edit_button/saveButton.png",
+				"assets/img/edit_button/saveButton_pressed.png",
+				"assets/img/edit_button/saveButton_hover.png",
+				"assets/img/edit_button/saveButton_unable.png"
+			}
+		);
 		SaveLoad.gridx = 0;
 		SaveLoad.gridy = 0;
 		Save.addActionListener(this);
 		SaveAndLoad.add(Save, SaveLoad);
 		Load = new ImageButton(
-				new String[] { "assets/img/edit_button/loadButton.png", "assets/img/edit_button/loadButton_pressed.png",
-						"assets/img/edit_button/loadButton_hover.png", "assets/img/edit_button/loadButton_unable.png" });
+			new String[] {
+				"assets/img/edit_button/loadButton.png",
+				"assets/img/edit_button/loadButton_pressed.png",
+				"assets/img/edit_button/loadButton_hover.png",
+				"assets/img/edit_button/loadButton_unable.png"
+			}
+		);
 		SaveLoad.gridx = 0;
 		SaveLoad.gridy = 1;
 		Load.addActionListener(this);
@@ -153,8 +205,13 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 
 		/*タイトルに戻るためのComponent*/
 		end = new ImageButton(
-				new String[] { "assets/img/edit_button/toTitleButton.png", "assets/img/edit_button/toTitleButton_pressed.png",
-						"assets/img/edit_button/toTitleButton_hover.png", "assets/img/edit_button/toTitleButton_unable.png" });
+			new String[] {
+				"assets/img/edit_button/toTitleButton.png",
+				"assets/img/edit_button/toTitleButton_pressed.png",
+				"assets/img/edit_button/toTitleButton_hover.png",
+				"assets/img/edit_button/toTitleButton_unable.png"
+			}
+		);
 		BackTitle.gridx = 1;
 		BackTitle.gridy = 0;
 		end.addActionListener(this);
