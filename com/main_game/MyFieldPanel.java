@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.*;
 
+import javax.imageio.ImageIO;
+
+import java.io.IOException;
+
 import com.main_game.main_game_model.MainGameModel;
 import com.main_game.main_game_model.player_model.*;
 import com.main_game.main_game_model.card_model.*;
@@ -17,11 +21,20 @@ public class MyFieldPanel extends JPanel {
   MainGameModel model;
   BasePlayer myPlayer;
   ArrayList<CardModel> myHands = null;
-  JLabel deckImg = new JLabel( new ImageIcon("assets/img/card/btnimg/deck.png") );
+  JLabel deckImg;
 
   public MyFieldPanel(MainGameModel model, JPanel mainPanel) {
     super();
     this.model = model;
+    try {
+      deckImg = new JLabel( 
+        new ImageIcon(
+          ImageIO.read(getClass().getClassLoader().getResourceAsStream("assets/img/card/btnimg/deck.png"))
+        )
+      );
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     this.setOpaque(false); // 背景画像を表示するためにこのJPanelそのものを透明化する。
     // カードの画像の高さが140pxなので160に設定
     this.setPreferredSize( new Dimension(mainPanel.getPreferredSize().width, 160) ); 
@@ -30,6 +43,7 @@ public class MyFieldPanel extends JPanel {
 
     myPlayer = model.getPlayer();
     myHands = myPlayer.getHands();
+
   }
   
   // このフィールドをいったんすべて見えなくするメソッド。 再描画のために使う

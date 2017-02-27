@@ -49,7 +49,7 @@ public class ImageButton extends JButton implements MouseListener {
       normal = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[0])) );
       pressed = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[1])) );
       hovered = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[2])) );
-      disabled = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[3])) );
+      disabled = new ImageIcon( ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath[3])));
     } catch (IOException e) {
       e.printStackTrace();
     }

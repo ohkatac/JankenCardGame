@@ -78,7 +78,7 @@ final public class TitlePanel extends JPanel implements ActionListener {
         "assets/img/edit_button/toDeckEditButton.png", 
         "assets/img/edit_button/toDeckEditButton_pressed.png", 
         "assets/img/edit_button/toDeckEditButton_hover.png", 
-        "assets/img/edit_button/toDeckEditButton_unable.png"  
+        "assets/img/edit_button/toDeckEditButton_unable.png"
       }
     );
     gbc.gridx = 0;
@@ -106,11 +106,15 @@ final public class TitlePanel extends JPanel implements ActionListener {
     int[] checkData = mainDeck.ReadCSV();
 
     // デッキデータが不正ならゲーム画面に進めないようにする(gameButtonを使えなくする)
-    for(int i=0; i < checkData.length; i++){
-      if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40){
-        start.setEnabled(false);
-        break;
+    if (checkData != null) {
+      for(int i=0; i < checkData.length; i++){
+        if(checkData[i] < 1 || checkData[i] > 7 || checkData.length != 40){
+          start.setEnabled(false);
+          break;
+        }
       }
+    } else {
+      start.setEnabled(false);
     }
 
     start.addActionListener(this);

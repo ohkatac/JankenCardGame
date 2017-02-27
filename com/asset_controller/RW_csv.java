@@ -29,7 +29,7 @@ mainDeck_csv.ReadCSV(); // これで指定されたcsvファイルの中身を�
 いらなくなれば後で消します。
 
 MainGameやDeckEditパネルで.csvファイルを取り出したいなぁと思ったら
-RW_csv mainDeck = new RW_csv("assets/css/main_deck.csv"); 
+RW_csv mainDeck = new RW_csv("assets/csv/main_deck.csv"); 
 // この時ファイルが存在していなかったら新しく空の.csvが生成されます。
 int[] data = mainDeck.ReadCSV();
 ・・・・・・dataの中身をいろいろ変えたりする。
@@ -37,6 +37,11 @@ mainDeck.WriteCSV(data);
 
 ReadCSV2(), WriteCSV2()についてですが複数のデッキを保存するときがいつか来るかもしれないかなと思い作りました。
 例えばデッキのお気に入り機能とか実装するときに・・・
+
+↑ jarファイルに変換する際にcsvファイルのパスの関係でcsvファイルのパスを自由に設定できなくなりました. 
+コンストラクタの引数にどんなパスを入れても参照するcsvファイルは
+jarの状態なら.jarファイルが置いてあるディレクトリと同じディレクトリのmain_deck.csv,
+ソースコードの状態ならMain.javaが置いてあるディレクトリのmain_deck.csvとなります.
 */
 public class RW_csv {
 	String path;
@@ -44,22 +49,19 @@ public class RW_csv {
 
   public RW_csv(String path) {
 		this.path = path;
-		URL url =  this.getClass().getClassLoader().getResource(path);
 		try {
-			this.file = new File(url.toURI());
-		} catch (URISyntaxException e) {
-			System.out.println(e);
+			this.file = new File("main_deck.csv");
+		} catch (Exception e) {
+      e.printStackTrace();
 		}
 
-    /* jarファイルに変換するとFileクラスが使えないためコメントアウトする
 		if(!this.file.exists()) { // もし指定されたファイル名のファイルが存在しなかったら新しく生成する
       try {
         file.createNewFile();
       } catch(IOException e) {
-        System.out.println(e);
+        e.printStackTrace();
       }
     } // 処理ここまで
-    */
   }
 
   // 1次元配列を書き込むためのメソッド

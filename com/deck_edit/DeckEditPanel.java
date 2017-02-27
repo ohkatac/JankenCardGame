@@ -80,16 +80,6 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 		);
 		Gu.addActionListener(this);
 		Additonal.add(Gu);
-		Pa = new ImageButton(
-			new String[] {
-				"assets/img/card/btnimg/Pa.png",
-				"assets/img/card/btnimg/Pa_pressed.png",
-				"assets/img/card/btnimg/Pa_hover.png",
-				"assets/img/card/btnimg/Pa_unable.png"
-			}
-		);
-		Pa.addActionListener(this);
-		Additonal.add(Pa);
 		Chi = new ImageButton(
 			new String[] {
 				"assets/img/card/btnimg/Chi.png",
@@ -100,6 +90,16 @@ final public class DeckEditPanel extends JPanel implements ActionListener, Obser
 		);
 		Chi.addActionListener(this);
 		Additonal.add(Chi);
+		Pa = new ImageButton(
+			new String[] {
+				"assets/img/card/btnimg/Pa.png",
+				"assets/img/card/btnimg/Pa_pressed.png",
+				"assets/img/card/btnimg/Pa_hover.png",
+				"assets/img/card/btnimg/Pa_unable.png"
+			}
+		);
+		Pa.addActionListener(this);
+		Additonal.add(Pa);
 		G_C = new ImageButton(
 			new String[] {
 				"assets/img/card/btnimg/GuChi.png",
